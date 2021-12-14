@@ -19,6 +19,7 @@
 # You should have received a copy of the GNU General Public License
 # along with gcmpy. If not, see <http://www.gnu.org/licenses/gpl.html>.
 
-from .create_jdd import *
-from .gcm import *
+from .joint_degree import *
+from .gcm_algorithm import *
+from .motif_generators import *
 from .utils import *
