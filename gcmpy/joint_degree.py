@@ -30,7 +30,9 @@ _JOINT_DEGREE = TypeVar('_JOINT_DEGREE', bound=Tuple[int,...])
 
 class JDD_Interface(object):
     '''Joint degree distribution interface. Subclasses will define how self._jdd
-    is created, and all implementations should do so upon construction.'''
+    is created, and all implementations should do so upon construction.
+    
+    :param modulo: list of integers for number of nodes in each motif'''
 
     def __init__( self, modulo ):
         self._jdd : _JDD
@@ -38,16 +40,24 @@ class JDD_Interface(object):
 
     def _sample_JDS( self, N : int )->_JDS:
         '''Samples N joint motif sequence from self._jdd object. Intended to 
-        be a private method, only to be called by sample_JDS. '''
+        be a private method, only to be called by sample_JDS.
+        
+        :param N: number of samples
+        :return jds: joint degree sequence'''
+        
         keys = np.array(list(self._jdd.keys()))
         values = np.array(list(self._jdd.values()))
         choice_list_indices = np.random.choice(len(keys), N, replace=True, p=values)
         return keys[choice_list_indices] 
 
-    def sample_JDS( self, N : int )->None:  
+    def sample_JDS( self, N : int )->_JDS:  
         '''Method to ensure the sum of the motifs in each dimension mod modulo[i] (which is the 
         number of vertices in each motif) is zero by adding motifs to the motif list. 
-        This ensures the JDS is graphic.'''
+        This ensures the JDS is graphic.
+        
+        :param N: number of samples
+        :returns jds: joint degree sequnce'''
+        
         # raw joint degree sequence
         jds = list(map(ast.literal_eval,self._sample_JDS(N)))
         
@@ -70,18 +80,23 @@ class JDD_Interface(object):
             self._jdd[key] /= summation
 
     def convert_jds_to_jdd(self, jds : _JDS):
-        '''Convert a joint degree sequence to self._jdd .'''
+        '''Convert a joint degree sequence to self._jdd.
+        
+        :param jds: joint degree sequence'''
         n_samples = len(jds)
         self._jdd = dict((k,v/n_samples) for k, v in Counter(str(tuple(e)) for e in list(jds)).items())
  
 class JDD_manual(JDD_Interface):
-    '''Specify self._jdd by hand.''' 
+    '''Specify self._jdd by hand.
+    :param jdd: joint degree distribution''' 
+    
     def __init__(self, jdd : _JDD, modulo : List[int])->None:
         self._jdd = jdd
         super().__init__(modulo)
 
 class JDD_empirical_data(JDD_Interface):
-    '''An empirical joint degree sequence is used to create self._jdd '''
+    '''An empirical joint degree sequence is used to create self._jdd.
+    :param jds: joint degree sequence'''
 
     def __init__(self, jds : _JDS, modulo : List[int])->None:
         self.convert_jds_to_jdd(jds)
@@ -89,7 +104,13 @@ class JDD_empirical_data(JDD_Interface):
 
 class JDD_joint_function(JDD_Interface):
     '''Multivariate function to evaluate the probability of given joint degree from an analytical source.
-    Note, callable self._fp must accept a joint degree tuple and return a float.'''
+    Note, callable self._fp must accept a joint degree tuple and return a float.
+    
+    :param fp: callback
+    :param modulo: list of ints for number of vertices in each motif
+    :param hi_lo_degree_bounds: list of tuples (int,int) for kmin,kmax per topology
+    :param use_sampling: bool to use sampling or direct approach
+    :param n_samples: number of samples if not direct'''
     def __init__(self, fp : Callable,
                        modulo : List[int],
                        hi_lo_degree_bounds : Tuple[int,int],
@@ -123,7 +144,13 @@ class JDD_marginals(JDD_Interface):
     '''Merge uncorrelated marginals in each topology from analytical data together to create self._jdd. 
     If using a direct method, all possible joint degree tuples are evaluated; however, for large varience 
     in the allowed degrees this method is slow. Instead, we can choose to sample the analytical functions
-    by setting `use_sampling' which draws `n_samples' weighted samples from each marginal function.'''
+    by setting `use_sampling' which draws `n_samples' weighted samples from each marginal function.
+    
+    :param arr_fp: array of callbacks
+    :param modulo: list of ints for number of vertices in each motif
+    :param hi_lo_degree_bounds: list of tuples (int,int) for kmin,kmax per topology
+    :param use_sampling: bool to use sampling or direct approach
+    :param n_samples: number of samples if not direct'''
     def __init__(self, arr_fp : List[Callable],
                        modulo : List[int],
                        hi_lo_degree_bounds : List[Tuple[int,int]],
@@ -142,14 +169,18 @@ class JDD_marginals(JDD_Interface):
         super().__init__(modulo)
 
     def _generate_all_joint_degrees(self)->List[_JOINT_DEGREE] :
-        '''Generate all possible joint degrees from a range of min/max degree of each motif.'''
+        '''Generate all possible joint degrees from a range of min/max degree of each motif.
+        :return jd: list of joint degrees'''
         ks = []
         for kmin, kmax in self._hi_lo_degree_bounds:
             ks.append([k for k in range(kmin,kmax)])
         return list(product(*ks))
     
     def _evaluate_prob_of_joint_degree(self, joint_degree : List[_JOINT_DEGREE])->float:
-        '''Evaluate the joint probability of a joint degree using function callbacks'''
+        '''Evaluate the joint probability of a joint degree using function callbacks.
+        
+        :param joint_degree: list of joint degreees
+        :returns prod: probability of joint degree'''
         prod : float = 1.0
         for i,deg in enumerate(joint_degree):
             prod *= self._arr_fp[i](deg)
@@ -167,7 +198,8 @@ class JDD_marginals(JDD_Interface):
         self.normalise_jdd(self)
 
     def _draw_from_analytical_joint(self)->np.ndarray:
-        '''Draw `self._n_samples' from a marginal distribution `self._arr_fp' along each dimension.'''
+        '''Draw `self._n_samples' from a marginal distribution `self._arr_fp' along each dimension.
+        :returns jds: samples from marginal distributions'''
         ret = []
         for i in range(len(self._hi_lo_degree_bounds)):
             kmin,kmax = self._hi_lo_degree_bounds[i]
@@ -177,6 +209,9 @@ class JDD_marginals(JDD_Interface):
         return np.column_stack(ret)                                 # return sampled degrees
 
     def _create_jdd_by_sampling(self)->None:
+        '''Draws jds samples from analytical marginal functions and converts to 
+        a joint degree distribution. '''
+        
         self.convert_jds_to_jdd(self._draw_from_analytical_joint())
 
 class JDD_split_K_model(JDD_Interface):
