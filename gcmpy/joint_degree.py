@@ -1,3 +1,21 @@
+# construct joint degree distributions for gcmpy
+#
+# Copyright (C) 2021 Peter Mann
+#
+# This file is part of gcmpy, generalised configuration model networks in Python.
+#
+# gcmpy is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# gcmpy is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with gcmpy. If not, see <http://www.gnu.org/licenses/gpl.html>.
 
 import numpy as np
 import random
@@ -6,17 +24,9 @@ from itertools import product
 from typing import Tuple, Dict, List, Callable, TypeVar
 from collections import Counter
 
-##############################################
-################## typedefs ##################
-##############################################
-
 _JDD   = TypeVar('_JDD', bound=Dict[str,float])  
 _JDS   = TypeVar('_JDS', bound=List[List[int]])          
 _JOINT_DEGREE = TypeVar('_JOINT_DEGREE', bound=Tuple[int,...])
-
-##############################################
-#### joint degree distribution interface #####
-##############################################
 
 class JDD_Interface(object):
     '''Joint degree distribution interface. Subclasses will define how self._jdd
@@ -63,12 +73,7 @@ class JDD_Interface(object):
         '''Convert a joint degree sequence to self._jdd .'''
         n_samples = len(jds)
         self._jdd = dict((k,v/n_samples) for k, v in Counter(str(tuple(e)) for e in list(jds)).items())
-    
-
-######################################################
-## implementations of the joint degree distribution ##
-######################################################
-
+ 
 class JDD_manual(JDD_Interface):
     '''Specify self._jdd by hand.''' 
     def __init__(self, jdd : _JDD, modulo : List[int])->None:
