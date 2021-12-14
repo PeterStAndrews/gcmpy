@@ -29,26 +29,34 @@ _NODES  = TypeVar('_NODES', bound=List[int])
 class edge_list(object):
     '''Network represented as an edge list. The GCM class uses this 
     structure to generate networks which can then be converted to 
-    other network libraries. '''
+    other network libraries.'''
+    
     def __init__(self):
         self._edge_list = []
         
     def add_edges_from(self, edges : List[_EDGE])->None:
+        '''Adds edges from list of tuples (int,int) to the edge list.
+        :param edges: list of tuples of ints.'''
         for e in edges:
             self._edge_list.append(e)
 
 class output_data(object):
-    '''An object to store output data from the process'''
+    '''An object to store output data from the process.
+    :param i: integer for experiment index'''
 
-    def __init__(self,i:int):
-        self._experiment = i                # experiment index
+    def __init__(self, i : int):
+        self._experiment : int = i                # experiment index
         self._name : str = ''               # name of experiment
         self._network  : edge_list = []     # networks
     
 _RESULTS   = TypeVar('_RESULTS', bound=List[output_data])  
 
 class GCM_algorithm(object):
-    """Generalised configuration model algorithm """
+    """Generalised configuration model algorithm.
+    
+    :param num_networks: the number of networks to create
+    :param motif_sizes: list of ints that indicate the number of nodes in each motif
+    :param build_functions: callbacks that accept list of nodes and return edges"""
     _num_networks    : int                                               # number of networks to create
     _motif_sizes     : List[int]                                         # list of number of nodes in each motif
     _build_functions : List[Callable[[_NODES],List[_EDGE]]]              # list of callbacks for motif construction 
@@ -64,7 +72,9 @@ class GCM_algorithm(object):
     def random_clustered_graph(self, jds : _JDS)->edge_list:
         '''Generate a random graph from a given joint degree sequence of motifs. If motif constructors 
         are not specified, ValueError is raised.
-        Returns a list of edges in the graph as an edge_list object''' 
+        
+        :param jds: joint degree sequence 
+        :returns: a list of edges in the graph as an edge_list object''' 
 
         # as default construct cliques
         if self._build_functions is None:
@@ -109,22 +119,26 @@ class GCM_algorithm(object):
         return es
 
 class ResampleJDS(GCM_algorithm):
-    '''Resamples a joint degree sequence to create multiple networks.'''
+    '''Resamples a joint degree sequence to create multiple networks.
+    
+    :param num_networks: the number of networks to create
+    :param motif_sizes: list of ints that indicate the number of nodes in each motif
+    :param network_name: string identifier/classifier for network
+    :param build_functions: callbacks that accept list of nodes and return edges'''
     def __init__(self, num_networks    : int, 
                        motif_sizes     : List[int],
                        network_name    : str = None,
                        build_functions : List[Callable[[_NODES],List[_EDGE]]] = None):
-        '''Param num_networks: integer number of networks to creates
-           Param motif_sizes: list of integers for num vertices per motif
-           Param network_name: string identifier/classifier for network
-           Param build_functions: list of callables that take a list of node IDs and return the motif edges'''
         self._allow_rewires = True          # indicate that the networks are rewired from a single JDS sample
         self._network_name = network_name 
         super().__init__(num_networks, motif_sizes, build_functions)
 
-    def random_clustered_graph_from_resampled_jds(self, jds : _JDS):
+    def random_clustered_graph_from_resampled_jds(self, jds : _JDS)->_RESULTS:
         '''Routine to create multiple configuration model networks from a single joint degree sequence.
-        This essentially rewires a given sequence of joint degrees using the configuration model.'''
+        This essentially rewires a given sequence of joint degrees using the configuration model.
+        
+        :param jds: joint degree sequence 
+        :returns results: data of constructed networks'''
         results : _RESULTS  = []
         for i in range(self._num_networks):
             res = output_data(i)
