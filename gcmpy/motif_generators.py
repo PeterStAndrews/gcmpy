@@ -25,7 +25,9 @@ def cycle_motif(nodes: _NODES) -> List[_EDGE]:
     '''Accepts a list of ints and creates a cycle of adjacent node pairs. Creates two 
     iterators and then increments one before zipping together to create tuples. Finally,
     connects the start and end of the chain toegher.
-    Returns: edge list as list of tuples (int, int)'''
+    
+    :param nodes: list of nodes (int)
+    :returns: edge list as list of tuples (int, int)'''
     nodes.sort()
     a, b = tee(nodes)
     _ = next(b, None)
@@ -34,13 +36,18 @@ def cycle_motif(nodes: _NODES) -> List[_EDGE]:
     return edges
 
 def clique_motif(nodes: _NODES) -> List[_EDGE]:
-    '''Accepts list of ints and creates all possible pairs which it returns as a list of tuples of int pairs'''
+    '''Accepts list of ints and creates all possible pairs which it returns as a list of tuples of int pairs
+    
+    :param nodes: list of nodes (int)
+    :returns: edge list as list of tuples (int, int)'''
     nodes.sort()
     return list(combinations(nodes,2))
 
 def diamond_motif(nodes: _NODES) -> List[_EDGE]:
-    '''creates a diamond motif of 4 vertices.'''
+    '''Accepts list of ints and creates edge pairs for a diamond motif of 4 vertices.
     
+    :param nodes: list of nodes (int)
+    :returns: edge list as list of tuples (int, int)'''
     if len(nodes) < 4:
         raise("Error during motif construction - diamond_motif")
 
