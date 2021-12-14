@@ -26,46 +26,6 @@ from joint_degree import _JDS
 _EDGE   = TypeVar('_EDGE', bound=Tuple[int,int])    
 _NODES  = TypeVar('_NODES', bound=List[int])
 
-##############################################
-## functions to construct particular motifs ##
-##############################################
-
-def cycle_motif(nodes: _NODES) -> List[_EDGE]:
-    '''Accepts a list of ints and creates a cycle of adjacent node pairs. Creates two 
-    iterators and then increments one before zipping together to create tuples. Finally,
-    connects the start and end of the chain toegher.
-    Returns: edge list as list of tuples (int, int)'''
-    nodes.sort()
-    a, b = tee(nodes)
-    _ = next(b, None)
-    edges = list(zip(a,b))
-    edges.append((nodes[0], nodes[-1]))
-    return edges
-
-def clique_motif(nodes: _NODES) -> List[_EDGE]:
-    '''Accepts list of ints and creates all possible pairs which it returns as a list of tuples of int pairs'''
-    nodes.sort()
-    return list(combinations(nodes,2))
-
-def diamond_motif(nodes: _NODES) -> List[_EDGE]:
-    '''creates a diamond motif of 4 vertices.'''
-    
-    if len(nodes) < 4:
-        raise("Error during motif construction - diamond_motif")
-
-    nodes.sort()
-    n0, n1, n2, n3 = nodes
-
-    edges = cycle_motif(nodes)
-    edges.append((n0,n2))
-    edges.append((n1,n3))
-    
-    return edges
-
-##############################################
-######### network edge list object ###########
-##############################################
-
 class edge_list(object):
     '''Network represented as an edge list. The GCM class uses this 
     structure to generate networks which can then be converted to 
@@ -77,10 +37,6 @@ class edge_list(object):
         for e in edges:
             self._edge_list.append(e)
 
-##############################################
-####### datastructure to house results #######
-##############################################
-
 class output_data(object):
     '''An object to store output data from the process'''
 
@@ -89,12 +45,7 @@ class output_data(object):
         self._name : str = ''               # name of experiment
         self._network  : edge_list = []     # networks
     
-
 _RESULTS   = TypeVar('_RESULTS', bound=List[output_data])  
-
-##############################################
-######## Configuration model algorithm #######
-##############################################
 
 class GCM_algorithm(object):
     """Generalised configuration model algorithm """
