@@ -18,13 +18,10 @@
 # along with gcmpy. If not, see <http://www.gnu.org/licenses/gpl.html>.
 
 import random
-from itertools import tee, combinations
-from typing import Tuple, TypeVar, Callable, List
+from typing import List, Callable
 
-from joint_degree import _JDS
-
-_EDGE   = TypeVar('_EDGE', bound=Tuple[int,int])    
-_NODES  = TypeVar('_NODES', bound=List[int])
+from typing import List
+from gcmpy import _EDGE, _NODES, _JDS, _RESULTS
 
 class edge_list(object):
     '''Network represented as an edge list. The GCM class uses this 
@@ -49,8 +46,6 @@ class output_data(object):
         self._name : str = ''               # name of experiment
         self._network  : edge_list = []     # networks
     
-_RESULTS   = TypeVar('_RESULTS', bound=List[output_data])  
-
 class GCM_algorithm(object):
     """Generalised configuration model algorithm.
     

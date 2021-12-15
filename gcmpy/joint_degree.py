@@ -17,16 +17,16 @@
 # You should have received a copy of the GNU General Public License
 # along with gcmpy. If not, see <http://www.gnu.org/licenses/gpl.html>.
 
-import numpy as np
-import random
 import ast
+import random
 from itertools import product
-from typing import Tuple, Dict, List, Callable, TypeVar
 from collections import Counter
 
-_JDD   = TypeVar('_JDD', bound=Dict[str,float])  
-_JDS   = TypeVar('_JDS', bound=List[List[int]])          
-_JOINT_DEGREE = TypeVar('_JOINT_DEGREE', bound=Tuple[int,...])
+import numpy as np
+
+from typing import Tuple, Callable, List, _JOINT_DEGREE
+from gcmpy import _JDD, _JDS
+
 
 class JDD_Interface(object):
     '''Joint degree distribution interface. Subclasses will define how self._jdd

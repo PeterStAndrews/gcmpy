@@ -19,7 +19,7 @@
 
 from itertools import tee, combinations
 from typing import List
-from joint_degree import _NODES, _EDGE
+from types import _NODES, _EDGE
 
 def cycle_motif(nodes: _NODES) -> List[_EDGE]:
     '''Accepts a list of ints and creates a cycle of adjacent node pairs. Creates two 
