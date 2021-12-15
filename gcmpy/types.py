@@ -18,14 +18,16 @@
 # You should have received a copy of the GNU General Public License
 # along with gcmpy. If not, see <http://www.gnu.org/licenses/gpl.html>.
 
-from typing import Tuple, TypeVar, Dict, List
+from typing import NewType, Tuple, Dict, List
 from gcm_algorithm import output_data
 
-_JDD   = TypeVar('_JDD', bound=Dict[str,float])  
-_JDS   = TypeVar('_JDS', bound=List[List[int]])          
-_JOINT_DEGREE = TypeVar('_JOINT_DEGREE', bound=Tuple[int,...])
+_JDD   = NewType('_JDD', Dict[str,float])  
+_JDS   = NewType('_JDS', List[List[int]])          
+_JOINT_DEGREE = NewType('_JOINT_DEGREE', Tuple[int,...])
 
-_EDGE   = TypeVar('_EDGE', bound=Tuple[int,int])    
-_NODES  = TypeVar('_NODES', bound=List[int])
+_NODE   = NewType('_NODE', int)
+_EDGE   = NewType('_EDGE', Tuple[_NODE ,_NODE])    
+_NODES  = NewType('_NODES', List[_NODE])
+_EDGES  = NewType('_EDGES', List[_EDGE])
 
-_RESULTS   = TypeVar('_RESULTS', bound=List[output_data])  
+_RESULTS   = NewType('_RESULTS', List[output_data])  

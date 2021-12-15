@@ -19,7 +19,7 @@
 # You should have received a copy of the GNU General Public License
 # along with gcmpy. If not, see <http://www.gnu.org/licenses/gpl.html>.
 
-from types import *
+from .types import *
 from .joint_degree import *
 from .gcm_algorithm import *
 from .motif_generators import *

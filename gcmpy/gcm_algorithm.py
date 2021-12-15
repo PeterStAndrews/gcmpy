@@ -21,7 +21,7 @@ import random
 from typing import List, Callable
 
 from typing import List
-from gcmpy import _EDGE, _NODES, _JDS, _RESULTS
+from gcmpy import _EDGE, _EDGES, _NODES, _JDS, _RESULTS
 
 class edge_list(object):
     '''Network represented as an edge list. The GCM class uses this 
@@ -29,9 +29,9 @@ class edge_list(object):
     other network libraries.'''
     
     def __init__(self):
-        self._edge_list = []
+        self._edge_list : _EDGES = []
         
-    def add_edges_from(self, edges : List[_EDGE])->None:
+    def add_edges_from(self, edges : _EDGES)->None:
         '''Adds edges from list of tuples (int,int) to the edge list.
         :param edges: list of tuples of ints.'''
         for e in edges:
@@ -43,8 +43,8 @@ class output_data(object):
 
     def __init__(self, i : int):
         self._experiment : int = i                # experiment index
-        self._name : str = ''               # name of experiment
-        self._network  : edge_list = []     # networks
+        self._name : str = ''                     # tags for network
+        self._network  : edge_list = None         # network
     
 class GCM_algorithm(object):
     """Generalised configuration model algorithm.
@@ -54,11 +54,11 @@ class GCM_algorithm(object):
     :param build_functions: callbacks that accept list of nodes and return edges"""
     _num_networks    : int                                               # number of networks to create
     _motif_sizes     : List[int]                                         # list of number of nodes in each motif
-    _build_functions : List[Callable[[_NODES],List[_EDGE]]]              # list of callbacks for motif construction 
+    _build_functions : List[Callable[[_NODES],_EDGES]]              # list of callbacks for motif construction 
     
     def __init__(self, num_networks    : int, 
                        motif_sizes     : List[int],
-                       build_functions : List[Callable[[_NODES],List[_EDGE]]] = None):
+                       build_functions : List[Callable[[_NODES],_EDGES]] = None):
         
         self._num_networks    = num_networks 
         self._motif_sizes     = motif_sizes
@@ -123,7 +123,7 @@ class ResampleJDS(GCM_algorithm):
     def __init__(self, num_networks    : int, 
                        motif_sizes     : List[int],
                        network_name    : str = None,
-                       build_functions : List[Callable[[_NODES],List[_EDGE]]] = None):
+                       build_functions : List[Callable[[_NODES],_EDGES]] = None):
         self._allow_rewires = True          # indicate that the networks are rewired from a single JDS sample
         self._network_name = network_name 
         super().__init__(num_networks, motif_sizes, build_functions)
