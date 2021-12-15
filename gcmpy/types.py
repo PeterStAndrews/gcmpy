@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with gcmpy. If not, see <http://www.gnu.org/licenses/gpl.html>.
 
-from typing import NewType, Tuple, Dict, List
-from gcm_algorithm import output_data
+from typing import NewType, Tuple, Dict, List, TypeVar
 
 _JDD   = NewType('_JDD', Dict[str,float])  
 _JDS   = NewType('_JDS', List[List[int]])          
@@ -29,5 +28,4 @@ _NODE   = NewType('_NODE', int)
 _EDGE   = NewType('_EDGE', Tuple[_NODE ,_NODE])    
 _NODES  = NewType('_NODES', List[_NODE])
 _EDGES  = NewType('_EDGES', List[_EDGE])
-
-_RESULTS   = NewType('_RESULTS', List[output_data])  
+_RESULTS   = TypeVar('_RESULTS', bound=List[any])  

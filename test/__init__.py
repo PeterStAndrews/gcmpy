@@ -1,5 +1,5 @@
 
-# Test the behaviour of the joint degree distribution 
+# Test the behaviour of gcmpy
 # 
 # Copyright (C) 2021 Peter Mann
 #
@@ -17,25 +17,3 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with gcmpy. If not, see <http://www.gnu.org/licenses/gpl.html>.
-
-from gcmpy import *
-import unittest
-
-class JDD_manual_Test(unittest.TestCase):
-
-    def test_manual_JDD_single_topology(self):
-        
-        # valid input data for manual entry
-        motif_sizes = [2]
-        jdd = {'(1)' : 0.2, '(2)' : 0.5, '(3)' : 0.1, '(5)' : 0.2}
-
-        # create degree distribution
-        DegreeDistObj = JDD_manual(jdd, motif_sizes)._jdd
-
-        self.assertEqual(jdd,DegreeDistObj)
-
-
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -21,7 +21,7 @@ import random
 from typing import List, Callable
 
 from typing import List
-from gcmpy import _EDGE, _EDGES, _NODES, _JDS, _RESULTS
+from .types import _EDGES, _NODES, _JDS, _RESULTS
 
 class edge_list(object):
     '''Network represented as an edge list. The GCM class uses this 

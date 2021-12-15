@@ -24,9 +24,8 @@ from collections import Counter
 
 import numpy as np
 
-from typing import Tuple, Callable, List, _JOINT_DEGREE
-from gcmpy import _JDD, _JDS
-
+from typing import Tuple, Callable, List
+from .types import _JDD, _JDS, _JOINT_DEGREE
 
 class JDD_Interface(object):
     '''Joint degree distribution interface. Subclasses will define how self._jdd
