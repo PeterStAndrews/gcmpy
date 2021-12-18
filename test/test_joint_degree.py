@@ -22,6 +22,8 @@ from gcmpy import *
 import unittest
 import time
 
+from .test_utils import NETWORK_SIZE
+
 class JDD_manual_Test(unittest.TestCase):
 
     def test_manual_JDD_single_topology(self):
@@ -33,7 +35,7 @@ class JDD_manual_Test(unittest.TestCase):
         # create degree distribution
         DegreeDistObj = JDD_manual(jdd, motif_sizes)
 
-        n_vertices : int = 10000
+        n_vertices : int = NETWORK_SIZE
         DegreeDistObj.sample_JDS(n_vertices)
         
     def test_manual_JDD_single_topology_performance(self):
@@ -48,7 +50,7 @@ class JDD_manual_Test(unittest.TestCase):
         # create degree distribution
         DegreeDistObj = JDD_manual(jdd, motif_sizes)
 
-        n_vertices : int = 10000
+        n_vertices : int = NETWORK_SIZE
         DegreeDistObj.sample_JDS(n_vertices)
         t1 = time.time()
 
@@ -64,7 +66,7 @@ class JDD_manual_Test(unittest.TestCase):
         # create degree distribution
         DegreeDistObj = JDD_manual(jdd, motif_sizes)
 
-        n_vertices : int = 1000
+        n_vertices : int = NETWORK_SIZE
         DegreeDistObj.sample_JDS(n_vertices)
 
 class JDD_empirical_data_Test(unittest.TestCase):
@@ -77,7 +79,7 @@ class JDD_empirical_data_Test(unittest.TestCase):
         motif_sizes = [2]                    
         DegreeDistObj = JDD_empirical_data(jds, motif_sizes)
 
-        n_vertices : int = 10000
+        n_vertices : int = NETWORK_SIZE
         DegreeDistObj.sample_JDS(n_vertices)
 
     def test_empirical_JDD_single_topology_tuple(self):
@@ -86,7 +88,7 @@ class JDD_empirical_data_Test(unittest.TestCase):
         motif_sizes = [2]
         DegreeDistObj = JDD_empirical_data(jds, motif_sizes)
 
-        n_vertices : int = 10000
+        n_vertices : int = NETWORK_SIZE
         DegreeDistObj.sample_JDS(n_vertices)
         
     def test_empirical_JDD_two_topology_list(self):
@@ -95,7 +97,7 @@ class JDD_empirical_data_Test(unittest.TestCase):
         motif_sizes = [2,3]
         DegreeDistObj = JDD_empirical_data(jds, motif_sizes)
 
-        n_vertices : int = 10000
+        n_vertices : int = NETWORK_SIZE
         DegreeDistObj.sample_JDS(n_vertices)
 
     def test_empirical_JDD_two_topology_tuple(self):
@@ -104,7 +106,7 @@ class JDD_empirical_data_Test(unittest.TestCase):
         motif_sizes = [2,3]
         DegreeDistObj = JDD_empirical_data(jds, motif_sizes)
 
-        n_vertices : int = 10000
+        n_vertices : int = NETWORK_SIZE
         DegreeDistObj.sample_JDS(n_vertices)
 
 class JDD_marginal_Test(unittest.TestCase):
@@ -120,7 +122,7 @@ class JDD_marginal_Test(unittest.TestCase):
         # create joint degree distribution object
         DegreeDistObj = JDD_marginals(fp_array, motif_sizes, [(kmin,kmax)])
         
-        n_vertices : int = 10000
+        n_vertices : int = NETWORK_SIZE
         DegreeDistObj.sample_JDS(n_vertices)
 
     def test_marginal_JDD_two_topologies(self):
@@ -148,7 +150,7 @@ class JDD_marginal_Test(unittest.TestCase):
         # create joint degree distribution object
         DegreeDistObj = JDD_marginals(fp_array, motif_sizes, kmin_max)
         
-        n_vertices : int = 10000
+        n_vertices : int = NETWORK_SIZE
         DegreeDistObj.sample_JDS(n_vertices)
 
     def test_marginal_JDD_two_topologies_sample(self):
@@ -177,7 +179,7 @@ class JDD_marginal_Test(unittest.TestCase):
         DegreeDistObj = JDD_marginals(fp_array, motif_sizes, kmin_max,
                                       use_sampling=True,n_samples=int(1e5))
 
-        n_vertices : int = 10000
+        n_vertices : int = NETWORK_SIZE
         DegreeDistObj.sample_JDS(n_vertices)
 
     def test_marginal_JDD_many_topologies_sample(self):
@@ -202,7 +204,7 @@ class JDD_marginal_Test(unittest.TestCase):
         DegreeDistObj = JDD_marginals(fp_array, motif_sizes, kmin_max,
                                       use_sampling=True,n_samples=int(1e5))
 
-        n_vertices : int = 10000
+        n_vertices : int = NETWORK_SIZE
         DegreeDistObj.sample_JDS(n_vertices)
 
     def test_marginal_JDD_powerlaw_topology(self):
@@ -216,7 +218,7 @@ class JDD_marginal_Test(unittest.TestCase):
         # create joint degree distribution object
         DegreeDistObj = JDD_marginals(fp_array, motif_sizes, [(kmin,kmax)])
 
-        n_vertices : int = 10000
+        n_vertices : int = NETWORK_SIZE
         DegreeDistObj.sample_JDS(n_vertices)
 
     def test_marginal_JDD_scale_free_cut_off_topology(self):
@@ -233,7 +235,7 @@ class JDD_marginal_Test(unittest.TestCase):
         # create joint degree distribution object
         DegreeDistObj = JDD_marginals(fp_array, motif_sizes, [(kmin,kmax)])
 
-        n_vertices : int = 10000
+        n_vertices : int = NETWORK_SIZE
         DegreeDistObj.sample_JDS(n_vertices)
 
 class JDD_split_K_Test(unittest.TestCase):
@@ -251,7 +253,7 @@ class JDD_split_K_Test(unittest.TestCase):
 
         DegreeDistObj = JDD_split_K_model(fp, motif_sizes, probs, kmin, kmax)
 
-        n_vertices : int = 10000
+        n_vertices : int = NETWORK_SIZE
         DegreeDistObj.sample_JDS(n_vertices)
 
 class JDD_delta_Test(unittest.TestCase):
@@ -270,7 +272,7 @@ class JDD_delta_Test(unittest.TestCase):
         target_k = 3
         DegreeDistObj = JDD_delta_model(fp, motif_sizes, probs, target_k, kmin, kmax)
 
-        n_vertices : int = 10000
+        n_vertices : int = NETWORK_SIZE
         DegreeDistObj.sample_JDS(n_vertices)
 
 
