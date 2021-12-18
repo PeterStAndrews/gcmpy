@@ -17,80 +17,64 @@
 # You should have received a copy of the GNU General Public License
 # along with gcmpy. If not, see <http://www.gnu.org/licenses/gpl.html>.
 
-from typing import Callable
-import numpy as np
+import io
+import pickle
+from typing import List
 
-def poisson(kmean : float)->Callable:
-    '''Implements a poisson distribution.
+from .types import _EDGES
+
+class edge_list(object):
+    '''Network represented as an edge list. The GCM class uses this 
+    structure to generate networks which can then be converted to 
+    other network libraries.'''
     
-    :param kmean: mean of poisson distribution
-    :returns p: Callable'''
-    def p(k : int)->float:
-        return np.exp() * pow(kmean,k) / np.factorial(k)
-    return p
-
-def exponential(a : float)->Callable:
-    '''Implemnts an exponential distribution.
-    :param a: distribution parameter
-    :returns p: callable'''
-    def p(k : int)->float:
-        return (1-a)*pow(a,k)
-    return p
-
-def power_law(alpha : float)->Callable:
-    '''Implements a power law distribution with exponent alpha. Undefined for k = 0.
-    
-    :param alpha: power law exponent
-    :returns p: callable'''
-
-    def zeta(s : float)->float:
-        tol = +1e-06
-        l = 0.0
-        k = 1
-        while 1:
-            term = 1.0/ k**s
-            l += term
-            if abs(term) < tol:
-                break
-            k += 1
-        return l
-
-    C = zeta(alpha)
-
-    def p(k:int)->float:
-        return pow(k,-alpha) / C
-    return p
-
-def scale_free_cut_off(alpha : float, kappa :float) -> Callable:
-    '''Implements a scale free with exponential degree cutoff function. Limits
-    to scale free for large degree cutoff. Undefined for k = 0.
-    
-    :param k: int degree
-    :param alpha: float power law exponent
-    :param kappa: float degree cutoff'''
-
-    def polylog(s : float, z : float) -> float:
-        '''Implements a polylogarithm function for real arguments, taking two floats
+    def __init__(self):
+        self._edge_list : _EDGES = []
         
-        :param s: base
-        :param z: arg
-        :returns polylogarithm float:'''
-        tol = +1e-06
-        l = 0.0
-        k = 1
-        zk = z
-        while 1:
-            term = zk / k**s
-            l += term
-            if abs(term) < tol:
-                break
-            zk *= z
-            k += 1
-        return l
+    def add_edges_from(self, edges : _EDGES)->None:
+        '''Adds edges from list of tuples (int,int) to the edge list.
+        :param edges: list of tuples of ints.'''
+        for e in edges:
+            self._edge_list.append(e)
 
-    C = polylog(alpha, np.exp(-1.0 / kappa)) # normalisation constant
+class output_data(object):
+    '''An object to store output data from the process.
+    :param i: integer for experiment index'''
 
-    def p(k : int) -> float:
-        return (pow((k + 0.0), -alpha) * np.exp(-(k + 0.0) / kappa)) / C
-    return p
+    def __init__(self, i : int):
+        self._experiment : int = i                # experiment index
+        self._name : str = ''                     # tags for network
+        self._network  : edge_list = None         # network
+    
+class results(object):
+    '''A collection of `output_data' objects that can
+    be serialised and converted to other graph formats.'''
 
+    def __init__(self):
+        self.res : List[output_data]
+
+    def add_result(self, r : output_data)->None:
+        self.res.append(r)
+
+    def serialise_results_to_file(self, filename : str)->None:
+        '''Dump the results structure to a binary file.
+        :param filename: name of file to create.'''
+        
+        binary_file = open(filename, mode='wb')
+        pickle.dump(self.res, binary_file)
+        binary_file.close()
+
+    def read_results_from_binary_file(self, filename : str)->None:
+        '''read the results structure from a binary file.
+        :param filename: name of the file to read.'''
+
+        f : io.BufferedReader = open(filename,mode='rb')
+        bin_data : bytes = f.read()
+        sio : io.StringIO = io.StringIO(bin_data)
+        self.res : results = pickle.load(sio)
+
+    def to_networkx(self)->List[any]:
+        pass
+
+    def to_iGraph(self)->List[any]:
+        pass

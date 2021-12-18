@@ -19,33 +19,9 @@
 
 import random
 from typing import List, Callable
+from .types import _EDGES, _NODES, _JDS
+from .utils import edge_list, output_data, results
 
-from typing import List
-from .types import _EDGES, _NODES, _JDS, _RESULTS
-
-class edge_list(object):
-    '''Network represented as an edge list. The GCM class uses this 
-    structure to generate networks which can then be converted to 
-    other network libraries.'''
-    
-    def __init__(self):
-        self._edge_list : _EDGES = []
-        
-    def add_edges_from(self, edges : _EDGES)->None:
-        '''Adds edges from list of tuples (int,int) to the edge list.
-        :param edges: list of tuples of ints.'''
-        for e in edges:
-            self._edge_list.append(e)
-
-class output_data(object):
-    '''An object to store output data from the process.
-    :param i: integer for experiment index'''
-
-    def __init__(self, i : int):
-        self._experiment : int = i                # experiment index
-        self._name : str = ''                     # tags for network
-        self._network  : edge_list = None         # network
-    
 class GCM_algorithm(object):
     """Generalised configuration model algorithm.
     
@@ -128,16 +104,16 @@ class ResampleJDS(GCM_algorithm):
         self._network_name = network_name 
         super().__init__(num_networks, motif_sizes, build_functions)
 
-    def random_clustered_graph_from_resampled_jds(self, jds : _JDS)->_RESULTS:
+    def random_clustered_graph_from_resampled_jds(self, jds : _JDS)->results:
         '''Routine to create multiple configuration model networks from a single joint degree sequence.
         This essentially rewires a given sequence of joint degrees using the configuration model.
         
         :param jds: joint degree sequence 
         :returns results: data of constructed networks'''
-        results : _RESULTS  = []
+        res : results = []
         for i in range(self._num_networks):
-            res = output_data(i)
-            res._name = self._network_name
-            res._network = self.random_clustered_graph(jds)
-            results.append(res)
-        return results
+            res_ = output_data(i)
+            res_._name = self._network_name
+            res_._network = self.random_clustered_graph(jds)
+            res.append(res_)
+        return res

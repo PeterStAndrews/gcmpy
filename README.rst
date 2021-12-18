@@ -27,13 +27,15 @@ Installation
 
 You can install ``gcmpy`` directly from PyPi using ``pip``:
 
-::
+.. code-block:: bash
+
    pip install gcmpy
 
 The master distribution of ``gcmpy`` is hosted on GitHub. To obtain a
 copy, just clone the repo:
 
-::
+.. code-block:: bash
+    
     git clone git@github.com:PeterStAndrews/gcmpy.git
     cd gcmpy
     python setup.py install
@@ -51,4 +53,4 @@ Author and license
 
 Copyright (c) 2021, Peter Mann <pm78@st-andrews.ac.uk>
 
-Licensed under the ``GNU General Public License v2 or later (GPLv2+) <http://www.gnu.org/licenses/gpl.html>``_.
+Licensed under the `GNU General Public License v2 or later (GPLv2+) <http://www.gnu.org/licenses/gpl.html>`_.

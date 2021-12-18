@@ -34,6 +34,17 @@ class JDD_manual_Test(unittest.TestCase):
 
         self.assertEqual(jdd,DegreeDistObj)
 
+    def test_manual_JDD_two_topologies(self):
+        
+        # valid input data for manual entry
+        motif_sizes = [2,3]
+        jdd = {'(1,0)' : 0.2, '(2,1)' : 0.5, '(3,0)' : 0.1, '(5,1)' : 0.2}
+
+        # create degree distribution
+        DegreeDistObj = JDD_manual(jdd, motif_sizes)._jdd
+
+        self.assertEqual(jdd,DegreeDistObj)
+
 
 
 
