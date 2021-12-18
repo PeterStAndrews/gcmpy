@@ -34,7 +34,7 @@ class JDD_Interface(object):
     :param modulo: list of integers for number of nodes in each motif'''
 
     def __init__( self, modulo ):
-        self._jdd : _JDD
+        self._jdd : _JDD = {}
         self._modulo : List[int] = modulo
 
     def _sample_JDS( self, N : int )->_JDS:
@@ -90,17 +90,18 @@ class JDD_manual(JDD_Interface):
     :param jdd: joint degree distribution''' 
     
     def __init__(self, jdd : _JDD, modulo : List[int])->None:
-        self._jdd = jdd
         super().__init__(modulo)
+        self._jdd = jdd
+        
 
 class JDD_empirical_data(JDD_Interface):
     '''An empirical joint degree sequence is used to create self._jdd.
     :param jds: joint degree sequence'''
 
     def __init__(self, jds : _JDS, modulo : List[int])->None:
-        self.convert_jds_to_jdd(jds)
         super().__init__(modulo)
-
+        self.convert_jds_to_jdd(jds)
+        
 class JDD_joint_function(JDD_Interface):
     '''Multivariate function to evaluate the probability of given joint degree from an analytical source.
     Note, callable self._fp must accept a joint degree tuple and return a float.
@@ -116,9 +117,10 @@ class JDD_joint_function(JDD_Interface):
                        use_sampling : bool = False,
                        n_samples : int = 1e5
                        ):
+        super().__init__(modulo)
         self._fp = fp
         self._hi_lo_degree_bounds = hi_lo_degree_bounds  
-        super().__init__(modulo)
+        
         if not use_sampling:
             self._create_jdd_directly()
         else:
@@ -156,6 +158,7 @@ class JDD_marginals(JDD_Interface):
                        use_sampling : bool = False,
                        n_samples : int = 1e5
                        ):
+        super().__init__(modulo)
         self._arr_fp = arr_fp
         self._hi_lo_degree_bounds = hi_lo_degree_bounds
 
@@ -164,8 +167,6 @@ class JDD_marginals(JDD_Interface):
         else:
             self._n_samples = n_samples
             self._create_jdd_by_sampling()
-
-        super().__init__(modulo)
 
     def _generate_all_joint_degrees(self)->List[_JOINT_DEGREE] :
         '''Generate all possible joint degrees from a range of min/max degree of each motif.
@@ -219,21 +220,22 @@ class JDD_split_K_model(JDD_Interface):
     def __init__(self, fp : Callable, 
                        modulo : List[int],
                        probs : List[float],
-                       num_edges : List[int], 
                        kmin : int, 
                        kmax : int)->None:
-
+        
+        super().__init__(modulo)
         self._fp = fp
         self._probs = probs
-        self._hi_lo = (kmin,kmax)
-        self._num_edges = num_edges                 # number of edges per vertex per motif
+        self._kmin = kmin
+        self._kmax = kmax
+        
         self.create_jdd()
-        super().__init__(modulo)
-
+        
     def create_jdd(self)->None:
         '''Creates self._jdd using the split degree model'''
         for k in range(self._kmin,self._kmax):
             self.resolve_degree(k, self._fp(k))
+        self.normalise_jdd()
 
     def get_valid_joint_degrees(self, remaining_degree : int, topology : int)->List[_JOINT_DEGREE]:
         '''Returns a list of tuples by recursion. Only an ordered list of cliques are currently supported.
@@ -257,7 +259,7 @@ class JDD_split_K_model(JDD_Interface):
 
         prod : float = 1.0
         for i, degree in enumerate(jd):
-            prod *= pow(self._probs[i],self._num_edges[i]*degree)
+            prod *= pow(self._probs[i], (i+1)*degree)
         return prod
 
     def resolve_degree(self, k : int, prob_overall_k : float)->None:
@@ -267,7 +269,7 @@ class JDD_split_K_model(JDD_Interface):
         :param prob_overall_k: float value'''
         
         # get a list of valid joint degrees
-        valid_tuples : List[_JOINT_DEGREE] = list(self.get_valid_joint_degrees(k))
+        valid_tuples : List[_JOINT_DEGREE] = list(self.get_valid_joint_degrees(k,len(self._probs)))
 
         # calculate the probability of each joint degree tuple
         probabilities = []
@@ -276,6 +278,10 @@ class JDD_split_K_model(JDD_Interface):
 
         # normalise the probabilities to unity
         total = sum(probabilities)
+
+        if total == 0.0:
+            bbug = 1
+
         for i in range(len(probabilities)):
             probabilities[i] /= total
 
@@ -290,14 +296,13 @@ class JDD_delta_model(JDD_split_K_model):
     def __init__(self, fp : Callable, 
                        modulo : List[int],
                        probs : List[float],
-                       num_edges : List[int],
                        target_k : int, 
                        kmin : int, 
                        kmax : int)->None:
 
         self._target_k = target_k
-        super().__init__(fp, modulo, probs, num_edges, kmin, kmax)
-
+        super().__init__(fp, modulo, probs, kmin, kmax)
+        
     def create_jdd(self)->None:
         '''Creates self._jdd using the degree delta model. '''
         for k in range(self._kmin,self._kmax):
@@ -307,3 +312,5 @@ class JDD_delta_model(JDD_split_K_model):
                 self._jdd[str(tuple(zeros))] = self._fp(k)
             else:
                 self.resolve_degree(k, self._fp(k))
+
+        self.normalise_jdd()

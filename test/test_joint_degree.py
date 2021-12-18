@@ -55,7 +55,6 @@ class JDD_manual_Test(unittest.TestCase):
         total = t1-t0
         self.assertGreaterEqual(18, total)
 
-
     def test_manual_JDD_two_topologies(self):
         
         # valid input data for manual entry
@@ -90,6 +89,23 @@ class JDD_empirical_data_Test(unittest.TestCase):
         n_vertices : int = 10000
         DegreeDistObj.sample_JDS(n_vertices)
         
+    def test_empirical_JDD_two_topology_list(self):
+
+        jds = [[k,k+1] for k in np.random.randint(1,20,5)]
+        motif_sizes = [2,3]
+        DegreeDistObj = JDD_empirical_data(jds, motif_sizes)
+
+        n_vertices : int = 10000
+        DegreeDistObj.sample_JDS(n_vertices)
+
+    def test_empirical_JDD_two_topology_tuple(self):
+
+        jds = [(k,k+1) for k in np.random.randint(1,20,5)]
+        motif_sizes = [2,3]
+        DegreeDistObj = JDD_empirical_data(jds, motif_sizes)
+
+        n_vertices : int = 10000
+        DegreeDistObj.sample_JDS(n_vertices)
 
 class JDD_marginal_Test(unittest.TestCase):
 
@@ -216,6 +232,43 @@ class JDD_marginal_Test(unittest.TestCase):
 
         # create joint degree distribution object
         DegreeDistObj = JDD_marginals(fp_array, motif_sizes, [(kmin,kmax)])
+
+        n_vertices : int = 10000
+        DegreeDistObj.sample_JDS(n_vertices)
+
+class JDD_split_K_Test(unittest.TestCase):
+
+    def test_split_k_two_topologies(self):
+
+        motif_sizes = [2,3]                    
+        probs = [0.8,0.2]   # probability that an edge is a 2- or 3-clique
+
+        powerlaw_exponent = 2.5                     
+        fp = power_law(powerlaw_exponent)   # overall degree distribution
+
+        kmax = 1000                                  
+        kmin = 1                                     
+
+        DegreeDistObj = JDD_split_K_model(fp, motif_sizes, probs, kmin, kmax)
+
+        n_vertices : int = 10000
+        DegreeDistObj.sample_JDS(n_vertices)
+
+class JDD_delta_Test(unittest.TestCase):
+
+    def test_delta_two_topologies(self):
+        
+        motif_sizes = [2,3]                    
+        probs = [0.8,0.2]   # probability that an edge is a 2- or 3-clique
+
+        powerlaw_exponent = 2.5                     
+        fp = power_law(powerlaw_exponent)   # overall degree distribution
+
+        kmax = 1000                                  
+        kmin = 1                                     
+
+        target_k = 3
+        DegreeDistObj = JDD_delta_model(fp, motif_sizes, probs, target_k, kmin, kmax)
 
         n_vertices : int = 10000
         DegreeDistObj.sample_JDS(n_vertices)
