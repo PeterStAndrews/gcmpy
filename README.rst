@@ -45,7 +45,7 @@ copy, just clone the repo:
 Documentation
 -------------
 
-API documentation for ``gcmpy`` is available on ``ReadTheDocs``
+API documentation for ``gcmpy`` is available on `ReadTheDocs <https://peterstandrews-gcmpy.readthedocs.io/en/latest/>`_
 
 
 Author and license
