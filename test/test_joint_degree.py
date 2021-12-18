@@ -22,7 +22,7 @@ from gcmpy import *
 import unittest
 import time
 
-from .test_utils import NETWORK_SIZE
+from test_utils import NETWORK_SIZE
 
 class JDD_manual_Test(unittest.TestCase):
 
