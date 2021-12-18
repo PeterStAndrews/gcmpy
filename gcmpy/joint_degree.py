@@ -194,7 +194,7 @@ class JDD_marginals(JDD_Interface):
         for key in self._jdd:
             self._jdd[key] = self._evaluate_prob_of_joint_degree(ast.literal_eval(key))
         
-        self.normalise_jdd(self)
+        self.normalise_jdd()
 
     def _draw_from_analytical_joint(self)->np.ndarray:
         '''Draw `self._n_samples' from a marginal distribution `self._arr_fp' along each dimension.

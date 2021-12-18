@@ -23,4 +23,5 @@ from .types import *
 from .joint_degree import *
 from .gcm_algorithm import *
 from .motif_generators import *
+from .distributions import *
 from .utils import *

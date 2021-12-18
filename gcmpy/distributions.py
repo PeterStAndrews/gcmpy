@@ -26,7 +26,7 @@ def poisson(kmean : float)->Callable:
     :param kmean: mean of poisson distribution
     :returns p: Callable'''
     def p(k : int)->float:
-        return np.exp() * pow(kmean,k) / np.factorial(k)
+        return np.exp(-kmean) * pow(kmean,k) / np.math.factorial(k)
     return p
 
 def exponential(a : float)->Callable:
@@ -94,3 +94,8 @@ def scale_free_cut_off(alpha : float, kappa :float) -> Callable:
         return (pow((k + 0.0), -alpha) * np.exp(-(k + 0.0) / kappa)) / C
     return p
 
+def log_normal():
+    pass
+
+def weibull():
+    pass

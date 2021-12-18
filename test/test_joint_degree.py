@@ -45,6 +45,117 @@ class JDD_manual_Test(unittest.TestCase):
 
         self.assertEqual(jdd,DegreeDistObj)
 
+    def test_marginal_JDD_single_topology(self):
+
+        motif_sizes = [2]                    # 2-cliques
+        mean_degree = 2.5                    # mean poisson degree
+        fp_array = [poisson(mean_degree)]    # array of marginals
+        kmax = 15                            # largest degree
+        kmin = 0                             # smallest degree
+
+        # create joint degree distribution object
+        DegreeDistObj = JDD_marginals(fp_array, motif_sizes, [(kmin,kmax)])
+
+       
+    def test_marginal_JDD_two_topologies(self):
+
+        # allow 2 & 3-cliques
+        motif_sizes = [2,3]
+        
+        # mean poisson degrees
+        mean_degree_2_clique = 2.5
+        mean_degree_3_clique = 0.5
+        
+        # array of marginal distribution functions
+        fp_array = [poisson(mean_degree_2_clique),
+                    poisson(mean_degree_3_clique)]
+
+        # kmin and kmax in each dimension
+        kmax_2_clique = 15                            
+        kmin_2_clique = 0      
+
+        kmax_3_clique = 5                           
+        kmin_3_clique = 0   
+
+        kmin_max = [(kmin_2_clique,kmax_2_clique),(kmin_3_clique,kmax_3_clique)]                           
+
+        # create joint degree distribution object
+        DegreeDistObj = JDD_marginals(fp_array, motif_sizes, kmin_max)
+
+    def test_marginal_JDD_two_topologies_sample(self):
+
+        # allow 2 & 3-cliques
+        motif_sizes = [2,3]
+        
+        # mean poisson degrees
+        mean_degree_2_clique = 2.5
+        mean_degree_3_clique = 0.5
+        
+        # array of marginal distribution functions
+        fp_array = [poisson(mean_degree_2_clique),
+                    poisson(mean_degree_3_clique)]
+
+        # kmin and kmax in each dimension
+        kmax_2_clique = 15                            
+        kmin_2_clique = 0      
+
+        kmax_3_clique = 5                           
+        kmin_3_clique = 0   
+
+        kmin_max = [(kmin_2_clique,kmax_2_clique),(kmin_3_clique,kmax_3_clique)]                           
+
+        # create joint degree distribution object by sampling
+        DegreeDistObj = JDD_marginals(fp_array, motif_sizes, kmin_max,
+                                      use_sampling=True,n_samples=int(1e5))
+
+
+    def test_marginal_JDD_many_topologies_sample(self):
+
+        # allow up to n-cliques
+        n = 10
+        motif_sizes = list(range(2,n+1))
+        
+        # mean poisson degrees (all same for ease)
+        mean_degree_clique = 2
+        
+        # array of marginal distribution functions (all same for ease)
+        fp_array = [poisson(mean_degree_clique)] * (n+1)
+
+        # kmin and kmax (all same for ease)
+        kmax = 10                            
+        kmin= 0   
+
+        kmin_max = [(kmin,kmax)] * (n+1)                        
+
+        # create joint degree distribution object by sampling
+        DegreeDistObj = JDD_marginals(fp_array, motif_sizes, kmin_max,
+                                      use_sampling=True,n_samples=int(1e5))
+
+
+    def test_marginal_JDD_powerlaw_topology(self):
+
+        motif_sizes = [2]                            # 2-cliques
+        powerlaw_exponent = 2.5                      # powerlaw_exponent
+        fp_array = [power_law(powerlaw_exponent)]    # array of marginals
+        kmax = 150000                                # largest degree
+        kmin = 1                                     # smallest degree
+
+        # create joint degree distribution object
+        DegreeDistObj = JDD_marginals(fp_array, motif_sizes, [(kmin,kmax)])
+
+    def test_marginal_JDD_scale_free_cut_off_topology(self):
+
+        motif_sizes = [2]                            # 2-cliques
+        powerlaw_exponent = 2.5                      # powerlaw_exponent
+        degree_cut_off = 25                          # degree cut off 
+
+                                                     # array of marginals            
+        fp_array = [scale_free_cut_off(powerlaw_exponent,degree_cut_off)]    
+        kmax = 1500                                  # largest degree
+        kmin = 1                                     # smallest degree
+
+        # create joint degree distribution object
+        DegreeDistObj = JDD_marginals(fp_array, motif_sizes, [(kmin,kmax)])
 
 
 
