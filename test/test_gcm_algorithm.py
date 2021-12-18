@@ -4,7 +4,7 @@ from gcmpy import *
 import unittest
 import time
 
-from .test_utils import NETWORK_SIZE
+from test_utils import NETWORK_SIZE
 
 class GCM_algorithm_Test(unittest.TestCase):
 
@@ -22,9 +22,8 @@ class GCM_algorithm_Test(unittest.TestCase):
         jds = DegreeDistObj.sample_JDS(n_vertices)
 
         # create graph 
-        num_networks = 1
         build_functions = [clique_motif]
-        g = GCM_algorithm(num_networks, motif_sizes, build_functions).random_clustered_graph(jds)
+        g = GCM_algorithm(motif_sizes, build_functions).random_clustered_graph(jds)
         
     def test_marginal_JDD_single_topology(self):
 
@@ -42,9 +41,8 @@ class GCM_algorithm_Test(unittest.TestCase):
         jds = DegreeDistObj.sample_JDS(n_vertices)
 
         # create graph 
-        num_networks = 1
         build_functions = [clique_motif]
-        g = GCM_algorithm(num_networks, motif_sizes, build_functions).random_clustered_graph(jds)
+        g = GCM_algorithm(motif_sizes, build_functions).random_clustered_graph(jds)
 
     def test_split_k_two_topologies(self):
 
@@ -63,8 +61,26 @@ class GCM_algorithm_Test(unittest.TestCase):
         jds = DegreeDistObj.sample_JDS(n_vertices)
         
         # create graph 
-        num_networks = 1
         build_functions = [clique_motif, clique_motif]
-        g = GCM_algorithm(num_networks, motif_sizes, build_functions).random_clustered_graph(jds)
+        g = GCM_algorithm(motif_sizes, build_functions).random_clustered_graph(jds)
 
-        b = 1
+class ResampleJDS_Test(unittest.TestCase):
+
+    def test_manual_single_topology(self):
+
+         # valid input data for manual entry
+        motif_sizes = [2]
+        jdd = {'(1,)' : 0.2, '(2,)' : 0.5, '(3,)' : 0.1, '(5,)' : 0.2}
+
+        # create degree distribution
+        DegreeDistObj = JDD_manual(jdd, motif_sizes)
+
+        # draw a sample
+        n_vertices : int = NETWORK_SIZE
+        jds = DegreeDistObj.sample_JDS(n_vertices)
+
+        # create graph 
+        num_networks = 10
+        build_functions = [clique_motif]
+        g = ResampleJDS(num_networks, motif_sizes, build_functions).random_clustered_graph(jds)
+        

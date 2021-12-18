@@ -32,11 +32,9 @@ class GCM_algorithm(object):
     _motif_sizes     : List[int]                                         # list of number of nodes in each motif
     _build_functions : List[Callable[[_NODES],_EDGES]]              # list of callbacks for motif construction 
     
-    def __init__(self, num_networks    : int, 
-                       motif_sizes     : List[int],
-                       build_functions : List[Callable[[_NODES],_EDGES]] = None):
+    def __init__(self, motif_sizes     : List[int],
+                       build_functions : List[Callable[[_NODES],_EDGES]]):
         
-        self._num_networks    = num_networks 
         self._motif_sizes     = motif_sizes
         self._build_functions = build_functions
 
@@ -98,11 +96,12 @@ class ResampleJDS(GCM_algorithm):
     :param build_functions: callbacks that accept list of nodes and return edges'''
     def __init__(self, num_networks    : int, 
                        motif_sizes     : List[int],
-                       network_name    : str = None,
-                       build_functions : List[Callable[[_NODES],_EDGES]] = None):
+                       build_functions : List[Callable[[_NODES],_EDGES]],
+                       network_name    : str = None,):
+        self._num_networks = num_networks
         self._allow_rewires = True          # indicate that the networks are rewired from a single JDS sample
         self._network_name = network_name 
-        super().__init__(num_networks, motif_sizes, build_functions)
+        super().__init__(motif_sizes, build_functions)
 
     def random_clustered_graph_from_resampled_jds(self, jds : _JDS)->results:
         '''Routine to create multiple configuration model networks from a single joint degree sequence.
