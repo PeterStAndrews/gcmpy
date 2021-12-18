@@ -235,24 +235,36 @@ class JDD_split_K_model(JDD_Interface):
         for k in range(self._kmin,self._kmax):
             self.resolve_degree(k, self._fp(k))
 
-    def get_valid_joint_degrees(self, target : int, column : int)->List[_JOINT_DEGREE]:
-        '''Returns a list of tuples by recursion. Only an ordered list of cliques are currently supported.'''
-        if column == 1:
-            yield [target]
+    def get_valid_joint_degrees(self, remaining_degree : int, topology : int)->List[_JOINT_DEGREE]:
+        '''Returns a list of tuples by recursion. Only an ordered list of cliques are currently supported.
+        
+        :param remaining_degree: current free edges that can be partitioned
+        :param topology: column index of joint degree tuple
+        
+        :returns list of joint degrees'''
+        if topology  == 1:
+            yield [remaining_degree]
         else:
-            for i in range( 0, target//column+1 ):
-                for row in self.get_valid_joint_degrees( target-i*column, column-1 ):
+            for i in range( 0, remaining_degree//topology+1 ):
+                for row in self.get_valid_joint_degrees(remaining_degree-i*topology, topology-1):
                     yield row+[i]
     
     def calc_prob_of_joint_degree(self, jd : _JOINT_DEGREE)->float:
-        '''calculates the probability of a joint degree from the input params.'''
+        '''calculates the probability of a joint degree from the input params.
+        
+        :param jd: joint degree
+        :returns probability: float value'''
+
         prod : float = 1.0
         for i, degree in enumerate(jd):
             prod *= pow(self._probs[i],self._num_edges[i]*degree)
         return prod
 
     def resolve_degree(self, k : int, prob_overall_k : float)->None:
-        '''creates all valid joint degrees for overall k and their probability and updates self._jdd'''
+        '''creates all valid joint degrees for overall k and their probability and updates self._jdd.
+        
+        :param k: overall degree
+        :param prob_overall_k: float value'''
         
         # get a list of valid joint degrees
         valid_tuples : List[_JOINT_DEGREE] = list(self.get_valid_joint_degrees(k))
