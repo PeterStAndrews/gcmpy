@@ -1,0 +1,528 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>gcmpy package &#8212; gcmpy  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="gcmpy-package">
+<h1>gcmpy package<a class="headerlink" href="#gcmpy-package" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-gcmpy.distributions">
+<span id="gcmpy-distributions-module"></span><h2>gcmpy.distributions module<a class="headerlink" href="#module-gcmpy.distributions" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="gcmpy.distributions.exponential">
+<span class="sig-prename descclassname"><span class="pre">gcmpy.distributions.</span></span><span class="sig-name descname"><span class="pre">exponential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="reference internal" href="_modules/gcmpy/distributions.html#exponential"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.distributions.exponential" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implemnts an exponential distribution.
+:param a: distribution parameter
+:returns p: callable</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gcmpy.distributions.log_normal">
+<span class="sig-prename descclassname"><span class="pre">gcmpy.distributions.</span></span><span class="sig-name descname"><span class="pre">log_normal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/distributions.html#log_normal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.distributions.log_normal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gcmpy.distributions.poisson">
+<span class="sig-prename descclassname"><span class="pre">gcmpy.distributions.</span></span><span class="sig-name descname"><span class="pre">poisson</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kmean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="reference internal" href="_modules/gcmpy/distributions.html#poisson"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.distributions.poisson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a poisson distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kmean</strong> – mean of poisson distribution</p>
+</dd>
+<dt class="field-even">Returns p</dt>
+<dd class="field-even"><p>Callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gcmpy.distributions.power_law">
+<span class="sig-prename descclassname"><span class="pre">gcmpy.distributions.</span></span><span class="sig-name descname"><span class="pre">power_law</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="reference internal" href="_modules/gcmpy/distributions.html#power_law"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.distributions.power_law" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a power law distribution with exponent alpha. Undefined for k = 0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>alpha</strong> – power law exponent</p>
+</dd>
+<dt class="field-even">Returns p</dt>
+<dd class="field-even"><p>callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gcmpy.distributions.scale_free_cut_off">
+<span class="sig-prename descclassname"><span class="pre">gcmpy.distributions.</span></span><span class="sig-name descname"><span class="pre">scale_free_cut_off</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="reference internal" href="_modules/gcmpy/distributions.html#scale_free_cut_off"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.distributions.scale_free_cut_off" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a scale free with exponential degree cutoff function. Limits
+to scale free for large degree cutoff. Undefined for k = 0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>k</strong> – int degree</p></li>
+<li><p><strong>alpha</strong> – float power law exponent</p></li>
+<li><p><strong>kappa</strong> – float degree cutoff</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gcmpy.distributions.weibull">
+<span class="sig-prename descclassname"><span class="pre">gcmpy.distributions.</span></span><span class="sig-name descname"><span class="pre">weibull</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/distributions.html#weibull"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.distributions.weibull" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-gcmpy.gcm_algorithm">
+<span id="gcmpy-gcm-algorithm-module"></span><h2>gcmpy.gcm_algorithm module<a class="headerlink" href="#module-gcmpy.gcm_algorithm" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gcmpy.gcm_algorithm.GCM_algorithm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gcmpy.gcm_algorithm.</span></span><span class="sig-name descname"><span class="pre">GCM_algorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">motif_sizes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">build_functions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">gcmpy.types._NODES</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">gcmpy.types._EDGES</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/gcm_algorithm.html#GCM_algorithm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.gcm_algorithm.GCM_algorithm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Generalised configuration model algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_networks</strong> – the number of networks to create</p></li>
+<li><p><strong>motif_sizes</strong> – list of ints that indicate the number of nodes in each motif</p></li>
+<li><p><strong>build_functions</strong> – callbacks that accept list of nodes and return edges</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.gcm_algorithm.GCM_algorithm.random_clustered_graph">
+<span class="sig-name descname"><span class="pre">random_clustered_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gcmpy.types._JDS</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#gcmpy.utils.edge_list" title="gcmpy.utils.edge_list"><span class="pre">gcmpy.utils.edge_list</span></a></span></span><a class="reference internal" href="_modules/gcmpy/gcm_algorithm.html#GCM_algorithm.random_clustered_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.gcm_algorithm.GCM_algorithm.random_clustered_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a random graph from a given joint degree sequence of motifs. If motif constructors 
+are not specified, ValueError is raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jds</strong> – joint degree sequence</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a list of edges in the graph as an edge_list object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gcmpy.gcm_algorithm.ResampleJDS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gcmpy.gcm_algorithm.</span></span><span class="sig-name descname"><span class="pre">ResampleJDS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_networks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">motif_sizes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">build_functions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">gcmpy.types._NODES</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">gcmpy.types._EDGES</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/gcm_algorithm.html#ResampleJDS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.gcm_algorithm.ResampleJDS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gcmpy.gcm_algorithm.GCM_algorithm" title="gcmpy.gcm_algorithm.GCM_algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">gcmpy.gcm_algorithm.GCM_algorithm</span></code></a></p>
+<p>Resamples a joint degree sequence to create multiple networks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_networks</strong> – the number of networks to create</p></li>
+<li><p><strong>motif_sizes</strong> – list of ints that indicate the number of nodes in each motif</p></li>
+<li><p><strong>network_name</strong> – string identifier/classifier for network</p></li>
+<li><p><strong>build_functions</strong> – callbacks that accept list of nodes and return edges</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.gcm_algorithm.ResampleJDS.random_clustered_graph_from_resampled_jds">
+<span class="sig-name descname"><span class="pre">random_clustered_graph_from_resampled_jds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gcmpy.types._JDS</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#gcmpy.utils.results" title="gcmpy.utils.results"><span class="pre">gcmpy.utils.results</span></a></span></span><a class="reference internal" href="_modules/gcmpy/gcm_algorithm.html#ResampleJDS.random_clustered_graph_from_resampled_jds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.gcm_algorithm.ResampleJDS.random_clustered_graph_from_resampled_jds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Routine to create multiple configuration model networks from a single joint degree sequence.
+This essentially rewires a given sequence of joint degrees using the configuration model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jds</strong> – joint degree sequence</p>
+</dd>
+<dt class="field-even">Returns results</dt>
+<dd class="field-even"><p>data of constructed networks</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gcmpy.joint_degree">
+<span id="gcmpy-joint-degree-module"></span><h2>gcmpy.joint_degree module<a class="headerlink" href="#module-gcmpy.joint_degree" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_Interface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gcmpy.joint_degree.</span></span><span class="sig-name descname"><span class="pre">JDD_Interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modulo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_Interface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_Interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Joint degree distribution interface. Subclasses will define how self._jdd
+is created, and all implementations should do so upon construction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>modulo</strong> – list of integers for number of nodes in each motif</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_Interface.convert_jds_to_jdd">
+<span class="sig-name descname"><span class="pre">convert_jds_to_jdd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gcmpy.types._JDS</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_Interface.convert_jds_to_jdd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_Interface.convert_jds_to_jdd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a joint degree sequence to self._jdd.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jds</strong> – joint degree sequence</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_Interface.normalise_jdd">
+<span class="sig-name descname"><span class="pre">normalise_jdd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_Interface.normalise_jdd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_Interface.normalise_jdd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalises self._jdd probability distribution.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_Interface.sample_JDS">
+<span class="sig-name descname"><span class="pre">sample_JDS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">gcmpy.types._JDS</span></span></span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_Interface.sample_JDS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_Interface.sample_JDS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to ensure the sum of the motifs in each dimension mod modulo[i] (which is the 
+number of vertices in each motif) is zero by adding motifs to the motif list. 
+This ensures the JDS is graphic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>N</strong> – number of samples</p>
+</dd>
+<dt class="field-even">Returns jds</dt>
+<dd class="field-even"><p>joint degree sequnce</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_delta_model">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gcmpy.joint_degree.</span></span><span class="sig-name descname"><span class="pre">JDD_delta_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modulo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kmin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kmax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_delta_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_delta_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gcmpy.joint_degree.JDD_split_K_model" title="gcmpy.joint_degree.JDD_split_K_model"><code class="xref py py-class docutils literal notranslate"><span class="pre">gcmpy.joint_degree.JDD_split_K_model</span></code></a></p>
+<p>A distribution of single edges apart from a specified target degree. For instance
+a distribution of degrees in a single dimension (2-cliques) with zeros for all other motif
+type counts, apart from when k=target.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_delta_model.create_jdd">
+<span class="sig-name descname"><span class="pre">create_jdd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_delta_model.create_jdd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_delta_model.create_jdd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates self._jdd using the degree delta model.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_empirical_data">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gcmpy.joint_degree.</span></span><span class="sig-name descname"><span class="pre">JDD_empirical_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gcmpy.types._JDS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modulo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_empirical_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_empirical_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gcmpy.joint_degree.JDD_Interface" title="gcmpy.joint_degree.JDD_Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">gcmpy.joint_degree.JDD_Interface</span></code></a></p>
+<p>An empirical joint degree sequence is used to create self._jdd.
+:param jds: joint degree sequence</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_joint_function">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gcmpy.joint_degree.</span></span><span class="sig-name descname"><span class="pre">JDD_joint_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modulo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hi_lo_degree_bounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_sampling</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100000.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_joint_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_joint_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gcmpy.joint_degree.JDD_Interface" title="gcmpy.joint_degree.JDD_Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">gcmpy.joint_degree.JDD_Interface</span></code></a></p>
+<p>Multivariate function to evaluate the probability of given joint degree from an analytical source.
+Note, callable self._fp must accept a joint degree tuple and return a float.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fp</strong> – callback</p></li>
+<li><p><strong>modulo</strong> – list of ints for number of vertices in each motif</p></li>
+<li><p><strong>hi_lo_degree_bounds</strong> – list of tuples (int,int) for kmin,kmax per topology</p></li>
+<li><p><strong>use_sampling</strong> – bool to use sampling or direct approach</p></li>
+<li><p><strong>n_samples</strong> – number of samples if not direct</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_manual">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gcmpy.joint_degree.</span></span><span class="sig-name descname"><span class="pre">JDD_manual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jdd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gcmpy.types._JDD</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modulo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_manual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_manual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gcmpy.joint_degree.JDD_Interface" title="gcmpy.joint_degree.JDD_Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">gcmpy.joint_degree.JDD_Interface</span></code></a></p>
+<p>Specify self._jdd by hand.
+:param jdd: joint degree distribution</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_marginals">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gcmpy.joint_degree.</span></span><span class="sig-name descname"><span class="pre">JDD_marginals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr_fp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modulo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hi_lo_degree_bounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_sampling</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100000.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_marginals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_marginals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gcmpy.joint_degree.JDD_Interface" title="gcmpy.joint_degree.JDD_Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">gcmpy.joint_degree.JDD_Interface</span></code></a></p>
+<p>Merge uncorrelated marginals in each topology from analytical data together to create self._jdd. 
+If using a direct method, all possible joint degree tuples are evaluated; however, for large varience 
+in the allowed degrees this method is slow. Instead, we can choose to sample the analytical functions
+by setting <a href="#id1"><span class="problematic" id="id2">`</span></a>use_sampling’ which draws <a href="#id3"><span class="problematic" id="id4">`</span></a>n_samples’ weighted samples from each marginal function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr_fp</strong> – array of callbacks</p></li>
+<li><p><strong>modulo</strong> – list of ints for number of vertices in each motif</p></li>
+<li><p><strong>hi_lo_degree_bounds</strong> – list of tuples (int,int) for kmin,kmax per topology</p></li>
+<li><p><strong>use_sampling</strong> – bool to use sampling or direct approach</p></li>
+<li><p><strong>n_samples</strong> – number of samples if not direct</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_split_K_model">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gcmpy.joint_degree.</span></span><span class="sig-name descname"><span class="pre">JDD_split_K_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modulo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kmin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kmax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_split_K_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_split_K_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gcmpy.joint_degree.JDD_Interface" title="gcmpy.joint_degree.JDD_Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">gcmpy.joint_degree.JDD_Interface</span></code></a></p>
+<p>An overall degree distribution is split with probabilities of creating each motif.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_split_K_model.calc_prob_of_joint_degree">
+<span class="sig-name descname"><span class="pre">calc_prob_of_joint_degree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gcmpy.types._JOINT_DEGREE</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_split_K_model.calc_prob_of_joint_degree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_split_K_model.calc_prob_of_joint_degree" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculates the probability of a joint degree from the input params.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jd</strong> – joint degree</p>
+</dd>
+<dt class="field-even">Returns probability</dt>
+<dd class="field-even"><p>float value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_split_K_model.create_jdd">
+<span class="sig-name descname"><span class="pre">create_jdd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_split_K_model.create_jdd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_split_K_model.create_jdd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates self._jdd using the split degree model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_split_K_model.get_valid_joint_degrees">
+<span class="sig-name descname"><span class="pre">get_valid_joint_degrees</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">remaining_degree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">gcmpy.types._JOINT_DEGREE</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_split_K_model.get_valid_joint_degrees"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_split_K_model.get_valid_joint_degrees" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of tuples by recursion. Only an ordered list of cliques are currently supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>remaining_degree</strong> – current free edges that can be partitioned</p></li>
+<li><p><strong>topology</strong> – column index of joint degree tuple</p></li>
+</ul>
+</dd>
+</dl>
+<p>:returns list of joint degrees</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_split_K_model.resolve_degree">
+<span class="sig-name descname"><span class="pre">resolve_degree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prob_overall_k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_split_K_model.resolve_degree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_split_K_model.resolve_degree" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates all valid joint degrees for overall k and their probability and updates self._jdd.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>k</strong> – overall degree</p></li>
+<li><p><strong>prob_overall_k</strong> – float value</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gcmpy.motif_generators">
+<span id="gcmpy-motif-generators-module"></span><h2>gcmpy.motif_generators module<a class="headerlink" href="#module-gcmpy.motif_generators" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="gcmpy.motif_generators.clique_motif">
+<span class="sig-prename descclassname"><span class="pre">gcmpy.motif_generators.</span></span><span class="sig-name descname"><span class="pre">clique_motif</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gcmpy.types._NODES</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">gcmpy.types._EDGE</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/gcmpy/motif_generators.html#clique_motif"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.motif_generators.clique_motif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts list of ints and creates all possible pairs which it returns as a list of tuples of int pairs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>nodes</strong> – list of nodes (int)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>edge list as list of tuples (int, int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gcmpy.motif_generators.cycle_motif">
+<span class="sig-prename descclassname"><span class="pre">gcmpy.motif_generators.</span></span><span class="sig-name descname"><span class="pre">cycle_motif</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gcmpy.types._NODES</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">gcmpy.types._EDGE</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/gcmpy/motif_generators.html#cycle_motif"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.motif_generators.cycle_motif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts a list of ints and creates a cycle of adjacent node pairs. Creates two 
+iterators and then increments one before zipping together to create tuples. Finally,
+connects the start and end of the chain toegher.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>nodes</strong> – list of nodes (int)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>edge list as list of tuples (int, int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gcmpy.motif_generators.diamond_motif">
+<span class="sig-prename descclassname"><span class="pre">gcmpy.motif_generators.</span></span><span class="sig-name descname"><span class="pre">diamond_motif</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gcmpy.types._NODES</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">gcmpy.types._EDGE</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/gcmpy/motif_generators.html#diamond_motif"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.motif_generators.diamond_motif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts list of ints and creates edge pairs for a diamond motif of 4 vertices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>nodes</strong> – list of nodes (int)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>edge list as list of tuples (int, int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-gcmpy.types">
+<span id="gcmpy-types-module"></span><h2>gcmpy.types module<a class="headerlink" href="#module-gcmpy.types" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-gcmpy.utils">
+<span id="gcmpy-utils-module"></span><h2>gcmpy.utils module<a class="headerlink" href="#module-gcmpy.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gcmpy.utils.edge_list">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gcmpy.utils.</span></span><span class="sig-name descname"><span class="pre">edge_list</span></span><a class="reference internal" href="_modules/gcmpy/utils.html#edge_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.utils.edge_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Network represented as an edge list. The GCM class uses this 
+structure to generate networks which can then be converted to 
+other network libraries.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.utils.edge_list.add_edges_from">
+<span class="sig-name descname"><span class="pre">add_edges_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gcmpy.types._EDGES</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gcmpy/utils.html#edge_list.add_edges_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.utils.edge_list.add_edges_from" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds edges from list of tuples (int,int) to the edge list.
+:param edges: list of tuples of ints.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gcmpy.utils.output_data">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gcmpy.utils.</span></span><span class="sig-name descname"><span class="pre">output_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/utils.html#output_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.utils.output_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>An object to store output data from the process.
+:param i: integer for experiment index</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gcmpy.utils.results">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gcmpy.utils.</span></span><span class="sig-name descname"><span class="pre">results</span></span><a class="reference internal" href="_modules/gcmpy/utils.html#results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.utils.results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A collection of <a href="#id5"><span class="problematic" id="id6">`</span></a>output_data’ objects that can
+be serialised and converted to other graph formats.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.utils.results.add_result">
+<span class="sig-name descname"><span class="pre">add_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#gcmpy.utils.output_data" title="gcmpy.utils.output_data"><span class="pre">gcmpy.utils.output_data</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gcmpy/utils.html#results.add_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.utils.results.add_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.utils.results.read_results_from_binary_file">
+<span class="sig-name descname"><span class="pre">read_results_from_binary_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gcmpy/utils.html#results.read_results_from_binary_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.utils.results.read_results_from_binary_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>read the results structure from a binary file.
+:param filename: name of the file to read.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.utils.results.serialise_results_to_file">
+<span class="sig-name descname"><span class="pre">serialise_results_to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gcmpy/utils.html#results.serialise_results_to_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.utils.results.serialise_results_to_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dump the results structure to a binary file.
+:param filename: name of file to create.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.utils.results.to_iGraph">
+<span class="sig-name descname"><span class="pre">to_iGraph</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/gcmpy/utils.html#results.to_iGraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.utils.results.to_iGraph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.utils.results.to_networkx">
+<span class="sig-name descname"><span class="pre">to_networkx</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/gcmpy/utils.html#results.to_networkx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.utils.results.to_networkx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gcmpy">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-gcmpy" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">gcmpy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Peter Mann.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/gcmpy.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

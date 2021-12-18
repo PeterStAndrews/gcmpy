@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gcmpy.gcm_algorithm &#8212; gcmpy  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for gcmpy.gcm_algorithm</h1><div class="highlight"><pre>
+<span></span><span class="c1"># GCM algorithm for gcmpy</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (C) 2021 Peter Mann</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of gcmpy, generalised configuration model networks in Python.</span>
+<span class="c1">#</span>
+<span class="c1"># gcmpy is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 2 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># gcmpy is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with gcmpy. If not, see &lt;http://www.gnu.org/licenses/gpl.html&gt;.</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">.types</span> <span class="kn">import</span> <span class="n">_EDGES</span><span class="p">,</span> <span class="n">_NODES</span><span class="p">,</span> <span class="n">_JDS</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">edge_list</span><span class="p">,</span> <span class="n">output_data</span><span class="p">,</span> <span class="n">results</span>
+
+<div class="viewcode-block" id="GCM_algorithm"><a class="viewcode-back" href="../../gcmpy.html#gcmpy.gcm_algorithm.GCM_algorithm">[docs]</a><span class="k">class</span> <span class="nc">GCM_algorithm</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generalised configuration model algorithm.</span>
+<span class="sd">    </span>
+<span class="sd">    :param num_networks: the number of networks to create</span>
+<span class="sd">    :param motif_sizes: list of ints that indicate the number of nodes in each motif</span>
+<span class="sd">    :param build_functions: callbacks that accept list of nodes and return edges&quot;&quot;&quot;</span>
+    <span class="n">_num_networks</span>    <span class="p">:</span> <span class="nb">int</span>                                               <span class="c1"># number of networks to create</span>
+    <span class="n">_motif_sizes</span>     <span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>                                         <span class="c1"># list of number of nodes in each motif</span>
+    <span class="n">_build_functions</span> <span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">_NODES</span><span class="p">],</span><span class="n">_EDGES</span><span class="p">]]</span>              <span class="c1"># list of callbacks for motif construction </span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motif_sizes</span>     <span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+                       <span class="n">build_functions</span> <span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">_NODES</span><span class="p">],</span><span class="n">_EDGES</span><span class="p">]]):</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_motif_sizes</span>     <span class="o">=</span> <span class="n">motif_sizes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build_functions</span> <span class="o">=</span> <span class="n">build_functions</span>
+
+<div class="viewcode-block" id="GCM_algorithm.random_clustered_graph"><a class="viewcode-back" href="../../gcmpy.html#gcmpy.gcm_algorithm.GCM_algorithm.random_clustered_graph">[docs]</a>    <span class="k">def</span> <span class="nf">random_clustered_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jds</span> <span class="p">:</span> <span class="n">_JDS</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">edge_list</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Generate a random graph from a given joint degree sequence of motifs. If motif constructors </span>
+<span class="sd">        are not specified, ValueError is raised.</span>
+<span class="sd">        </span>
+<span class="sd">        :param jds: joint degree sequence </span>
+<span class="sd">        :returns: a list of edges in the graph as an edge_list object&#39;&#39;&#39;</span> 
+
+        <span class="c1"># as default construct cliques</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_functions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;GCM_algorithm._build_functions is None&#39;</span><span class="p">)</span>
+
+        <span class="c1"># create an empty graph</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">jds</span><span class="p">)</span>
+    
+        <span class="c1"># initialise a list of lists for distinct motif topology </span>
+        <span class="n">stubs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">([]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">jds</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+    
+        <span class="c1"># for each node n</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">joint_degree</span> <span class="o">=</span> <span class="n">jds</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+            <span class="c1"># for each topology ... </span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">k_list</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">stubs</span><span class="p">):</span>
+                <span class="c1"># append node n to the list once per unique motif of a given topology </span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">joint_degree</span><span class="p">[</span><span class="n">k</span><span class="p">]):</span>
+                    <span class="n">k_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                
+        <span class="c1"># shuffle each stub list</span>
+        <span class="k">for</span> <span class="n">k_list</span> <span class="ow">in</span> <span class="n">stubs</span><span class="p">:</span>
+            <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">k_list</span><span class="p">)</span>
+        
+        <span class="c1"># create edge list object</span>
+        <span class="n">es</span> <span class="o">=</span> <span class="n">edge_list</span><span class="p">()</span>
+
+        <span class="c1"># for each topology list ...</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">k_list</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">stubs</span><span class="p">):</span>
+            <span class="n">motif_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_motif_sizes</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="c1"># while there are still nodes ... </span>
+            <span class="k">while</span> <span class="n">k_list</span><span class="p">:</span>
+                <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="c1"># grab required number of nodes to build the motif</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">motif_size</span><span class="p">):</span>
+                    <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k_list</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+
+                <span class="c1"># add the edges to the network using the builder callback</span>
+                <span class="n">es</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_build_functions</span><span class="p">[</span><span class="n">k</span><span class="p">](</span><span class="n">nodes</span><span class="p">))</span>    
+            
+        <span class="c1"># return the graph</span>
+        <span class="k">return</span> <span class="n">es</span></div></div>
+
+<div class="viewcode-block" id="ResampleJDS"><a class="viewcode-back" href="../../gcmpy.html#gcmpy.gcm_algorithm.ResampleJDS">[docs]</a><span class="k">class</span> <span class="nc">ResampleJDS</span><span class="p">(</span><span class="n">GCM_algorithm</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Resamples a joint degree sequence to create multiple networks.</span>
+<span class="sd">    </span>
+<span class="sd">    :param num_networks: the number of networks to create</span>
+<span class="sd">    :param motif_sizes: list of ints that indicate the number of nodes in each motif</span>
+<span class="sd">    :param network_name: string identifier/classifier for network</span>
+<span class="sd">    :param build_functions: callbacks that accept list of nodes and return edges&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_networks</span>    <span class="p">:</span> <span class="nb">int</span><span class="p">,</span> 
+                       <span class="n">motif_sizes</span>     <span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+                       <span class="n">build_functions</span> <span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">_NODES</span><span class="p">],</span><span class="n">_EDGES</span><span class="p">]],</span>
+                       <span class="n">network_name</span>    <span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_networks</span> <span class="o">=</span> <span class="n">num_networks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_allow_rewires</span> <span class="o">=</span> <span class="kc">True</span>          <span class="c1"># indicate that the networks are rewired from a single JDS sample</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_network_name</span> <span class="o">=</span> <span class="n">network_name</span> 
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">motif_sizes</span><span class="p">,</span> <span class="n">build_functions</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ResampleJDS.random_clustered_graph_from_resampled_jds"><a class="viewcode-back" href="../../gcmpy.html#gcmpy.gcm_algorithm.ResampleJDS.random_clustered_graph_from_resampled_jds">[docs]</a>    <span class="k">def</span> <span class="nf">random_clustered_graph_from_resampled_jds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jds</span> <span class="p">:</span> <span class="n">_JDS</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">results</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Routine to create multiple configuration model networks from a single joint degree sequence.</span>
+<span class="sd">        This essentially rewires a given sequence of joint degrees using the configuration model.</span>
+<span class="sd">        </span>
+<span class="sd">        :param jds: joint degree sequence </span>
+<span class="sd">        :returns results: data of constructed networks&#39;&#39;&#39;</span>
+        <span class="n">res</span> <span class="p">:</span> <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_networks</span><span class="p">):</span>
+            <span class="n">res_</span> <span class="o">=</span> <span class="n">output_data</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">res_</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_network_name</span>
+            <span class="n">res_</span><span class="o">.</span><span class="n">_network</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_clustered_graph</span><span class="p">(</span><span class="n">jds</span><span class="p">)</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res_</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">gcmpy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Peter Mann.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
