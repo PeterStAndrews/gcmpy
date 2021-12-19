@@ -145,7 +145,7 @@ class JDD_marginals(JDD_Interface):
     '''Merge uncorrelated marginals in each topology from analytical data together to create self._jdd. 
     If using a direct method, all possible joint degree tuples are evaluated; however, for large varience 
     in the allowed degrees this method is slow. Instead, we can choose to sample the analytical functions
-    by setting `use_sampling' which draws `n_samples' weighted samples from each marginal function.
+    by setting use_sampling which draws n_samples weighted samples from each marginal function.
     
     :param arr_fp: array of callbacks
     :param modulo: list of ints for number of vertices in each motif

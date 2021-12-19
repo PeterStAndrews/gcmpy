@@ -47,7 +47,7 @@ class output_data(object):
         self._network  : edge_list = None         # network
     
 class results(object):
-    '''A collection of `output_data' objects that can
+    '''A collection of output_data objects that can
     be serialised and converted to other graph formats.'''
 
     def __init__(self):
