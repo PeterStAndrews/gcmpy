@@ -22,8 +22,6 @@ from gcmpy import *
 import unittest
 import time
 
-from test_utils import NETWORK_SIZE
-
 class JDD_manual_Test(unittest.TestCase):
 
     def test_manual_JDD_single_topology(self):

@@ -4,8 +4,6 @@ from gcmpy import *
 import unittest
 import time
 
-from test_utils import NETWORK_SIZE
-
 class GCM_algorithm_Test(unittest.TestCase):
 
     def test_manual_single_topology(self):
