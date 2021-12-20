@@ -24,4 +24,5 @@ from .joint_degree import *
 from .gcm_algorithm import *
 from .motif_generators import *
 from .distributions import *
+from .covers import *
 from .utils import *

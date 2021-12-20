@@ -21,7 +21,9 @@ import io
 import pickle
 from typing import List
 
-from .types import _EDGES
+import networkx as nx
+
+from .types import _EDGES, _EDGE
 
 class edge_list(object):
     '''Network represented as an edge list. The GCM class uses this 
@@ -31,11 +33,33 @@ class edge_list(object):
     def __init__(self):
         self._edge_list : _EDGES = []
         
+    def add_edge(self, e : _EDGE):
+        '''Adds an edge to the networkx'''
+        self._edge_list.append(e)
+
     def add_edges_from(self, edges : _EDGES)->None:
         '''Adds edges from list of tuples (int,int) to the edge list.
         :param edges: list of tuples of ints.'''
         for e in edges:
-            self._edge_list.append(e)
+            self.add_edge(e)
+
+    def find_cliques(self):
+        '''Returns all maximal cliques in an undirected graph by converting the edge
+        list to a nx graph object first.'''
+        G = nx.Graph()
+        G.add_edges_from(self._edge_list)
+        return list(nx.find_cliques(G))
+
+    def remove_edge(self, i : int, j : int)->None:
+        '''Removes edge (i,j) from G. Assumes i<j and no duplicates.'''
+        try:
+            self._edge_list.remove((i,j))
+        except ValueError:
+            pass
+        
+    def has_edges(self)->bool:
+        '''True if graph has edges remaining'''
+        return len(self._edge_list) > 0
 
 class output_data(object):
     '''An object to store output data from the process.
@@ -51,7 +75,7 @@ class results(object):
     be serialised and converted to other graph formats.'''
 
     def __init__(self):
-        self.res : List[output_data]
+        self.res : List[output_data] = []
 
     def add_result(self, r : output_data)->None:
         self.res.append(r)
@@ -71,10 +95,4 @@ class results(object):
         f : io.BufferedReader = open(filename,mode='rb')
         bin_data : bytes = f.read()
         sio : io.StringIO = io.StringIO(bin_data)
-        self.res : results = pickle.load(sio)
-
-    def to_networkx(self)->List[any]:
-        pass
-
-    def to_iGraph(self)->List[any]:
-        pass
+        self.res : List[output_data] = pickle.load(sio)

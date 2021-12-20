@@ -29,4 +29,6 @@ _EDGE   = NewType('_EDGE', Tuple[_NODE ,_NODE])
 _NODES  = NewType('_NODES', List[_NODE])
 _EDGES  = NewType('_EDGES', List[_EDGE])
 
+_COVER = NewType('_COVER',List[List[int]])
+
 NETWORK_SIZE = 100000
