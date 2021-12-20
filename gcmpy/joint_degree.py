@@ -21,11 +21,12 @@ import ast
 import random
 from itertools import product
 from collections import Counter
+from networkx.algorithms import clique
 
 import numpy as np
 
 from typing import Tuple, Callable, List
-from .types import _JDD, _JDS, _JOINT_DEGREE
+from .types import _JDD, _JDS, _JOINT_DEGREE, _COVER
 
 class JDD_Interface(object):
     '''Joint degree distribution interface. Subclasses will define how self._jdd
@@ -279,9 +280,6 @@ class JDD_split_K_model(JDD_Interface):
         # normalise the probabilities to unity
         total = sum(probabilities)
 
-        if total == 0.0:
-            bbug = 1
-
         for i in range(len(probabilities)):
             probabilities[i] /= total
 
@@ -314,3 +312,48 @@ class JDD_delta_model(JDD_split_K_model):
                 self.resolve_degree(k, self._fp(k))
 
         self.normalise_jdd()
+
+class JDD_clique_cover(JDD_Interface):
+    '''Creates self._jdd from a list of cliques in the network. The sizes of the 
+    cliques can be obtained from the self._modulo member.'''
+
+    def __init__(self, C : _COVER):
+        ''':param C: clique cover'''
+        self._cover = C
+        super().__init__(sorted(list(set([len(c) for c in C]))))
+        self.create_jdd()
+
+    def create_jdd(self)->None:
+
+        node_ids = list(set([node for clique in self._cover for node in clique]))
+
+        zero_index = 0
+        if min(node_ids) != zero_index:
+            zero_index = 1
+
+        largest_clique = len(max(self._cover, key = len))
+
+        jds = []
+        for _ in range(len(node_ids)):
+            jd = [0] * largest_clique
+            jds.append(jd)
+
+        for c in self._cover:
+
+            clique_size = len(c)
+            for node in c:
+                jds[node - zero_index][clique_size-1] += 1
+
+        # iterate each column of the jds and record the index if all zeros
+        indxs = [i for i, top in enumerate(zip(*jds)) if not any(top)]
+        
+        # use the indexes of the zero columns to remove
+        for i in indxs:
+            for jd in jds:
+                del jd[i]
+
+        # convert jds to jdd
+        self.convert_jds_to_jdd(jds)
+        
+
+

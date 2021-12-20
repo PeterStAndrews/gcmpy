@@ -273,6 +273,56 @@ class JDD_delta_Test(unittest.TestCase):
         n_vertices : int = NETWORK_SIZE
         DegreeDistObj.sample_JDS(n_vertices)
 
+def EECC_Test_util_network()->EECC:
+
+    G = EECC()
+
+    G.add_edge((1, 2))
+    G.add_edge((1, 14))
+    G.add_edge((2, 4))
+    G.add_edge((2, 13))
+    G.add_edge((2, 14))
+    G.add_edge((3, 4))
+    G.add_edge((3, 5))
+    G.add_edge((4, 5))
+    G.add_edge((4, 13))
+    G.add_edge((4, 14))
+    G.add_edge((6, 7))
+    G.add_edge((6, 13))
+    G.add_edge((7, 8))
+    G.add_edge((7, 13))
+    G.add_edge((8, 9))
+    G.add_edge((8, 13))
+    G.add_edge((9, 10))
+    G.add_edge((9, 11))
+    G.add_edge((9, 13))
+    G.add_edge((10, 11))
+    G.add_edge((11, 12))
+    G.add_edge((12, 13))
+    G.add_edge((13, 14))
+
+    return G
+
+class JDD_cover_Test(unittest.TestCase):
+
+    def test_EECC_cover(self):
+        
+        G = EECC_Test_util_network()
+
+        G.set_max_clique_size(4)
+        EECC_cover = G.get_EECC()
+
+        DegreeDistObj = JDD_clique_cover(EECC_cover)
+
+        n_vertices : int = NETWORK_SIZE
+        DegreeDistObj.sample_JDS(n_vertices)
+
+
+
+
+
+
+
 
 
 if __name__ == '__main__':
