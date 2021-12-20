@@ -244,4 +244,5 @@ class MPCC(edge_list):
     '''Creates an MPCC clique cover. '''
 
     def __init__(self):
-        pass
+        pass 
+    
