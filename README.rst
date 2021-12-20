@@ -1,6 +1,6 @@
 
-.. image:: https://github.com/https://github.com/PeterStAndrews/gcmpy/actions/workflows/ci.yml/badge.svg
-     :target: https://github.com/PeterStAndrews/gcmpy/actions/workflows/ci.yml
+.. image:: https://github.com/https://github.com/PeterStAndrews/gcmpy/workflows/ci.yml/badge.svg
+     :target: https://github.com/PeterStAndrews/gcmpy/workflows/ci.yml
 
 gcmpy: Generalised Configuration Model random graphs in Python
 ===================================================================
