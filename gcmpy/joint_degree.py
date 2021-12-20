@@ -21,7 +21,6 @@ import ast
 import random
 from itertools import product
 from collections import Counter
-from networkx.algorithms import clique
 
 import numpy as np
 

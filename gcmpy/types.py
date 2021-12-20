@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with gcmpy. If not, see <http://www.gnu.org/licenses/gpl.html>.
 
-from typing import NewType, Tuple, Dict, List, TypeVar
+from typing import NewType, Tuple, Dict, List
 
 _JDD   = NewType('_JDD', Dict[str,float])  
 _JDS   = NewType('_JDS', List[List[int]])          
