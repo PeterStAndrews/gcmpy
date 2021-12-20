@@ -1,4 +1,10 @@
+.. image:: https://badge.fury.io/py/gcmpy.svg
+    :target: https://badge.fury.io/py/gcmpy
 
+.. image:: https://readthedocs.org/projects/peterstandrews-gcmpy/badge/?version=latest
+:target: https://peterstandrews-gcmpy.readthedocs.io/en/latest/?badge=latest
+:alt: Documentation Status
+      
 .. image:: https://github.com/https://github.com/PeterStAndrews/gcmpy/workflows/ci.yml/badge.svg
      :target: https://github.com/PeterStAndrews/gcmpy/workflows/ci.yml
 
