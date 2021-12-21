@@ -7,8 +7,8 @@ gcmpy: Generalised Configuration Model random graphs in Python
 .. image:: https://readthedocs.org/projects/peterstandrews-gcmpy/badge/?version=latest
     :target: https://peterstandrews-gcmpy.readthedocs.io/en/latest/?badge=latest
       
-.. image:: https://github.com/https://github.com/PeterStAndrews/gcmpy/workflows/ci.yml/badge.svg
-     :target: https://github.com/PeterStAndrews/gcmpy/workflows/ci.yml
+.. image:: https://github.com/PeterStAndrews/gcmpy/blob/main/.github/workflows/ci.yml/badge.svg
+     :target: https://github.com/PeterStAndrews/gcmpy/blob/main/.github/workflows/ci.yml
 
 Overview
 --------
