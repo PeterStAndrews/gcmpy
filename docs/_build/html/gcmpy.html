@@ -216,6 +216,19 @@ This ensures the JDS is graphic.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_clique_cover">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gcmpy.joint_degree.</span></span><span class="sig-name descname"><span class="pre">JDD_clique_cover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gcmpy.types._COVER</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_clique_cover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_clique_cover" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gcmpy.joint_degree.JDD_Interface" title="gcmpy.joint_degree.JDD_Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">gcmpy.joint_degree.JDD_Interface</span></code></a></p>
+<p>Creates self._jdd from a list of cliques in the network. The sizes of the 
+cliques can be obtained from the self._modulo member.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_clique_cover.create_jdd">
+<span class="sig-name descname"><span class="pre">create_jdd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_clique_cover.create_jdd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_clique_cover.create_jdd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="gcmpy.joint_degree.JDD_delta_model">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gcmpy.joint_degree.</span></span><span class="sig-name descname"><span class="pre">JDD_delta_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modulo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kmin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kmax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/joint_degree.html#JDD_delta_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.joint_degree.JDD_delta_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#gcmpy.joint_degree.JDD_split_K_model" title="gcmpy.joint_degree.JDD_split_K_model"><code class="xref py py-class docutils literal notranslate"><span class="pre">gcmpy.joint_degree.JDD_split_K_model</span></code></a></p>
@@ -403,10 +416,35 @@ connects the start and end of the chain toegher.</p>
 structure to generate networks which can then be converted to 
 other network libraries.</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.utils.edge_list.add_edge">
+<span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gcmpy.types._EDGE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/utils.html#edge_list.add_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.utils.edge_list.add_edge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an edge to the networkx</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="gcmpy.utils.edge_list.add_edges_from">
 <span class="sig-name descname"><span class="pre">add_edges_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gcmpy.types._EDGES</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gcmpy/utils.html#edge_list.add_edges_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.utils.edge_list.add_edges_from" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds edges from list of tuples (int,int) to the edge list.
 :param edges: list of tuples of ints.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.utils.edge_list.find_cliques">
+<span class="sig-name descname"><span class="pre">find_cliques</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gcmpy/utils.html#edge_list.find_cliques"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.utils.edge_list.find_cliques" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all maximal cliques in an undirected graph by converting the edge
+list to a nx graph object first.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.utils.edge_list.has_edges">
+<span class="sig-name descname"><span class="pre">has_edges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/gcmpy/utils.html#edge_list.has_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.utils.edge_list.has_edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if graph has edges remaining</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gcmpy.utils.edge_list.remove_edge">
+<span class="sig-name descname"><span class="pre">remove_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gcmpy/utils.html#edge_list.remove_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.utils.edge_list.remove_edge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes edge (i,j) from G. Assumes i&lt;j and no duplicates.</p>
 </dd></dl>
 
 </dd></dl>
@@ -443,16 +481,6 @@ be serialised and converted to other graph formats.</p>
 <dd><p>Dump the results structure to a binary file.
 :param filename: name of file to create.</p>
 </dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="gcmpy.utils.results.to_iGraph">
-<span class="sig-name descname"><span class="pre">to_iGraph</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/gcmpy/utils.html#results.to_iGraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.utils.results.to_iGraph" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="gcmpy.utils.results.to_networkx">
-<span class="sig-name descname"><span class="pre">to_networkx</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/gcmpy/utils.html#results.to_networkx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gcmpy.utils.results.to_networkx" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 

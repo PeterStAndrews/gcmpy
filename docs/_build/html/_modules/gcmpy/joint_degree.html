@@ -58,7 +58,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span>
-<span class="kn">from</span> <span class="nn">.types</span> <span class="kn">import</span> <span class="n">_JDD</span><span class="p">,</span> <span class="n">_JDS</span><span class="p">,</span> <span class="n">_JOINT_DEGREE</span>
+<span class="kn">from</span> <span class="nn">.types</span> <span class="kn">import</span> <span class="n">_JDD</span><span class="p">,</span> <span class="n">_JDS</span><span class="p">,</span> <span class="n">_JOINT_DEGREE</span><span class="p">,</span> <span class="n">_COVER</span>
 
 <div class="viewcode-block" id="JDD_Interface"><a class="viewcode-back" href="../../gcmpy.html#gcmpy.joint_degree.JDD_Interface">[docs]</a><span class="k">class</span> <span class="nc">JDD_Interface</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Joint degree distribution interface. Subclasses will define how self._jdd</span>
@@ -312,9 +312,6 @@
         <span class="c1"># normalise the probabilities to unity</span>
         <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">total</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="n">bbug</span> <span class="o">=</span> <span class="mi">1</span>
-
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)):</span>
             <span class="n">probabilities</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/=</span> <span class="n">total</span>
 
@@ -347,6 +344,51 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">resolve_degree</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">normalise_jdd</span><span class="p">()</span></div></div>
+
+<div class="viewcode-block" id="JDD_clique_cover"><a class="viewcode-back" href="../../gcmpy.html#gcmpy.joint_degree.JDD_clique_cover">[docs]</a><span class="k">class</span> <span class="nc">JDD_clique_cover</span><span class="p">(</span><span class="n">JDD_Interface</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Creates self._jdd from a list of cliques in the network. The sizes of the </span>
+<span class="sd">    cliques can be obtained from the self._modulo member.&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">C</span> <span class="p">:</span> <span class="n">_COVER</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;:param C: clique cover&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cover</span> <span class="o">=</span> <span class="n">C</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">C</span><span class="p">]))))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_jdd</span><span class="p">()</span>
+
+<div class="viewcode-block" id="JDD_clique_cover.create_jdd"><a class="viewcode-back" href="../../gcmpy.html#gcmpy.joint_degree.JDD_clique_cover.create_jdd">[docs]</a>    <span class="k">def</span> <span class="nf">create_jdd</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+
+        <span class="n">node_ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">node</span> <span class="k">for</span> <span class="n">clique</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cover</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">clique</span><span class="p">]))</span>
+
+        <span class="n">zero_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="nb">min</span><span class="p">(</span><span class="n">node_ids</span><span class="p">)</span> <span class="o">!=</span> <span class="n">zero_index</span><span class="p">:</span>
+            <span class="n">zero_index</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="n">largest_clique</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cover</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="nb">len</span><span class="p">))</span>
+
+        <span class="n">jds</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">node_ids</span><span class="p">)):</span>
+            <span class="n">jd</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">largest_clique</span>
+            <span class="n">jds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jd</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cover</span><span class="p">:</span>
+
+            <span class="n">clique_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+                <span class="n">jds</span><span class="p">[</span><span class="n">node</span> <span class="o">-</span> <span class="n">zero_index</span><span class="p">][</span><span class="n">clique_size</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># iterate each column of the jds and record the index if all zeros</span>
+        <span class="n">indxs</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">top</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">jds</span><span class="p">))</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">top</span><span class="p">)]</span>
+        
+        <span class="c1"># use the indexes of the zero columns to remove</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indxs</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">jd</span> <span class="ow">in</span> <span class="n">jds</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">jd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="c1"># convert jds to jdd</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">convert_jds_to_jdd</span><span class="p">(</span><span class="n">jds</span><span class="p">)</span></div></div>
+        
+
+
 </pre></div>
 
           </div>

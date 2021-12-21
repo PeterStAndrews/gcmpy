@@ -306,6 +306,56 @@
         <span class="n">n_vertices</span> <span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">NETWORK_SIZE</span>
         <span class="n">DegreeDistObj</span><span class="o">.</span><span class="n">sample_JDS</span><span class="p">(</span><span class="n">n_vertices</span><span class="p">)</span></div></div>
 
+<div class="viewcode-block" id="EECC_Test_util_network"><a class="viewcode-back" href="../../test.html#test.test_joint_degree.EECC_Test_util_network">[docs]</a><span class="k">def</span> <span class="nf">EECC_Test_util_network</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">EECC</span><span class="p">:</span>
+
+    <span class="n">G</span> <span class="o">=</span> <span class="n">EECC</span><span class="p">()</span>
+
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">((</span><span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">G</span></div>
+
+<div class="viewcode-block" id="JDD_cover_Test"><a class="viewcode-back" href="../../test.html#test.test_joint_degree.JDD_cover_Test">[docs]</a><span class="k">class</span> <span class="nc">JDD_cover_Test</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="JDD_cover_Test.test_EECC_cover"><a class="viewcode-back" href="../../test.html#test.test_joint_degree.JDD_cover_Test.test_EECC_cover">[docs]</a>    <span class="k">def</span> <span class="nf">test_EECC_cover</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="n">G</span> <span class="o">=</span> <span class="n">EECC_Test_util_network</span><span class="p">()</span>
+
+        <span class="n">G</span><span class="o">.</span><span class="n">set_max_clique_size</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">EECC_cover</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">get_EECC</span><span class="p">()</span>
+
+        <span class="n">DegreeDistObj</span> <span class="o">=</span> <span class="n">JDD_clique_cover</span><span class="p">(</span><span class="n">EECC_cover</span><span class="p">)</span>
+
+        <span class="n">n_vertices</span> <span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">NETWORK_SIZE</span>
+        <span class="n">DegreeDistObj</span><span class="o">.</span><span class="n">sample_JDS</span><span class="p">(</span><span class="n">n_vertices</span><span class="p">)</span></div></div>
+
+
+
+
+
+
+
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
