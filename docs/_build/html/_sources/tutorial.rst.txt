@@ -10,3 +10,7 @@ network examples.
     :maxdepth: 2
 
     tutorial/getting_started.rst
+    tutorial/from_marginal.rst
+    tutorial/from_empirical_data.rst
+    tutorial/split_degree.rst
+    tutorial/from_clique_cover.rst

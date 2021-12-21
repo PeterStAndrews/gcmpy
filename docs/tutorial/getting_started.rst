@@ -2,8 +2,7 @@
 
 .. currentmodule :: gcmpy
 
-Getting started
-================
+Getting started with ``gcmpy``
+================================
 
-Welcome to ``gcmpy`` a Python module to make creating random graphs with the configuration model algorithm 
-easier! 
+There are many different workflows in ``gcmpy`` that can be implemented to create a random graph.

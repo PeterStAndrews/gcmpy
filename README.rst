@@ -24,9 +24,6 @@ through a variety of analytical or empirical methods. Once constructed, this
 joint distribution is sampled to obtain a joint degree sequence. The joint 
 sequence is then used in the GCM algorithm to create an edge list.
 
-``gcmpy`` generates networks as edge lists and therefore can be integrated 
-into any graph library such as ``networkx`` or ``iGraph``. 
-
 Networks can be given storage tags to classify the properties for database 
 look-up. 
 

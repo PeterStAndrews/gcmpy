@@ -6,13 +6,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Welcome to gcmpy’s documentation! &#8212; gcmpy  documentation</title>
+    <title>Welcome to gcmpy: a toolkit for random graph creation for network science &#8212; gcmpy  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tutorial" href="tutorial.html" />
@@ -32,25 +33,77 @@
 
           <div class="body" role="main">
             
-  <section id="welcome-to-gcmpy-s-documentation">
-<h1>Welcome to gcmpy’s documentation!<a class="headerlink" href="#welcome-to-gcmpy-s-documentation" title="Permalink to this headline">¶</a></h1>
+  <section id="welcome-to-gcmpy-a-toolkit-for-random-graph-creation-for-network-science">
+<h1>Welcome to gcmpy: a toolkit for random graph creation for network science<a class="headerlink" href="#welcome-to-gcmpy-a-toolkit-for-random-graph-creation-for-network-science" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">gcmpy</span></code> aims to provide a common framework for the scalable and
+efficient creation of random graphs in python that are constructed
+according to the generalised configuration model algorithm.</p>
+<section id="what-are-configuration-model-networks">
+<h2>What are configuration model networks?<a class="headerlink" href="#what-are-configuration-model-networks" title="Permalink to this headline">¶</a></h2>
+<p>Networks are collections of vertices connected together by edges. A mathematician
+might call a network a <em>graph</em>, and we use the two terms indiscriminately. Networks provide
+an excellent opportunity to bring both dynamics and topology into a single model. In this context
+questions on how topology influences the dynamics are readily answered by a network model. For instance,
+in a <em>contact network</em>, the vertices of the graph represent people, and the edges represent those
+contacts that are sufficient to transmit disease. One could then inject a dynamical process over
+this network, such as an epidemic disease that transmits from contact to contact. Varying the structure
+of the contact network, perhaps through mitigation strategies such as social distancing, might change
+how the epidemic behaves at the population level.</p>
+<p>Networks can be collected from empirical data, or they can be created according to a given algorithm.
+Empirical networks are only a single graph; whilst, synthetic algorithms can be used repeatedly to
+create different graphs. In general, graph construction algorithms are stochastic by nature, meaning
+that they have randomisation in them. This leads to a different final network for a given input dataset.
+As such, a <em>family</em> of random graphs can be created with equivalent statistical properties. Upon each
+application of the algorithm, a single member of the random graph family is generated.</p>
+<p>One such random graph algorithm is the <em>configuration model</em> (CM). In the CM, each vertex in a set
+of unconnected vertices is assigned an integer, <span class="math notranslate nohighlight">\(k\)</span>, that represent it’s number of edges - called its degree.
+The vertices are then entered into a list once for each of its edges, such that, a vertex with <span class="math notranslate nohighlight">\(k\)</span> edges
+is present exactly <span class="math notranslate nohighlight">\(k\)</span> times in the list. Once all vertices have been entered, the list is shuffled
+and vertex pairs are drawn without replacement from the list. The vertices are then connected together. Once
+all pairs have been drawn from the list, the construction algorithm is completed. Theoretically, the same vertex
+can be drawn from the list twice, and therefore, self-loops can be created; however, for large networks, this
+is rare.</p>
+</section>
+<section id="what-are-generalised-configuration-model-networks">
+<h2>What are generalised configuration model networks?<a class="headerlink" href="#what-are-generalised-configuration-model-networks" title="Permalink to this headline">¶</a></h2>
+<p>In the CM, pairs of vertices are connected together at random. This leads to networks that are
+<em>locally tree-like</em> and do not contain short range cycles. In the contact network example above
+this indicates that an individuals friends do not have contact with one another, which is highly
+unrealistic. These types of relationships often have a very large influence on the properties of
+the network!</p>
+<p>The <em>generalised configuration model</em> (GCM) allows higher-order connections, beyond simple edges, to be added to the graph whilst
+still generating random graphs. An edge is a pair-wise interaction. The next interaction we can consider is
+an interaction between 3 vertices, such as a triangle. Let us consider a GCM network that contains both ordinary edges
+and triangles. To begin, each vertex in an unconnected set of vertices is assigned two integers: one representing
+its number of ordinary edges, <span class="math notranslate nohighlight">\(s\)</span>, and the second representing the number of distinct triangles, <span class="math notranslate nohighlight">\(t\)</span>, it belongs to. Two lists are
+now created and each vertex is entered once for each of its ordinary edges to the first list, and once for each of its
+triangles to the second. Once all vertices have been added to the lists they are sboth huffled. In a similar
+manner to the CM algorithm, pairs of vertices are drawn from the ordinary edge list and connected together until it is empty; whilst triples
+of vertices are drawn from the triangles list and connected together in a triangle until it too is empty. Upon completion
+we now have a random network that contains ordinary edges and triangles.</p>
+<p>The choice of motif can certainly be extended beyond ordinary edges and triangles. Indeed, any graph motif can be used.
+This allows a great freedom in the kinds of networks that we can create and the types of natural phenomena we can model!</p>
+</section>
+<section id="what-is-gcmpy">
+<h2>What is <code class="docutils literal notranslate"><span class="pre">gcmpy</span></code>?<a class="headerlink" href="#what-is-gcmpy" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">gcmpy</span></code> is a pure Python simulation framework that facilitates the synthesis of GCM networks from a variety of
+input formats. It aims to provide the common simulation approaches used in
+the scientific literature, together with a small set of “common
+networks” that can form the basis for experimentation.</p>
+</section>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Compatible with Python 3.8 and later</p></li>
+<li><p>Fully compatible with <code class="docutils literal notranslate"><span class="pre">jupyter</span></code> notebooks and labs</p></li>
+<li><p>Annotated with <code class="docutils literal notranslate"><span class="pre">typing</span></code> type annotations</p></li>
+<li><p>Supports a variety of analytical and empircal entry points for network construction</p></li>
+<li><p>Allows empirical networks to be covered and synthetic data to be generated</p></li>
+<li><p>Supports serialisation for database storage and tags for retrieval</p></li>
+</ul>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/getting_started.html">Getting started</a></li>
-</ul>
-</li>
-</ul>
 </div>
 </section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
 </section>
 
 
