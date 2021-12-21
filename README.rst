@@ -1,15 +1,14 @@
+gcmpy: Generalised Configuration Model random graphs in Python
+===================================================================
+
 .. image:: https://badge.fury.io/py/gcmpy.svg
     :target: https://badge.fury.io/py/gcmpy
 
 .. image:: https://readthedocs.org/projects/peterstandrews-gcmpy/badge/?version=latest
-:target: https://peterstandrews-gcmpy.readthedocs.io/en/latest/?badge=latest
-:alt: Documentation Status
+    :target: https://peterstandrews-gcmpy.readthedocs.io/en/latest/?badge=latest
       
 .. image:: https://github.com/https://github.com/PeterStAndrews/gcmpy/workflows/ci.yml/badge.svg
      :target: https://github.com/PeterStAndrews/gcmpy/workflows/ci.yml
-
-gcmpy: Generalised Configuration Model random graphs in Python
-===================================================================
 
 Overview
 --------
