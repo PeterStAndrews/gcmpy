@@ -23,7 +23,7 @@ from typing import List
 
 import networkx as nx
 
-from .types import _EDGES, _EDGE
+from .types import _EDGES, _EDGE, _JDS
 
 class edge_list(object):
     '''Network represented as an edge list. The GCM class uses this 
@@ -69,6 +69,7 @@ class output_data(object):
         self._experiment : int = i                # experiment index
         self._name : str = ''                     # tags for network
         self._network  : edge_list = None         # network
+        self._jds : _JDS = None                   # joint degree sequence from which it was created
     
 class results(object):
     '''A collection of output_data objects that can

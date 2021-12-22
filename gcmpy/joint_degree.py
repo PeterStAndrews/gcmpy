@@ -31,11 +31,11 @@ class JDD_Interface(object):
     '''Joint degree distribution interface. Subclasses will define how self._jdd
     is created, and all implementations should do so upon construction.
     
-    :param modulo: list of integers for number of nodes in each motif'''
+    :param motif_sizes: list of integers for number of nodes in each motif'''
 
-    def __init__( self, modulo ):
+    def __init__( self, motif_sizes ):
         self._jdd : _JDD = {}
-        self._modulo : List[int] = modulo
+        self._motif_sizes : List[int] = motif_sizes
 
     def _sample_JDS( self, N : int )->_JDS:
         '''Samples N joint motif sequence from self._jdd object. Intended to 
@@ -50,7 +50,7 @@ class JDD_Interface(object):
         return keys[choice_list_indices] 
 
     def sample_JDS( self, N : int )->_JDS:  
-        '''Method to ensure the sum of the motifs in each dimension mod modulo[i] (which is the 
+        '''Method to ensure the sum of the motifs in each dimension mod motif_sizes[i] (which is the 
         number of vertices in each motif) is zero by adding motifs to the motif list. 
         This ensures the JDS is graphic.
         
@@ -63,9 +63,9 @@ class JDD_Interface(object):
         # ensure that the sum of the numbers is divisible by the motif size
         ntops = list(map(sum, zip(*jds)))
         for i, ntop in enumerate(ntops):
-            if ntop % self._modulo[i] != 0:
+            if ntop % self._motif_sizes[i] != 0:
                 # if not, round up to add one more motif to the network
-                for j in range(self._modulo[i] - ntop % self._modulo[i]):
+                for j in range(self._motif_sizes[i] - ntop % self._motif_sizes[i]):
                     j = random.randrange(0,len(jds))
                     t = list(jds[j])
                     t[i] += 1
@@ -89,8 +89,8 @@ class JDD_manual(JDD_Interface):
     '''Specify self._jdd by hand.
     :param jdd: joint degree distribution''' 
     
-    def __init__(self, jdd : _JDD, modulo : List[int])->None:
-        super().__init__(modulo)
+    def __init__(self, jdd : _JDD, motif_sizes : List[int])->None:
+        super().__init__(motif_sizes)
         self._jdd = jdd
         
 
@@ -98,8 +98,8 @@ class JDD_empirical_data(JDD_Interface):
     '''An empirical joint degree sequence is used to create self._jdd.
     :param jds: joint degree sequence'''
 
-    def __init__(self, jds : _JDS, modulo : List[int])->None:
-        super().__init__(modulo)
+    def __init__(self, jds : _JDS, motif_sizes : List[int])->None:
+        super().__init__(motif_sizes)
         self.convert_jds_to_jdd(jds)
         
 class JDD_joint_function(JDD_Interface):
@@ -107,17 +107,17 @@ class JDD_joint_function(JDD_Interface):
     Note, callable self._fp must accept a joint degree tuple and return a float.
     
     :param fp: callback
-    :param modulo: list of ints for number of vertices in each motif
+    :param motif_sizes: list of ints for number of vertices in each motif
     :param hi_lo_degree_bounds: list of tuples (int,int) for kmin,kmax per topology
     :param use_sampling: bool to use sampling or direct approach
     :param n_samples: number of samples if not direct'''
     def __init__(self, fp : Callable,
-                       modulo : List[int],
+                       motif_sizes : List[int],
                        hi_lo_degree_bounds : Tuple[int,int],
                        use_sampling : bool = False,
                        n_samples : int = 1e5
                        ):
-        super().__init__(modulo)
+        super().__init__(motif_sizes)
         self._fp = fp
         self._hi_lo_degree_bounds = hi_lo_degree_bounds  
         
@@ -148,17 +148,17 @@ class JDD_marginals(JDD_Interface):
     by setting use_sampling which draws n_samples weighted samples from each marginal function.
     
     :param arr_fp: array of callbacks
-    :param modulo: list of ints for number of vertices in each motif
+    :param motif_sizes: list of ints for number of vertices in each motif
     :param hi_lo_degree_bounds: list of tuples (int,int) for kmin,kmax per topology
     :param use_sampling: bool to use sampling or direct approach
     :param n_samples: number of samples if not direct'''
     def __init__(self, arr_fp : List[Callable],
-                       modulo : List[int],
+                       motif_sizes : List[int],
                        hi_lo_degree_bounds : List[Tuple[int,int]],
                        use_sampling : bool = False,
                        n_samples : int = 1e5
                        ):
-        super().__init__(modulo)
+        super().__init__(motif_sizes)
         self._arr_fp = arr_fp
         self._hi_lo_degree_bounds = hi_lo_degree_bounds
 
@@ -211,19 +211,18 @@ class JDD_marginals(JDD_Interface):
     def _create_jdd_by_sampling(self)->None:
         '''Draws jds samples from analytical marginal functions and converts to 
         a joint degree distribution. '''
-        
         self.convert_jds_to_jdd(self._draw_from_analytical_joint())
 
 class JDD_split_K_model(JDD_Interface):
     '''An overall degree distribution is split with probabilities of creating each motif.'''
 
     def __init__(self, fp : Callable, 
-                       modulo : List[int],
+                       motif_sizes : List[int],
                        probs : List[float],
                        kmin : int, 
                        kmax : int)->None:
         
-        super().__init__(modulo)
+        super().__init__(motif_sizes)
         self._fp = fp
         self._probs = probs
         self._kmin = kmin
@@ -291,19 +290,19 @@ class JDD_delta_model(JDD_split_K_model):
     a distribution of degrees in a single dimension (2-cliques) with zeros for all other motif
     type counts, apart from when k=target. '''
     def __init__(self, fp : Callable, 
-                       modulo : List[int],
+                       motif_sizes : List[int],
                        probs : List[float],
                        target_k : int, 
                        kmin : int, 
                        kmax : int)->None:
 
         self._target_k = target_k
-        super().__init__(fp, modulo, probs, kmin, kmax)
+        super().__init__(fp, motif_sizes, probs, kmin, kmax)
         
     def create_jdd(self)->None:
         '''Creates self._jdd using the degree delta model. '''
         for k in range(self._kmin,self._kmax):
-            zeros = [0]*len(self._modulo)
+            zeros = [0]*len(self._motif_sizes)
             if k != self._target_k:
                 zeros[0] = k
                 self._jdd[str(tuple(zeros))] = self._fp(k)
@@ -314,7 +313,7 @@ class JDD_delta_model(JDD_split_K_model):
 
 class JDD_clique_cover(JDD_Interface):
     '''Creates self._jdd from a list of cliques in the network. The sizes of the 
-    cliques can be obtained from the self._modulo member.'''
+    cliques can be obtained from the self._motif_sizes member.'''
 
     def __init__(self, C : _COVER):
         ''':param C: clique cover'''
