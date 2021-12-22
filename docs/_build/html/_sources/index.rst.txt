@@ -91,3 +91,5 @@ Features
    :caption: Contents:
 
    tutorial
+   reference
+   bibligraphy

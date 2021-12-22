@@ -2,7 +2,7 @@
 
 .. currentmodule :: gcmpy
 
-Creating random networks using the split degree model in ``gcmpy``
+Creating random networks using the split degree model
 =====================================================================
 
 In this section, we examine how to use ``gcmpy`` to create random graphs using the 
