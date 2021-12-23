@@ -31,10 +31,10 @@ def poisson(kmean : float)->Callable:
 
 def exponential(a : float)->Callable:
     '''Implemnts an exponential distribution.
-    :param a: distribution parameter
+    :param a: distribution parameter, a>0.
     :returns p: callable'''
     def p(k : int)->float:
-        return (1-a)*pow(a,k)
+        return (1-np.exp(-a))*np.exp(-a*k)
     return p
 
 def power_law(alpha : float)->Callable:
