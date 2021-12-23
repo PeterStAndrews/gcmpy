@@ -1,0 +1,49 @@
+         2302291 function calls (2202291 primitive calls) in 2.182 seconds
+
+   Random listing order was used
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+   125156    0.014    0.000    0.014    0.000 {method 'extend' of 'list' objects}
+   250311    0.025    0.000    0.025    0.000 {method 'bit_length' of 'int' objects}
+        2    0.000    0.000    0.000    0.000 {method 'get' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 {method 'keys' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 {method 'items' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 {method 'values' of 'dict' objects}
+   100000    0.020    0.000    0.020    0.000 {method 'lstrip' of 'str' objects}
+   100000    0.595    0.000    0.595    0.000 {built-in method builtins.compile}
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.getattr}
+   600000    0.084    0.000    0.084    0.000 {built-in method builtins.isinstance}
+        3    0.000    0.000    0.000    0.000 {built-in method builtins.issubclass}
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+        1    0.000    0.000    0.000    0.000 {built-in method from_iterable}
+   100000    0.068    0.000    0.683    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/ast.py:33(parse)
+200000/100000    0.188    0.000    0.227    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/ast.py:82(_convert)
+   100000    0.299    0.000    1.254    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/ast.py:54(literal_eval)
+        1    0.030    0.030    2.182    2.182 /Users/PeterMann/Dropbox/gcmpy/test/test_gcm_algorithm.py:26(_profle_gcm)
+        1    0.001    0.001    0.006    0.006 /Users/PeterMann/Dropbox/gcmpy/gcmpy/joint_degree.py:40(_sample_JDS)
+        1    0.161    0.161    1.422    1.422 /Users/PeterMann/Dropbox/gcmpy/gcmpy/joint_degree.py:52(sample_JDS)
+        1    0.023    0.023    0.023    0.023 /Users/PeterMann/Dropbox/gcmpy/gcmpy/gcm_algorithm.py:51(<listcomp>)
+        1    0.161    0.161    0.729    0.729 /Users/PeterMann/Dropbox/gcmpy/gcmpy/gcm_algorithm.py:44(random_clustered_graph)
+   125156    0.088    0.000    0.088    0.000 /Users/PeterMann/Dropbox/gcmpy/gcmpy/motif_generators.py:38(clique_motif)
+        1    0.000    0.000    1.422    1.422 /Users/PeterMann/Dropbox/gcmpy/gcmpy/gcm_algorithm.py:107(_sample_a_jds)
+   250311    0.185    0.000    0.254    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/random.py:239(_randbelow_with_getrandbits)
+        1    0.191    0.191    0.444    0.444 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/random.py:380(shuffle)
+        1    0.002    0.002    2.152    2.152 /Users/PeterMann/Dropbox/gcmpy/gcmpy/gcm_algorithm.py:111(create_gcm_networks)
+   351319    0.044    0.000    0.044    0.000 {method 'getrandbits' of '_random.Random' objects}
+        2    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/numpy/core/numerictypes.py:284(issubclass_)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/numpy/core/numerictypes.py:358(issubdtype)
+        2    0.000    0.000    0.000    0.000 {built-in method numpy.array}
+        1    0.000    0.000    0.000    0.000 {built-in method numpy.core._multiarray_umath.implement_array_function}
+        1    0.000    0.000    0.000    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/numpy/core/fromnumeric.py:70(<dictcomp>)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/numpy/core/fromnumeric.py:69(_wrapreduction)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/numpy/core/fromnumeric.py:2928(_prod_dispatcher)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/numpy/core/fromnumeric.py:2933(prod)
+        1    0.000    0.000    0.000    0.000 <__array_function__ internals>:2(prod)
+        2    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/numpy/core/getlimits.py:382(__new__)
+        1    0.005    0.005    0.005    0.005 {method 'choice' of 'numpy.random.mtrand.RandomState' objects}
+        1    0.000    0.000    0.000    0.000 /Users/PeterMann/Dropbox/gcmpy/gcmpy/utils.py:68(__init__)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+

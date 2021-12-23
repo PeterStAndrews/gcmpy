@@ -51,7 +51,7 @@ class GCM_algorithm_Test(unittest.TestCase):
         motif_sizes = [2]                            # 2-cliques
         powerlaw_exponent = 2.5                      # powerlaw_exponent
         fp_array = [power_law(powerlaw_exponent)]    # array of marginals
-        kmax = 150000                                # largest degree
+        kmax = 1500                                  # largest degree
         kmin = 1                                     # smallest degree
 
         # create joint degree distribution object
@@ -94,10 +94,10 @@ class GCM_Network_Generator_Test(unittest.TestCase):
         jdd = {'(1,)' : 0.2, '(2,)' : 0.5, '(3,)' : 0.1, '(5,)' : 0.2}
         DegreeDistObj = JDD_manual(jdd, motif_sizes)
 
-        num_networks = 100                  # number of networks to create
+        num_networks = 10                   # number of networks to create
         n_vertices : int = NETWORK_SIZE     # number of vertices in the networks
         build_functions = [clique_motif]    # motif build functions
-        resample_jds_every : int = 1000       # resample a new JDS every n steps
+        resample_jds_every : int = 1000     # resample a new JDS every n steps
 
         # create GCM object with parameters
         gcm = GCM_Network_Generator(num_networks,

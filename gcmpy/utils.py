@@ -61,7 +61,7 @@ class edge_list(object):
         '''True if graph has edges remaining'''
         return len(self._edge_list) > 0
 
-class output_data(object):
+class network(object):
     '''An object to store output data from the process.
     :param i: integer for experiment index'''
 
@@ -71,29 +71,3 @@ class output_data(object):
         self._network  : edge_list = None         # network
         self._jds : _JDS = None                   # joint degree sequence from which it was created
     
-class results(object):
-    '''A collection of output_data objects that can
-    be serialised and converted to other graph formats.'''
-
-    def __init__(self):
-        self.res : List[output_data] = []
-
-    def add_result(self, r : output_data)->None:
-        self.res.append(r)
-
-    def serialise_results_to_file(self, filename : str)->None:
-        '''Dump the results structure to a binary file.
-        :param filename: name of file to create.'''
-        
-        binary_file = open(filename, mode='wb')
-        pickle.dump(self.res, binary_file)
-        binary_file.close()
-
-    def read_results_from_binary_file(self, filename : str)->None:
-        '''read the results structure from a binary file.
-        :param filename: name of the file to read.'''
-
-        f : io.BufferedReader = open(filename,mode='rb')
-        bin_data : bytes = f.read()
-        sio : io.StringIO = io.StringIO(bin_data)
-        self.res : List[output_data] = pickle.load(sio)

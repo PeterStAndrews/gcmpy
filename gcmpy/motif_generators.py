@@ -28,7 +28,7 @@ def cycle_motif(nodes: _NODES) -> List[_EDGE]:
     
     :param nodes: list of nodes (int)
     :returns: edge list as list of tuples (int, int)'''
-    nodes.sort()
+    #nodes.sort()
     a, b = tee(nodes)
     _ = next(b, None)
     edges = list(zip(a,b))
@@ -40,7 +40,7 @@ def clique_motif(nodes: _NODES) -> List[_EDGE]:
     
     :param nodes: list of nodes (int)
     :returns: edge list as list of tuples (int, int)'''
-    nodes.sort()
+    #nodes.sort()
     return list(combinations(nodes,2))
 
 def diamond_motif(nodes: _NODES) -> List[_EDGE]:
@@ -51,7 +51,7 @@ def diamond_motif(nodes: _NODES) -> List[_EDGE]:
     if len(nodes) < 4:
         raise("Error during motif construction - diamond_motif")
 
-    nodes.sort()
+    #nodes.sort()
     n0, n1, n2, n3 = nodes
 
     edges = cycle_motif(nodes)

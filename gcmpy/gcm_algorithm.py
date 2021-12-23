@@ -20,10 +20,10 @@
 import random
 from typing import List, Callable
 from iteration_utilities import grouper
-
+from itertools import chain,repeat,starmap
 from gcmpy.joint_degree import JDD_Interface
 from .types import _EDGES, _NODES, _JDS
-from .utils import edge_list, output_data, results
+from .utils import edge_list, network
 
 class GCM_algorithm(object):
     """Generalised configuration model algorithm.
@@ -48,48 +48,22 @@ class GCM_algorithm(object):
         :param jds: joint degree sequence 
         :returns: a list of edges in the graph as an edge_list object''' 
 
-        # as default construct cliques
-        if self._build_functions is None:
-            raise ValueError('GCM_algorithm._build_functions is None')
-
-        # create an empty graph
-        N = len(jds)
+        stubs = [list(chain.from_iterable(starmap(repeat,r))) 
+           for r in map(enumerate,zip(*jds))  ]
     
-        # initialise a list of lists for distinct motif topology 
-        stubs = list([] for _ in range(len(jds[0])))
-    
-        # for each node n
-        #for n in range(N):
-        #    joint_degree = jds[n]
-            # for each topology ... 
-        #    for k, k_list in enumerate(stubs):
-                # append node n to the list once per unique motif of a given topology 
-        #        for _ in range(joint_degree[k]):
-        #            k_list.append(n)
-                
-        stubs = []
-        for _, topology in enumerate(zip(*jds)):
-            stubs.append([j for j,count in enumerate(topology) for _ in range(count)])
-
         # shuffle each stub list
         for k_list in stubs:
             random.shuffle(k_list)
-        
-        # create edge list object
-        es = edge_list()
 
-        # for each topology list ...
+        # create edge list object
+        es = []
+
+        #for each topology list ...
         for k, k_list in enumerate(stubs):
-            #motif_size = self._motif_sizes[k]
-            # while there are still nodes ... 
-            #while k_list:
-            #    nodes = []
-            #    # grab required number of nodes to build the motif
-            #    for _ in range(motif_size):
-            #       nodes.append(k_list.pop())
+            # iterate the degree list
             for nodes in grouper(k_list,self._motif_sizes[k]):
                 # add the edges to the network using the builder callback
-                es.add_edges_from(self._build_functions[k](list(nodes)))    
+                es.extend(self._build_functions[k](list(nodes)))       
             
         # return the graph
         return es
@@ -134,18 +108,18 @@ class GCM_Network_Generator(GCM_algorithm):
         '''Use the interface to sample the joint degree distribution.'''
         return self._jdd_generator.sample_JDS(self._n_vertices)
 
-    def create_gcm_networks(self)->results:
+    def create_gcm_networks(self)->List[network] :
         '''Routine to create multiple configuration model networks from a JDS.
         :returns results: data of constructed networks'''
-        res : results = []
+        res : List[network] = []
         for i in range(self._num_networks):
 
             if i % self._resample_JDS_every == 0:
                 jds = self._sample_a_jds()
 
-            res_ = output_data(i)
+            res_ = network(i)
             res_._name = self._network_name
-            res_._network = self.random_clustered_graph(jds)
+            res_._edge_list = self.random_clustered_graph(jds)
             res_._jds = jds
             res.append(res_)
         return res
