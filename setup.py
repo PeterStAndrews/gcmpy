@@ -24,7 +24,7 @@ with open('README.rst') as f:
     longDescription = f.read()
 
 setup(name = 'gcmpy',
-      version = '0.0.1',
+      version = '0.0.2',
       description = 'Generalised Configuration Model random Graphs in Python',
       long_description = longDescription,
       url = 'https://github.com/PeterStAndrews/gcmpy',
