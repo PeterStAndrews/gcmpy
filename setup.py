@@ -20,11 +20,14 @@
 
 from setuptools import setup
 
+with open('gcmpy/version.py') as f:
+    exec(f.read())
+
 with open('README.rst') as f:
     longDescription = f.read()
 
 setup(name = 'gcmpy',
-      version = '0.0.2',
+      version=__version__,
       description = 'Generalised Configuration Model random Graphs in Python',
       long_description = longDescription,
       url = 'https://github.com/PeterStAndrews/gcmpy',

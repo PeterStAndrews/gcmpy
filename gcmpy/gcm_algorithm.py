@@ -119,7 +119,7 @@ class GCM_Network_Generator(GCM_algorithm):
 
             res_ = network(i)
             res_._name = self._network_name
-            res_._edge_list = self.random_clustered_graph(jds)
+            res_._network = self.random_clustered_graph(jds)
             res_._jds = jds
             res.append(res_)
         return res
