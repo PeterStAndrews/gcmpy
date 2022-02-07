@@ -46,7 +46,7 @@ class JDD_Interface(object):
         
         keys = np.array(list(self._jdd.keys()))
         values = np.array(list(self._jdd.values()))
-        choice_list_indices = np.random.choice(len(keys), N, replace=True, p=values)
+        choice_list_indices = np.random.choice(len(keys), N, replace=True, p=values.astype(np.float64))
         return keys[choice_list_indices] 
 
     def sample_JDS( self, N : int )->_JDS:  

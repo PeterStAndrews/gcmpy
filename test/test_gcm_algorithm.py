@@ -136,4 +136,43 @@ class GCM_Network_Generator_Test(unittest.TestCase):
         # create the networks and profile the code.
         _profle_gcm(gcm)
        
+
+    def test_generator(self):
+
+
+
+        # parameters for network creation (gcmpy)
+        motif_sizes = [2]                            # 2-cliques
+
+        NETWORK_SIZE = 6000
+        build_functions = [clique_motif]
+
+        n_repeats = 2
+        motif_sizes = [2]
+        jdd = {'(1,)' : 0.2, '(2,)' : 0.5, '(3,)' : 0.1, '(5,)' : 0.2}
+        DegreeDistObj = JDD_manual(jdd, motif_sizes)
+
+        n_sample_mod = 1
+        NetGenerator = GCM_Network_Generator(n_repeats, 
+                                                   motif_sizes, 
+                                                   build_functions, 
+                                                   NETWORK_SIZE, 
+                                                   n_sample_mod)
+        
+        # insert joint degree distribution object
+        NetGenerator.insert_jdd_generator(DegreeDistObj)
+        
+        # create list of networks (as edge-lists)
+        Gs = NetGenerator.create_gcm_networks()
+        
+        for r in range(n_repeats):
+            
+            
+            # create graph 
+            es = Gs[r]._network
+
+            print('      ', es)
+            
+    
+
     
