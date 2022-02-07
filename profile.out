@@ -1,36 +1,41 @@
-         2300074 function calls (2200074 primitive calls) in 2.010 seconds
+         4394845 function calls (4294845 primitive calls) in 3.909 seconds
 
    Random listing order was used
 
    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
         1    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
-   124845    0.013    0.000    0.013    0.000 {method 'extend' of 'list' objects}
-   249689    0.024    0.000    0.024    0.000 {method 'bit_length' of 'int' objects}
-        2    0.000    0.000    0.000    0.000 {method 'get' of 'dict' objects}
+   249388    0.023    0.000    0.023    0.000 {method 'bit_length' of 'int' objects}
+   124696    0.026    0.000    0.026    0.000 {method 'get' of 'dict' objects}
         1    0.000    0.000    0.000    0.000 {method 'keys' of 'dict' objects}
-        1    0.000    0.000    0.000    0.000 {method 'items' of 'dict' objects}
+        2    0.000    0.000    0.000    0.000 {method 'items' of 'dict' objects}
         1    0.000    0.000    0.000    0.000 {method 'values' of 'dict' objects}
-   100000    0.019    0.000    0.019    0.000 {method 'lstrip' of 'str' objects}
-   100000    0.556    0.000    0.556    0.000 {built-in method builtins.compile}
+   349389    0.051    0.000    0.051    0.000 {method 'update' of 'dict' objects}
+   100000    0.017    0.000    0.017    0.000 {method 'lstrip' of 'str' objects}
+   100000    0.551    0.000    0.551    0.000 {built-in method builtins.compile}
         1    0.000    0.000    0.000    0.000 {built-in method builtins.getattr}
-   600000    0.075    0.000    0.075    0.000 {built-in method builtins.isinstance}
+   949388    0.130    0.000    0.130    0.000 {built-in method builtins.isinstance}
         3    0.000    0.000    0.000    0.000 {built-in method builtins.issubclass}
-        2    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.iter}
+   224698    0.023    0.000    0.023    0.000 {built-in method builtins.len}
+        3    0.000    0.000    0.000    0.000 {built-in method _operator.index}
         1    0.000    0.000    0.000    0.000 {built-in method from_iterable}
-   100000    0.066    0.000    0.637    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/ast.py:33(parse)
-200000/100000    0.172    0.000    0.209    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/ast.py:82(_convert)
-   100000    0.283    0.000    1.171    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/ast.py:54(literal_eval)
-        1    0.018    0.018    2.010    2.010 /Users/PeterMann/Dropbox/gcmpy/test/test_gcm_algorithm.py:26(_profle_gcm)
-        1    0.001    0.001    0.005    0.005 /Users/PeterMann/Dropbox/gcmpy/gcmpy/joint_degree.py:40(_sample_JDS)
-        1    0.151    0.151    1.328    1.328 /Users/PeterMann/Dropbox/gcmpy/gcmpy/joint_degree.py:52(sample_JDS)
-        1    0.020    0.020    0.020    0.020 /Users/PeterMann/Dropbox/gcmpy/gcmpy/gcm_algorithm.py:51(<listcomp>)
-        1    0.154    0.154    0.662    0.662 /Users/PeterMann/Dropbox/gcmpy/gcmpy/gcm_algorithm.py:44(random_clustered_graph)
-   124845    0.078    0.000    0.078    0.000 /Users/PeterMann/Dropbox/gcmpy/gcmpy/motif_generators.py:38(clique_motif)
-        1    0.000    0.000    1.328    1.328 /Users/PeterMann/Dropbox/gcmpy/gcmpy/gcm_algorithm.py:107(_sample_a_jds)
-   249689    0.170    0.000    0.234    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/random.py:239(_randbelow_with_getrandbits)
-        1    0.163    0.163    0.397    0.397 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/random.py:380(shuffle)
-        1    0.002    0.002    1.992    1.992 /Users/PeterMann/Dropbox/gcmpy/gcmpy/gcm_algorithm.py:111(create_gcm_networks)
-   350967    0.040    0.000    0.040    0.000 {method 'getrandbits' of '_random.Random' objects}
+   100000    0.068    0.000    0.637    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/ast.py:33(parse)
+200000/100000    0.179    0.000    0.218    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/ast.py:82(_convert)
+   100000    0.282    0.000    1.177    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/ast.py:54(literal_eval)
+        1    0.070    0.070    3.909    3.909 /Users/PeterMann/Dropbox/gcmpy/test/test_gcm_algorithm.py:26(_profle_gcm)
+        1    0.002    0.002    0.007    0.007 /Users/PeterMann/Dropbox/gcmpy/gcmpy/joint_degree.py:40(_sample_JDS)
+        1    0.160    0.160    1.343    1.343 /Users/PeterMann/Dropbox/gcmpy/gcmpy/joint_degree.py:52(sample_JDS)
+        1    0.022    0.022    0.022    0.022 /Users/PeterMann/Dropbox/gcmpy/gcmpy/gcm_algorithm.py:58(<listcomp>)
+        1    0.004    0.004    0.004    0.004 /Users/PeterMann/Dropbox/gcmpy/gcmpy/gcm_algorithm.py:68(<listcomp>)
+        1    0.084    0.084    0.092    0.092 /Users/PeterMann/Dropbox/gcmpy/gcmpy/gcm_algorithm.py:71(<dictcomp>)
+        1    0.452    0.452    2.491    2.491 /Users/PeterMann/Dropbox/gcmpy/gcmpy/gcm_algorithm.py:51(random_clustered_graph)
+   124694    0.329    0.000    0.329    0.000 /Users/PeterMann/Dropbox/gcmpy/gcmpy/motif_generators.py:38(clique_motif)
+   249388    0.170    0.000    0.235    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/random.py:239(_randbelow_with_getrandbits)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/random.py:292(randrange)
+        1    0.163    0.163    0.398    0.398 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/random.py:380(shuffle)
+        1    0.000    0.000    1.343    1.343 /Users/PeterMann/Dropbox/gcmpy/gcmpy/gcm_algorithm.py:131(_sample_a_jds)
+        1    0.005    0.005    3.839    3.839 /Users/PeterMann/Dropbox/gcmpy/gcmpy/gcm_algorithm.py:135(create_gcm_networks)
+   350296    0.041    0.000    0.041    0.000 {method 'getrandbits' of '_random.Random' objects}
         2    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/numpy/core/numerictypes.py:284(issubclass_)
         1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/numpy/core/numerictypes.py:358(issubdtype)
         1    0.000    0.000    0.000    0.000 {method 'astype' of 'numpy.ndarray' objects}
@@ -43,8 +48,17 @@
         1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/numpy/core/fromnumeric.py:2933(prod)
         1    0.000    0.000    0.000    0.000 <__array_function__ internals>:2(prod)
         2    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/numpy/core/getlimits.py:382(__new__)
-        1    0.004    0.004    0.004    0.004 {method 'choice' of 'numpy.random.mtrand.RandomState' objects}
-        1    0.000    0.000    0.000    0.000 /Users/PeterMann/Dropbox/gcmpy/gcmpy/utils.py:68(__init__)
+        1    0.005    0.005    0.005    0.005 {method 'choice' of 'numpy.random.mtrand.RandomState' objects}
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/networkx/classes/graph.py:289(__init__)
+        1    0.145    0.145    0.159    0.159 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/networkx/classes/graph.py:526(add_nodes_from)
+   349389    0.205    0.000    0.271    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/networkx/classes/graph.py:661(nodes)
+   124694    0.415    0.000    0.493    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/networkx/classes/graph.py:895(add_edges_from)
+   349389    0.066    0.000    0.066    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/networkx/classes/reportviews.py:177(__init__)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/networkx/classes/reportviews.py:184(__iter__)
+   349388    0.142    0.000    0.192    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/networkx/classes/reportviews.py:187(__getitem__)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/networkx/classes/reportviews.py:204(__call__)
+        1    0.078    0.078    0.202    0.202 /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/networkx/classes/function.py:590(set_node_attributes)
+        1    0.000    0.000    0.000    0.000 /Users/PeterMann/Dropbox/gcmpy/gcmpy/utils.py:28(__init__)
         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
 
 

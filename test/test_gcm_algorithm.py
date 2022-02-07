@@ -46,6 +46,28 @@ class GCM_algorithm_Test(unittest.TestCase):
         build_functions = [clique_motif]
         g = GCM_algorithm(motif_sizes, build_functions).random_clustered_graph(jds)
         
+    def test_node_edge_attributes(self):
+        
+        # valid input data for manual entry
+        motif_sizes = [2]
+        jdd = {'(1,)' : 0.2, '(2,)' : 0.5, '(3,)' : 0.1, '(5,)' : 0.2}
+
+        edge_topology_names = ['2-clique']
+
+        # create degree distribution
+        DegreeDistObj = JDD_manual(jdd, motif_sizes)
+
+        # draw a sample
+        n_vertices : int = NETWORK_SIZE
+        jds = DegreeDistObj.sample_JDS(n_vertices)
+
+        # create graph 
+        build_functions = [clique_motif]
+        model = GCM_algorithm(motif_sizes,
+                              build_functions,
+                              edge_topology_names).random_clustered_graph(jds)
+
+
     def test_marginal_JDD_single_topology(self):
 
         motif_sizes = [2]                            # 2-cliques
@@ -139,8 +161,6 @@ class GCM_Network_Generator_Test(unittest.TestCase):
 
     def test_generator(self):
 
-
-
         # parameters for network creation (gcmpy)
         motif_sizes = [2]                            # 2-cliques
 
@@ -162,17 +182,6 @@ class GCM_Network_Generator_Test(unittest.TestCase):
         # insert joint degree distribution object
         NetGenerator.insert_jdd_generator(DegreeDistObj)
         
-        # create list of networks (as edge-lists)
+        # create list of networks
         Gs = NetGenerator.create_gcm_networks()
         
-        for r in range(n_repeats):
-            
-            
-            # create graph 
-            es = Gs[r]._network
-
-            print('      ', es)
-            
-    
-
-    

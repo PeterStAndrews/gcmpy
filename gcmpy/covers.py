@@ -23,7 +23,7 @@ from itertools import combinations
 from typing import List
 from random import choice
 
-from gcmpy import edge_list
+from gcmpy import network
 from .types import _COVER
 
 def binom(n : int, r : int)->int:
@@ -39,7 +39,7 @@ def binom(n : int, r : int)->int:
         n -= 1
     return p
 
-class EECC(edge_list):
+class EECC(network):
     '''Creates an EECC clique cover based on the algorithm developed in (1,2) for a graph
     in an edge_list format.
     
@@ -240,7 +240,7 @@ class EECC(edge_list):
         return sorted(EC, key=lambda x: (-len(x), x[0], x[1]))
 
 
-class MPCC(edge_list):
+class MPCC(network):
     '''Creates an MPCC clique cover. '''
 
     def __init__(self):

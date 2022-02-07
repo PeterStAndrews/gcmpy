@@ -18,12 +18,16 @@
 # along with gcmpy. If not, see <http://www.gnu.org/licenses/gpl.html>.
 
 import random
+import networkx as nx
 from typing import List, Callable
 from iteration_utilities import grouper
 from itertools import chain,repeat,starmap
-from gcmpy.joint_degree import JDD_Interface
+
+from networkx.generators.joint_degree_seq import joint_degree_graph
+
+from .joint_degree import JDD_Interface
+from .utils import network
 from .types import _EDGES, _NODES, _JDS
-from .utils import edge_list, network
 
 class GCM_algorithm(object):
     """Generalised configuration model algorithm.
@@ -33,40 +37,59 @@ class GCM_algorithm(object):
     :param build_functions: callbacks that accept list of nodes and return edges"""
     _num_networks    : int                                               # number of networks to create
     _motif_sizes     : List[int]                                         # list of number of nodes in each motif
-    _build_functions : List[Callable[[_NODES],_EDGES]]              # list of callbacks for motif construction 
+    _build_functions : List[Callable[[_NODES],_EDGES]]                   # list of callbacks for motif construction 
+    _edge_names      : List[str]                                         # list of edge topology names
     
     def __init__(self, motif_sizes     : List[int],
-                       build_functions : List[Callable[[_NODES],_EDGES]]):
+                       build_functions : List[Callable[[_NODES],_EDGES]],
+                       edge_names      : List[str] = None):
         
         self._motif_sizes     = motif_sizes
         self._build_functions = build_functions
+        self._edge_names      = edge_names
 
-    def random_clustered_graph(self, jds : _JDS)->edge_list:
+    def random_clustered_graph(self, jds : _JDS)->network:
         '''Generate a random graph from a given joint degree sequence of motifs. If motif constructors 
         are not specified, ValueError is raised.
         
         :param jds: joint degree sequence 
-        :returns: a list of edges in the graph as an edge_list object''' 
+        :returns: a list a networkx graph object''' 
 
-        stubs = [list(chain.from_iterable(starmap(repeat,r))) 
+        stubs = [list(chain.from_iterable(starmap(repeat,r)))
            for r in map(enumerate,zip(*jds))  ]
     
         # shuffle each stub list
         for k_list in stubs:
             random.shuffle(k_list)
 
-        # create edge list object
-        es = []
+        # create graph object
+        model = network()
+
+        model._G.add_nodes_from([i for i in range(len(jds))])
+
+        # give vertices joint degree attribute
+        joint_degree_dict = {n : [0]*len(self._motif_sizes) for n in model._G.nodes()}
+        nx.set_node_attributes(model._G, joint_degree_dict, 'joint_degree')
 
         #for each topology list ...
         for k, k_list in enumerate(stubs):
             # iterate the degree list
             for nodes in grouper(k_list,self._motif_sizes[k]):
                 # add the edges to the network using the builder callback
-                es.extend(self._build_functions[k](list(nodes)))       
+                es = self._build_functions[k](list(nodes))
+                model._G.add_edges_from(es)
+
+                # update the joint degrees of each vertex
+                for n in nodes:
+                    model._G.nodes[n]['joint_degree'][k] += 1
+
+                # give topology name to edges
+                if self._edge_names:
+                    for e in es:
+                        model._G.edges[e]['topology'] = self._edge_names[k]     
             
-        # return the graph
-        return es
+        # return the graph model
+        return model
 
 class GCM_Network_Generator(GCM_algorithm):
     '''Combines the logic of the JDD interface with the GCM algorithm.
@@ -91,13 +114,14 @@ class GCM_Network_Generator(GCM_algorithm):
                        build_functions : List[Callable[[_NODES],_EDGES]],
                        n_vertices      : int,
                        resample_JDS_every : int,
-                       network_name    : str = None):
+                       network_name    : str = None,
+                       edge_names      : List[str] = None):
+        
         self._num_networks = num_networks
-        self._allow_rewires = True          # indicate that the networks are rewired from a single JDS sample
         self._network_name = network_name 
         self._n_vertices = n_vertices
         self._resample_JDS_every = resample_JDS_every
-        super().__init__(motif_sizes, build_functions)
+        super().__init__(motif_sizes, build_functions, edge_names)
 
     def insert_jdd_generator(self, jdd_generator : JDD_Interface)->None:
         '''Insert the interface for the jdd object to be used to create a jdd.
@@ -117,9 +141,8 @@ class GCM_Network_Generator(GCM_algorithm):
             if i % self._resample_JDS_every == 0:
                 jds = self._sample_a_jds()
 
-            res_ = network(i)
-            res_._name = self._network_name
-            res_._network = self.random_clustered_graph(jds)
-            res_._jds = jds
-            res.append(res_)
+            model = self.random_clustered_graph(jds)
+            model._G.graph['name'] = self._network_name
+            res.append(model)
+
         return res
