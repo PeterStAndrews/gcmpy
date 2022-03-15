@@ -15,7 +15,7 @@ jobs:
           python-version: 3.8
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          python3 -m pip install --upgrade pip
+          pip3 install -r requirements.txt
       - name: Run tests with unittest
-        run: python -m unittest discover -p 'test/test_*.py'
+        run: python3 -m unittest discover -p 'test/test_*.py'
