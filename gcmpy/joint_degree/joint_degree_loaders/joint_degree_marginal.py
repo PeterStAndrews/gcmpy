@@ -20,7 +20,7 @@ class JointDegreeMarginal(JointDegree):
     :param use_sampling: bool to use sampling or direct approach
     :param n_samples: number of samples if not direct
     """
-    _type: str = JointDegreeType.MARGINAL
+    _type: str = JointDegreeType.MARGINAL 
     _arr_fp: list[callable] = []
     _low_high_degree_bounds: tuple = None
     _use_sampling: bool = False
