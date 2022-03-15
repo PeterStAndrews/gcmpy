@@ -1,0 +1,116 @@
+
+import unittest
+
+from gcmpy.joint_degree.joint_degree_loaders.joint_degree_marginal import JointDegreeMarginal
+from gcmpy.distributions.poisson import poisson
+from gcmpy.distributions.power_law import power_law
+from gcmpy.distributions.scale_free_cut_off import scale_free_cut_off
+
+NETWORK_SIZE: int = 100000
+
+class JDMarginalTest(unittest.TestCase):
+
+    def test_marginal_JDD_single_topology(self):
+
+        n_vertices: int = NETWORK_SIZE
+        mean_degree: float = 2.5                    # mean poisson degree
+        kmin: int = 0                               # smallest degree
+        kmax: int = 10                              # largest degree
+
+        params = {}
+        params["motif_sizes"] = [2]
+        params["arr_fp"] = [poisson(mean_degree)] 
+        params["low_high_degree_bounds"] = [(kmin,kmax)]
+
+        DegreeDistObj = JointDegreeMarginal(params)
+        jds = DegreeDistObj.sample_jds_from_jdd(n_vertices)
+
+        self.assertTrue(len(jds) == n_vertices)
+        for i in range(len(params["motif_sizes"])):
+            self.assertTrue(sum([jd[i] for jd in jds]) % params["motif_sizes"][i] == 0)
+
+    def test_marginal_JDD_two_topologies(self):
+
+        n_vertices: int = NETWORK_SIZE
+        mean_degree: float = 2.5                    # mean poisson degree
+        kmin: int = 0                               # smallest degree
+        kmax: int = 10                              # largest degree
+
+        params = {}
+        params["motif_sizes"] = [2,3]
+        params["arr_fp"] = [poisson(mean_degree),
+                            poisson(mean_degree)]
+
+        params["low_high_degree_bounds"] = [(kmin,kmax)] * len(params["motif_sizes"])
+
+        DegreeDistObj = JointDegreeMarginal(params)
+        jds = DegreeDistObj.sample_jds_from_jdd(n_vertices)
+
+        self.assertTrue(len(jds) == n_vertices)
+        for i in range(len(params["motif_sizes"])):
+            self.assertTrue(sum([jd[i] for jd in jds]) % params["motif_sizes"][i] == 0)
+
+    def test_marginal_JDD_two_topologies_sampling(self):
+
+        n_vertices: int = NETWORK_SIZE
+        mean_degree: float = 2.5                    # mean poisson degree
+        kmin: int = 0                               # smallest degree
+        kmax: int = 10                              # largest degree
+
+        params = {}
+        params["motif_sizes"] = [2,3]
+        params["arr_fp"] = [poisson(mean_degree),
+                            poisson(mean_degree)]
+
+        params["low_high_degree_bounds"] = [(kmin,kmax)] * len(params["motif_sizes"])
+        params["use_sampling"] = True
+        params["n_samples"] = 100000
+
+        DegreeDistObj = JointDegreeMarginal(params)
+        jds = DegreeDistObj.sample_jds_from_jdd(n_vertices)
+
+        self.assertTrue(len(jds) == n_vertices)
+        for i in range(len(params["motif_sizes"])):
+            self.assertTrue(sum([jd[i] for jd in jds]) % params["motif_sizes"][i] == 0)
+
+
+    def test_marginal_JDD_power_law(self):
+
+        n_vertices: int = NETWORK_SIZE
+        powerlaw_exponent = 2.5                     # powerlaw_exponent
+        kmin: int = 1                               # smallest degree
+        kmax: int = 10                              # largest degree
+
+        params = {}
+        params["motif_sizes"] = [2]
+        params["arr_fp"] = [power_law(powerlaw_exponent)] 
+        params["low_high_degree_bounds"] = [(kmin,kmax)]
+
+        DegreeDistObj = JointDegreeMarginal(params)
+        jds = DegreeDistObj.sample_jds_from_jdd(n_vertices)
+
+        self.assertTrue(len(jds) == n_vertices)
+        for i in range(len(params["motif_sizes"])):
+            self.assertTrue(sum([jd[i] for jd in jds]) % params["motif_sizes"][i] == 0)
+
+    def test_marginal_JDD_scale_free(self):
+
+        n_vertices: int = NETWORK_SIZE
+        powerlaw_exponent = 2.5                     # powerlaw_exponent
+        degree_cut_off = 25                         # degree cut off 
+        kmin: int = 1                               # smallest degree
+        kmax: int = 10                              # largest degree
+
+        params = {}
+        params["motif_sizes"] = [2]
+        params["low_high_degree_bounds"] = [(kmin,kmax)]
+        params["arr_fp"] = [scale_free_cut_off(
+            powerlaw_exponent, degree_cut_off
+        )] 
+        
+        DegreeDistObj = JointDegreeMarginal(params)
+        jds = DegreeDistObj.sample_jds_from_jdd(n_vertices)
+
+        self.assertTrue(len(jds) == n_vertices)
+        for i in range(len(params["motif_sizes"])):
+            self.assertTrue(sum([jd[i] for jd in jds]) % params["motif_sizes"][i] == 0)

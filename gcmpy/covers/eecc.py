@@ -1,37 +1,16 @@
-
-   
-# Clique covers for gcmpy
-#
-# Copyright (C) 2021 Peter Mann
-#
-# This file is part of gcmpy, generalised configuration model networks in Python.
-#
-# gcmpy is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 2 of the License, or
-# (at your option) any later version.
-#
-# gcmpy is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with gcmpy. If not, see <http://www.gnu.org/licenses/gpl.html>.
-
 from itertools import combinations
-from typing import List
 from random import choice
 
-from gcmpy import network
-from .types import _COVER
+from gcmpy.network.network import Network
 
-def binom(n : int, r : int)->int:
-    ''' Binomial coefficient, nCr, aka the "choose" function 
+def binom(n: int, r: int) -> int:
+    """
+    Binomial coefficient, nCr, aka the "choose" function 
             n! / (r! * (n - r)!)
     :param n: n choose
     :param r: r
-    :returns int: binomial coefficient.'''
+    :returns int: binomial coefficient.
+    """
     p = 1    
     for i in range(1, min(r, n - r) + 1):
         p *= n
@@ -39,8 +18,9 @@ def binom(n : int, r : int)->int:
         n -= 1
     return p
 
-class EECC(network):
-    '''Creates an EECC clique cover based on the algorithm developed in (1,2) for a graph
+class EECC(Network):
+    """
+    Creates an EECC clique cover based on the algorithm developed in (1,2) for a graph
     in an edge_list format.
     
     ----- References -----
@@ -50,20 +30,20 @@ class EECC(network):
        Comms. Phys. (2021) in press (arXiv:2101.03618)
 
     2) https://github.com/giubuig/DisjointCliqueCover.jl
-    '''
-
+    """
     def __init__(self):
         self._m0 : int = 2
         super().__init__()
 
-    def set_max_clique_size(self, m0 : int):
+    def set_max_clique_size(self, m0: int) -> None:
         self._m0 = m0
 
-    def limited_maximal_cliques(self)->_COVER:
-        '''Calculates the maximal cliques of a graph up to order m0. Any clique of order
+    def limited_maximal_cliques(self) -> list:
+        """
+        Calculates the maximal cliques of a graph up to order m0. Any clique of order
         m>m0 is decomposed into its sub-cliques of order m0.
-
-        :return list of maximal cliques up to size m0'''
+        :return list of maximal cliques up to size m0
+        """
         indxs = []
         C = self.find_cliques()
         for c in range(len(C)):
@@ -87,20 +67,20 @@ class EECC(network):
         return sorted(C, key=lambda x: (-len(x), x[0], x[1]) if len(x) > 1  else (-len(x), x[0], 0))
 
 
-    def compute_scores(self, C: _COVER,
-                             EC : _COVER,
-                             ord : List[int],
-                             r : List[float],
-                             indexes : List[int])->None:
-        '''Scores the cliques in list C in the network G and includes those of score zero in the 
+    def compute_scores(self, C: list,
+                             EC : list,
+                             ord : list,
+                             r : list,
+                             indexes : list) -> None:
+        """
+        Scores the cliques in list C in the network G and includes those of score zero in the 
         cover EC. The higher the score
-        
         :param C: set of maximal clique
         :param EC: EECC cover
         :param ord: List of cliques' order
         :param r: List of cliques' score
-        :param indexes: List of indexes'''
-
+        :param indexes: List of indexes
+        """
         num_cliques = len(C)
         for c in range(num_cliques):
             
@@ -135,20 +115,20 @@ class EECC(network):
                 EC.append(C[c])
                 indexes.append(c)
 
-    def get_EECC(self)->_COVER:
-        '''Calculate the edge-disjoint edge clique cover (EECC) of a graph G considering 
+    def get_EECC(self) -> None:
+        """
+        Calculate the edge-disjoint edge clique cover (EECC) of a graph G considering 
         cliques of order up to m0, according to the heuristic proposed in reference (1).
-        
         :param G: graph
         :param m0: int for maximum order of the cliques to consider
-
-        :return cover: A list containing the EECC'''
+        :return cover: A list containing the EECC
+        """
 
         C = self.limited_maximal_cliques()
         num_cliques : int = len(C)
-        ord : List[int] = [0] * num_cliques
-        r : List[float] = [0.0] * num_cliques
-        EC : _COVER = []
+        ord : list= [0] * num_cliques
+        r : list = [0.0] * num_cliques
+        EC : list = []
 
         indexes_score0 = []
         self.compute_scores(C,EC,ord,r,indexes_score0)
@@ -238,11 +218,3 @@ class EECC(network):
                         self.remove_edge(EC[c][i],EC[c][j])
 
         return sorted(EC, key=lambda x: (-len(x), x[0], x[1]))
-
-
-class MPCC(network):
-    '''Creates an MPCC clique cover. '''
-
-    def __init__(self):
-        pass    
-    

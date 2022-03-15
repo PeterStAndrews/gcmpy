@@ -1,8 +1,8 @@
-
-from gcmpy import *
 import unittest
 
-def EECC_Test_util_network()->EECC:
+from gcmpy.covers.eecc import EECC
+
+def EECC_Test_util_network() -> EECC:
 
     G = EECC()
 
@@ -35,7 +35,8 @@ def EECC_Test_util_network()->EECC:
 class EECC_Test(unittest.TestCase):
 
     def test_EECC_m0_2(self):
-        '''Test adapted from (2) for python.
+        """
+        Test adapted from (2) for python.
 
          ----- References -----
 
@@ -43,9 +44,9 @@ class EECC_Test(unittest.TestCase):
             Network clique cover approximation to analyze complex contagions through group interactions, 
             Comms. Phys. (2021) in press (arXiv:2101.03618)
 
-        2) https://github.com/giubuig/DisjointCliqueCover.jl'''
+        2) https://github.com/giubuig/DisjointCliqueCover.jl
+        """
 
-        
         G = EECC_Test_util_network()
 
         # Sets of maximal cliques in G to test against
@@ -63,10 +64,10 @@ class EECC_Test(unittest.TestCase):
         r_2 = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
-        EC_2 : List[int] = []
-        ord_2 : List[int] = [0] * len(C_2)
-        r_2_test : List[float] = [0.0] * len(C_2)
-        indexes_2 : List[int] = []
+        EC_2: list = []
+        ord_2: list = [0] * len(C_2)
+        r_2_test: list = [0.0] * len(C_2)
+        indexes_2: list = []
         
         G.set_max_clique_size(2)
         G.compute_scores(C_2, EC_2, ord_2, r_2_test, indexes_2)
@@ -99,10 +100,10 @@ class EECC_Test(unittest.TestCase):
 
         r_3 = [1/3, 1.0, 1.0, 1.0, 0.0, 1.0, 1/3, 2/3, 1/3, 0.0, 0.0, 0.0]
 
-        EC_3 : List[int] = []
-        ord_3 : List[int] = [0] * len(C_3)
-        r_3_test : List[float] = [0.0] * len(C_3)
-        indexes_3 : List[int] = []
+        EC_3: list = []
+        ord_3: list = [0] * len(C_3)
+        r_3_test: list = [0.0] * len(C_3)
+        indexes_3: list = []
        
         G.compute_scores(C_3, EC_3, ord_3, r_3_test, indexes_3)
         
@@ -130,10 +131,10 @@ class EECC_Test(unittest.TestCase):
 
         r_4 = [1/6, 1/3, 0.0, 1/3, 2/3, 1/3, 0.0, 0.0, 0.0]
 
-        EC_4 : List[int] = []
-        ord_4 : List[int] = [0] * len(C_4)
-        r_4_test : List[float] = [0.0] * len(C_4)
-        indexes_4 : List[int] = []
+        EC_4: list = []
+        ord_4: list = [0] * len(C_4)
+        r_4_test: list = [0.0] * len(C_4)
+        indexes_4: list = []
         G.set_max_clique_size(4)
         G.compute_scores(C_4, EC_4, ord_4, r_4_test, indexes_4)
         

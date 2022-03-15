@@ -1,13 +1,14 @@
 
 import unittest
 
+
 from gcmpy.joint_degree.joint_degree_loaders.joint_degree_manual import JointDegreeManual
 from gcmpy.motif_generators.clique_motif import clique_motif
-from gcmpy.gcm_algorithm.gcm_algorithm import GCMAlgorithm
+from gcmpy.gcm_algorithm.gcm_algorithm_fast import FastGCMAlgorithm
 
 NETWORK_SIZE: int = 100000
 
-class GCMAlgorithmTest(unittest.TestCase):
+class GCMAlgorithmFastTest(unittest.TestCase):
 
     def test_single_topology(self):
 
@@ -20,15 +21,13 @@ class GCMAlgorithmTest(unittest.TestCase):
         jds = DegreeDistObj.sample_jds_from_jdd(n_vertices)
 
         build_functions = [clique_motif]
-        g = GCMAlgorithm(
+        g = FastGCMAlgorithm(
                 params["motif_sizes"], build_functions
             ).random_clustered_graph(jds)
 
         num_edges = sum([k[0] for k in jds]) / 2.0
-        tolerance = 10
 
-        self.assertTrue(g._G.order() == NETWORK_SIZE)
-        self.assertTrue(num_edges - tolerance <= len(g._G.edges) <= num_edges + tolerance)
+        self.assertTrue(num_edges - 2 <= len(g) <= num_edges + 2)
 
     def test_two_topologies(self):
 
@@ -41,7 +40,7 @@ class GCMAlgorithmTest(unittest.TestCase):
         jds = DegreeDistObj.sample_jds_from_jdd(n_vertices)
 
         build_functions = [clique_motif,clique_motif]
-        g = GCMAlgorithm(
+        g = FastGCMAlgorithm(
                 params["motif_sizes"], build_functions
             ).random_clustered_graph(jds)
 
@@ -50,7 +49,6 @@ class GCMAlgorithmTest(unittest.TestCase):
         num_3_clique_edges = sum([k[1] for k in jds])
         num_expected_edges = num_2_clique_edges + num_3_clique_edges
         
-        self.assertTrue(g._G.order() == NETWORK_SIZE)
         self.assertTrue(
-            num_expected_edges-tolerance <= len(g._G.edges) <= num_expected_edges+tolerance
+            num_expected_edges-tolerance <= len(g) <= num_expected_edges+tolerance
         )
