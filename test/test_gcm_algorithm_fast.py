@@ -17,7 +17,7 @@ class GCMAlgorithmFastTest(unittest.TestCase):
         params["motif_sizes"] = [2]
         
         DegreeDistObj = JointDegreeManual(params)
-        n_vertices : int = NETWORK_SIZE
+        n_vertices: int = NETWORK_SIZE
         jds = DegreeDistObj.sample_jds_from_jdd(n_vertices)
 
         build_functions = [clique_motif]
