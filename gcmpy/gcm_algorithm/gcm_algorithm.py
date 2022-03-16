@@ -3,7 +3,7 @@
 import random
 import networkx as nx
 from iteration_utilities import grouper
-from itertools import chain,repeat,starmap
+from itertools import chain,repeat,starmap 
 
 from gcmpy.network.network import Network
 
