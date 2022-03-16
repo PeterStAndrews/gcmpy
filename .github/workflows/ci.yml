@@ -12,10 +12,10 @@ jobs:
       - name: Install Python 3
         uses: actions/setup-python@v1
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Install dependencies
         run: |
-          python3 -m pip install --upgrade pip
-          pip3 install -r requirements.txt
+          python3.9 -m pip install --upgrade pip
+          pip3.9 install -r requirements.txt
       - name: Run tests with unittest
-        run: python3 -m unittest discover -p 'test/test_*.py'
+        run: python3.9 -m unittest discover -p 'test/test_*.py'
