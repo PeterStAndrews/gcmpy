@@ -43,3 +43,26 @@ class MotifMixingPatternsTest(unittest.TestCase):
         ejks_2 = C.get_ejks()
 
         self.assertTrue(ejks_1==ejks_2)
+
+    def test_three_topologies(self):
+
+        params = {}
+        params["jdd"] = {(1,0,0) : 0.2, (2,1,1) : 0.5, (3,0,1) : 0.1, (5,1,0) : 0.2}
+        params["motif_sizes"] = [2,3,2]
+        
+        DegreeDistObj = JointDegreeManual(params)
+        n_vertices : int = NETWORK_SIZE 
+        jds = DegreeDistObj.sample_jds_from_jdd(n_vertices)
+
+        edge_names: list[str] = ['2-clique-blue', '3-clique','2-clique-red']
+        build_functions: list[callable] = [clique_motif,clique_motif,clique_motif]
+        g = GCMAlgorithm(
+                params["motif_sizes"], build_functions, edge_names
+            ).random_clustered_graph(jds)
+
+        params = {}
+        params['network'] = g._G
+        params['topology_names'] = edge_names
+        C = MotifMixingPatterns(params)
+
+        ejks_1 = C.get_ejks()
