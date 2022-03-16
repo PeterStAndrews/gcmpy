@@ -22,7 +22,8 @@ epidemic, occurring over a network.
 To create the networks, ``gcmpy`` creates a joint degree distribution object 
 through a variety of analytical or empirical methods. Once constructed, this 
 joint distribution is sampled to obtain a joint degree sequence. The joint 
-sequence is then used in the GCM algorithm to create an edge list.
+sequence is then used in the GCM algorithm to create a networkx graph. It can 
+also be used to create an edge list directly, which is significantly faster.
 
 Networks can be given storage tags to classify the properties for database 
 look-up. 
