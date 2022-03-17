@@ -4,6 +4,8 @@ import random
 from iteration_utilities import grouper
 from itertools import chain,repeat,starmap
 
+from gcmpy.network.edge_list import LightWeightEdgeList
+
 class FastGCMAlgorithm:
     """
     Generalised configuration model algorithm. Fast version doesn't use 
@@ -25,7 +27,7 @@ class FastGCMAlgorithm:
         self._build_functions = build_functions
         self._edge_names = edge_names
 
-    def random_clustered_graph(self, jds: list) -> list:
+    def random_clustered_graph(self, jds: list) -> LightWeightEdgeList:
         """
         Generate a random graph from a given joint degree sequence of motifs. If motif constructors 
         are not specified, ValueError is raised.
@@ -39,16 +41,21 @@ class FastGCMAlgorithm:
         for k_list in stubs:
             random.shuffle(k_list)
 
-        # create list for edges
-        edge_list = []
+        # create list for edges and add joint degree sequence
+        EdgeList = LightWeightEdgeList()
+        EdgeList.joint_degrees = jds
 
         #for each topology list ...
         for k, k_list in enumerate(stubs):
+            # add the edge names to a list
+            EdgeList.topologies.extend(
+                self._edge_names[k]*len(k_list)
+            )
             # iterate the degree list
             for nodes in grouper(k_list,self._motif_sizes[k]):
                 # add the edges to the network using the builder callback
                 es = self._build_functions[k](list(nodes))
-                edge_list.extend(es)
+                EdgeList.edge_list.extend(es)
 
-        # return the graph model
-        return edge_list
+        # return the graph model as a LightWeightEdgeList
+        return EdgeList

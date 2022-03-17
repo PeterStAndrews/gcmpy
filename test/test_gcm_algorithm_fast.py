@@ -21,13 +21,14 @@ class GCMAlgorithmFastTest(unittest.TestCase):
         jds = DegreeDistObj.sample_jds_from_jdd(n_vertices)
 
         build_functions = [clique_motif]
+        motif_names = ['2-clique']
         g = FastGCMAlgorithm(
-                params["motif_sizes"], build_functions
+                params["motif_sizes"], build_functions, motif_names
             ).random_clustered_graph(jds)
 
         num_edges = sum([k[0] for k in jds]) / 2.0
 
-        self.assertTrue(num_edges - 2 <= len(g) <= num_edges + 2)
+        self.assertTrue(num_edges - 2 <= len(g._edge_list) <= num_edges + 2)
 
     def test_two_topologies(self):
 
@@ -40,8 +41,9 @@ class GCMAlgorithmFastTest(unittest.TestCase):
         jds = DegreeDistObj.sample_jds_from_jdd(n_vertices)
 
         build_functions = [clique_motif,clique_motif]
+        motif_names = ['2-clique','3-clique']
         g = FastGCMAlgorithm(
-                params["motif_sizes"], build_functions
+                params["motif_sizes"], build_functions, motif_names
             ).random_clustered_graph(jds)
 
         tolerance = 10
@@ -50,5 +52,5 @@ class GCMAlgorithmFastTest(unittest.TestCase):
         num_expected_edges = num_2_clique_edges + num_3_clique_edges
         
         self.assertTrue(
-            num_expected_edges-tolerance <= len(g) <= num_expected_edges+tolerance
+            num_expected_edges-tolerance <= len(g._edge_list) <= num_expected_edges+tolerance
         )
