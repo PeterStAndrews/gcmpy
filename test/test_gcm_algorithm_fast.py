@@ -20,10 +20,12 @@ class GCMAlgorithmFastTest(unittest.TestCase):
         n_vertices: int = NETWORK_SIZE
         jds = DegreeDistObj.sample_jds_from_jdd(n_vertices)
 
-        build_functions = [clique_motif]
-        motif_names = ['2-clique']
+        params = {}
+        params["motif_sizes"] = [2]
+        params["edge_names"] = ['2-clique']
+        params["build_functions"] = [clique_motif]
         g = FastGCMAlgorithm(
-                params["motif_sizes"], build_functions, motif_names
+                params
             ).random_clustered_graph(jds)
 
         num_edges = sum([k[0] for k in jds]) / 2.0
@@ -40,17 +42,20 @@ class GCMAlgorithmFastTest(unittest.TestCase):
         n_vertices : int = NETWORK_SIZE 
         jds = DegreeDistObj.sample_jds_from_jdd(n_vertices)
 
-        build_functions = [clique_motif,clique_motif]
-        motif_names = ['2-clique','3-clique']
+        params = {}
+        params["motif_sizes"] = [2,3]
+        params["edge_names"] = ['2-clique','3-clique']
+        params["build_functions"] = [clique_motif,clique_motif]
         g = FastGCMAlgorithm(
-                params["motif_sizes"], build_functions, motif_names
+                params
             ).random_clustered_graph(jds)
 
-        tolerance = 10
+        tolerance = 20
         num_2_clique_edges = sum([k[0] for k in jds]) / 2.0
         num_3_clique_edges = sum([k[1] for k in jds])
         num_expected_edges = num_2_clique_edges + num_3_clique_edges
         
+        x: int = len(g._edge_list)
         self.assertTrue(
-            num_expected_edges-tolerance <= len(g._edge_list) <= num_expected_edges+tolerance
+            num_expected_edges-tolerance <= x <= num_expected_edges+tolerance
         )

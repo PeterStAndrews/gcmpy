@@ -4,7 +4,7 @@ import unittest
 from gcmpy.tools.joint_excess_joint_degree import MotifMixingPatterns
 from gcmpy.joint_degree.joint_degree_loaders.joint_degree_manual import JointDegreeManual
 from gcmpy.motif_generators.clique_motif import clique_motif
-from gcmpy.gcm_algorithm.gcm_algorithm import GCMAlgorithm
+from gcmpy.gcm_algorithm.gcm_algorithm_network import GCMAlgorithmNetwork
 
 NETWORK_SIZE: int = 100000
 
@@ -20,16 +20,18 @@ class MotifMixingPatternsTest(unittest.TestCase):
         n_vertices : int = NETWORK_SIZE 
         jds = DegreeDistObj.sample_jds_from_jdd(n_vertices)
 
-        edge_names: list[str] = ['2-clique', '3-clique']
-        build_functions: list[callable] = [clique_motif,clique_motif]
-        g = GCMAlgorithm(
-                params["motif_sizes"], build_functions, edge_names
+        params = {}
+        params["motif_sizes"] = [2,3]
+        params["edge_names"] = ['2-clique','2-clique']
+        params["build_functions"] = [clique_motif,clique_motif]
+        g = GCMAlgorithmNetwork(
+                params
             ).random_clustered_graph(jds)
 
         params = {}
         params['network'] = g._G
         params['jdd'] = {(5,1) : 1/3, (3,2) : 1/3, (1,3) : 1/3}
-        params['topology_names'] = edge_names
+        params['edge_names'] = ['2-clique','2-clique']
         C = MotifMixingPatterns(params)
 
         ejks_1 = C.get_ejks()
@@ -37,7 +39,7 @@ class MotifMixingPatternsTest(unittest.TestCase):
         # call again without supplying jdd
         params = {}
         params['network'] = g._G
-        params['topology_names'] = edge_names
+        params['edge_names'] = ['2-clique','2-clique']
         C = MotifMixingPatterns(params)
 
         ejks_2 = C.get_ejks()
@@ -54,15 +56,17 @@ class MotifMixingPatternsTest(unittest.TestCase):
         n_vertices : int = NETWORK_SIZE 
         jds = DegreeDistObj.sample_jds_from_jdd(n_vertices)
 
-        edge_names: list[str] = ['2-clique-blue', '3-clique','2-clique-red']
-        build_functions: list[callable] = [clique_motif,clique_motif,clique_motif]
-        g = GCMAlgorithm(
-                params["motif_sizes"], build_functions, edge_names
+        params = {}
+        params["edge_names"] = ['2-clique-blue', '3-clique','2-clique-red']
+        params["build_functions"] = [clique_motif,clique_motif,clique_motif]
+        params["motif_sizes"] = [2,3,2]
+        g = GCMAlgorithmNetwork(
+                params
             ).random_clustered_graph(jds)
 
         params = {}
-        params['network'] = g._G
-        params['topology_names'] = edge_names
+        params["network"] = g._G
+        params["edge_names"] = ['2-clique-blue', '3-clique','2-clique-red']
         C = MotifMixingPatterns(params)
 
-        ejks_1 = C.get_ejks()
+        self.assertTrue(len(C.get_ejks())==3)

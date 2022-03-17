@@ -47,6 +47,11 @@ copy, just clone the repo:
     python setup.py install
 
 
+The unit tests can be discovered from the project root using 
+
+.. code-block:: bash
+
+    python3 -m unittest discover -v -s test/ -p 'test_*.py'
 
 Documentation
 -------------

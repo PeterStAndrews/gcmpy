@@ -13,8 +13,8 @@ class MotifMixingPatterns:
 
     def __init__(self, params: dict):
         self._G: nx.Graph = params['network']
-        self._topology_names: list[str] = params['topology_names']
-        self._num_edges = [0] * len(params['topology_names'])
+        self._topology_names: list[str] = params['edge_names']
+        self._num_edges = [0] * len(params['edge_names'])
         
         if 'jdd' in params:
             self._degree_keys = params['jdd'].keys()
