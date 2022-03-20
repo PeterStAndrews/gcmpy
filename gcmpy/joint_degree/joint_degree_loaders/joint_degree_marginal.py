@@ -27,9 +27,13 @@ class JointDegreeMarginal(JointDegree):
     _n_samples: int = 100000
 
     def __init__(self, params: dict):
-        self._motif_sizes = params["motif_sizes"]
-        self._arr_fp = params["arr_fp"]
-        self._low_high_degree_bounds = params["low_high_degree_bounds"]
+        try:
+            self._motif_sizes = params["motif_sizes"]
+            self._arr_fp = params["arr_fp"]
+            self._low_high_degree_bounds = params["low_high_degree_bounds"]
+        except Exception as e:
+            raise(f"Error instantiating {self.__class__.__name__}: {e}")
+
         # default not to use sampling method
         if "use_sampling" in params:
             self._use_sampling = params["use_sampling"]

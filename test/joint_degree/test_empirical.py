@@ -15,7 +15,7 @@ class JDEmpiricalTest(unittest.TestCase):
         random_degrees = np.random.randint(kmin,kmax,n_vertices)
 
         params = {}
-        params['empirical_jds'] = [(k,) for k in random_degrees]
+        params['jds'] = [(k,) for k in random_degrees]
         params["motif_sizes"] = [2]
                 
         DegreeDistObj = JointDegreeEmpirical(params)
@@ -33,7 +33,7 @@ class JDEmpiricalTest(unittest.TestCase):
         random_degrees = np.random.randint(kmin,kmax,n_vertices)
 
         params = {}
-        params['empirical_jds'] = [(k+1,k) for k in random_degrees]
+        params['jds'] = [(k+1,k) for k in random_degrees]
         params["motif_sizes"] = [2,3]
                 
         DegreeDistObj = JointDegreeEmpirical(params)

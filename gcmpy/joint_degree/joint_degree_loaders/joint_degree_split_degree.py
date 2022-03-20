@@ -11,11 +11,14 @@ class JointDegreeSplitDegree(JointDegree):
     _low_high_degree_bound: tuple = None
 
     def __init__(self, params: dict):
-        self._fp = params['fp']
-        self._probs = params["probs"]
-        self._motif_sizes = params["motif_sizes"]
-        if "low_high_degree_bound" in params:
+        try:
+            self._fp = params['fp']
+            self._probs = params["probs"]
+            self._motif_sizes = params["motif_sizes"]
             self._low_high_degree_bound = params["low_high_degree_bound"]
+        except Exception as e:
+            raise(f"Error instantiating {self.__class__.__name__}: {e}")
+        
         self.create_jdd()
         
     def create_jdd(self) -> None:

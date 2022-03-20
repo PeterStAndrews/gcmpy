@@ -14,7 +14,11 @@ class JointDegreeCover(JointDegree):
         self._cover = value
 
     def __init__(self, params: dict):
-        self._cover = params["cover"]
+        try:
+            self._cover = params["cover"]
+        except Exception as e:
+            raise(f"Error instantiating {self.__class__.__name__}: {e}")
+            
         self._motif_sizes = sorted(
             list(set([len(c) for c in self._cover]))
         )

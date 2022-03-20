@@ -16,8 +16,11 @@ class JointDegreeEmpirical(JointDegree):
         self._empirical_jds = value
 
     def __init__(self, params: dict):
-        self._motif_sizes = params['motif_sizes']
-        self._empirical_jds = params['empirical_jds']
+        try:
+            self._motif_sizes = params['motif_sizes']
+            self._empirical_jds = params['jds']
+        except Exception as e:
+            raise(f"Error instantiating {self.__class__.__name__}: {e}")
         self.create_jdd()
 
     def create_jdd(self) -> None:

@@ -7,8 +7,11 @@ class JointDegreeManual(JointDegree):
     _type: str = JointDegreeType.MANUAL
 
     def __init__(self, params: dict):
-        self._jdd = params['jdd']
-        self._motif_sizes = params['motif_sizes']
+        try:
+            self._jdd = params['jdd']
+            self._motif_sizes = params['motif_sizes']
+        except Exception as e:
+            raise(f"Error instantiating {self.__class__.__name__}: {e}")
         self.create_jdd()
         
     def create_jdd(self) -> None:

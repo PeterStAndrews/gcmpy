@@ -1,7 +1,7 @@
 
 import networkx as nx
 
-class MotifMixingPatterns:
+class JointExcessJointDegreeDistribution:
     
     _topology_names: list[str]
     _G: nx.Graph = None
@@ -11,17 +11,28 @@ class MotifMixingPatterns:
     _degree_keys: list = []                         # list of joint degree tuples
     _excess_degree_keys: list[list] = []            # list of excess degree tuple lists
 
+    @property
+    def excess_degree_keys(self) -> dict:
+        return self._excess_degree_keys
+    @excess_degree_keys.setter
+    def excess_degree_keys(self, value: dict) -> None:
+        self._excess_degree_keys = value
+
     def __init__(self, params: dict):
-        self._G: nx.Graph = params['network']
-        self._topology_names: list[str] = params['edge_names']
-        self._num_edges = [0] * len(params['edge_names'])
+        try:
+            self._G = params['network']
+            self._topology_names: list[str] = params['edge_names']
+            self._num_edges = [0] * len(params['edge_names'])
         
-        if 'jdd' in params:
-            self._degree_keys = params['jdd'].keys()
-        else:
-            self._degree_keys = set(
-                [tuple(self._G.nodes[n]['joint_degree']) for n in self._G.nodes()]
-            )
+            if 'jdd' in params:
+                self._degree_keys = params['jdd'].keys()
+            else:
+                self._degree_keys = set(
+                    [tuple(self._G.nodes[n]['joint_degree']) for n in self._G.nodes()]
+                )
+        except Exception as e:
+            raise (f"Error in JointExcessJointDegreeDistribution: {e}")
+
         self.resolve_excess_degree_keys()
     
     def resolve_excess_degree_keys(self) -> None:

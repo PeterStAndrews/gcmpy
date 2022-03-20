@@ -14,9 +14,12 @@ class GCMAlgorithm(ABC):
     _edge_names: list                       # list of edge topology names
     
     def __init__(self, params: dict):
-        self._motif_sizes = params["motif_sizes"]
-        self._build_functions = params["build_functions"]
-        self._edge_names = params["edge_names"]
+        try:
+            self._motif_sizes = params["motif_sizes"]
+            self._build_functions = params["build_functions"]
+            self._edge_names = params["edge_names"]
+        except Exception as e:
+            raise (f"Error in GCMAlgorithm: {e}")
 
     def __new__(cls,*args,**kwargs):
         if cls is GCMAlgorithm:

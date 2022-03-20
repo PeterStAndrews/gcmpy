@@ -24,15 +24,17 @@ class FastGCMAlgorithm(GCMAlgorithm):
 
         #for each topology list ...
         for k, k_list in enumerate(stubs):
-            # add the edge names to a list
-            EdgeList.topologies.extend(
-                self._edge_names[k]*len(k_list)
-            )
+           
             # iterate the degree list
             for nodes in grouper(k_list,self._motif_sizes[k]):
                 # add the edges to the network using the builder callback
                 es = self._build_functions[k](list(nodes))
                 EdgeList.edge_list.extend(es)
+
+                # add the edge names to a list
+                EdgeList.topologies.extend(
+                    [self._edge_names[k]]*len(es)
+                )
 
         # return the graph model as a LightWeightEdgeList
         return EdgeList

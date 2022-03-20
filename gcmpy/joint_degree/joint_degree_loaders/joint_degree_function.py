@@ -17,12 +17,14 @@ class JointDegreeFunction(JointDegree):
     _fp: callable = None 
     _low_high_degree_bounds: tuple = (0,50)
 
-    def __init__(self, param: dict):      
-        self._motif_sizes = param["motif_sizes"]
-        self._fp = param["fp"]
-        # important for powerlaw distribution functions to set high
-        if "low_high_degree_bounds" in param:
+    def __init__(self, param: dict): 
+        try:
+            self._motif_sizes = param["motif_sizes"]
+            self._fp = param["fp"]
             self._low_high_degree_bounds = param["low_high_degree_bounds"]
+        except Exception as e:
+            raise(f"Error instantiating {self.__class__.__name__}: {e}")
+        
         self.create_jdd()
         
     def create_jdd(self) -> None:
