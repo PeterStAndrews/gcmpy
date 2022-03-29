@@ -1,9 +1,9 @@
-
 from itertools import product
 
 from gcmpy.joint_degree.joint_degree import JointDegree
 from gcmpy.joint_degree.joint_degree_types import JointDegreeType
 from gcmpy.names.joint_degree_names import JointDegreeNames
+
 
 class JointDegreeFunction(JointDegree):
     """
@@ -14,26 +14,29 @@ class JointDegreeFunction(JointDegree):
     :param hi_lo_degree_bounds: list of tuples (int,int) for kmin,kmax per topology
     :param n_samples: number of samples if not direct
     """
-    _type: str = JointDegreeType.JOINT_FUNCTION
-    _fp: callable = None 
-    _low_high_degree_bounds: tuple = (0,50)
 
-    def __init__(self, param: dict): 
+    _type: str = JointDegreeType.JOINT_FUNCTION
+    _fp: callable = None
+    _low_high_degree_bounds: tuple = (0, 50)
+
+    def __init__(self, param: dict):
         try:
             self._motif_sizes = param[JointDegreeNames.MOTIF_SIZES]
             self._fp = param[JointDegreeNames.FP]
             self._low_high_degree_bounds = param[JointDegreeNames.LOW_HIGH_DEGREE_BOUND]
         except Exception as e:
-            raise(f"Error instantiating {self.__class__.__name__}: {e}")
-        
+            raise (f"Error instantiating {self.__class__.__name__}: {e}")
+
         self.create_jdd()
-        
+
     def create_jdd(self) -> None:
         """
         Evaluates probability directly by generating all possible joint degrees.
         """
         # build list of lists of possible degrees in each dimension
-        ks = [list(range(kmin,kmax+1)) for kmin,kmax in self._low_high_degree_bounds]
+        ks = [
+            list(range(kmin, kmax + 1)) for kmin, kmax in self._low_high_degree_bounds
+        ]
         # iterate all joint degrees and evaluate the joint degree
         for jd in list(product(*ks)):
             self._jdd[jd] = self._fp(jd)

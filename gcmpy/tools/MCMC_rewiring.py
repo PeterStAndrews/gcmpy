@@ -1,4 +1,3 @@
-
 from epydemic import DrawSet
 import random
 import networkx as nx
@@ -7,13 +6,16 @@ from logging import Logger
 from gcmpy.names.tools_names import ToolsNames
 from gcmpy.network.network import Network
 from gcmpy.names.network_names import NetworkNames
-from gcmpy.tools.joint_excess_joint_degree_matrices import JointExcessJointDegreeMatrices
+from gcmpy.tools.joint_excess_joint_degree_matrices import (
+    JointExcessJointDegreeMatrices,
+)
 
 
 class MarkovChainMonteCarlo:
     """
     Stochastically rewires `_network` so that the target correlations match `ejks`.
     """
+
     _network: Network = None
     _convergence_limit: int = None
     _search_limit: int = None
@@ -28,7 +30,7 @@ class MarkovChainMonteCarlo:
             self._convergence_limit: int = params[ToolsNames.CONVERGENCE_LIMIT]
             self._search_limit: int = params[ToolsNames.SEARCH_LIMIT]
         except Exception as e:
-            raise(f"Error instantiating {self.__class__.__name__}: {e}")
+            raise (f"Error instantiating {self.__class__.__name__}: {e}")
 
     def get_all_edges(self, G: nx.Graph, u0: int, edge: tuple) -> list:
         """
@@ -62,7 +64,9 @@ class MarkovChainMonteCarlo:
             hashmap_es[topology] = lst
         return hashmap_es
 
-    def is_edge_choice_suitable(self, G: nx.Graph, u0: int, v0: int, e0s: list, e1s: list) -> bool:
+    def is_edge_choice_suitable(
+        self, G: nx.Graph, u0: int, v0: int, e0s: list, e1s: list
+    ) -> bool:
         """
         Checks to see if the randomly chosen edge is suitable to be swapped. We
         assume that vertices e0[0] -> e1[0] and hence new edges will be created
@@ -105,7 +109,10 @@ class MarkovChainMonteCarlo:
                 return False
 
         for e0, e1 in zip(e0s, e1s):
-            if G.edges[e0][NetworkNames.MOTIF_IDS] == G.edges[e1][NetworkNames.MOTIF_IDS]:
+            if (
+                G.edges[e0][NetworkNames.MOTIF_IDS]
+                == G.edges[e1][NetworkNames.MOTIF_IDS]
+            ):
                 self._logger.debug(
                     "MarkovChainMonteCarlo - paired corners belong to same motif"
                 )
@@ -143,9 +150,10 @@ class MarkovChainMonteCarlo:
         return us_excess_jd[0] + us_excess_jd[1]
 
     def get_swapped_joint_excess_degree_key(
-            self, G: nx.Graph, e0: tuple, e1: tuple, u0: int, v0: int, index: int) -> tuple:
+        self, G: nx.Graph, e0: tuple, e1: tuple, u0: int, v0: int, index: int
+    ) -> tuple:
         """
-        Returns the swapped joint excess degree key tuple for two edges e0, e1 in network G. 
+        Returns the swapped joint excess degree key tuple for two edges e0, e1 in network G.
         :param G: nx.Graph
         :param e0: edge
         :param e0: edge
@@ -156,10 +164,10 @@ class MarkovChainMonteCarlo:
         """
         u1: int = self.get_other_node(u0, e0)
         v1: int = self.get_other_node(v0, e1)
-        
+
         # pull the joint degrees of the 4 vertices
-        us: list = [u0,u1,v0,v1]
-        us_jd: list = [list(G.nodes[u][NetworkNames.JOINT_DEGREE])for u in us]
+        us: list = [u0, u1, v0, v1]
+        us_jd: list = [list(G.nodes[u][NetworkNames.JOINT_DEGREE]) for u in us]
 
         # grab their excess degrees in topology `index`
         us_excess_jd: list = []
@@ -167,11 +175,13 @@ class MarkovChainMonteCarlo:
             jd[index] -= 1
             us_excess_jd.append(tuple(jd))
 
-        return us_excess_jd[0] + us_excess_jd[3], us_excess_jd[1] + us_excess_jd[2] 
+        return us_excess_jd[0] + us_excess_jd[3], us_excess_jd[1] + us_excess_jd[2]
 
-    def swap_condition(self, G: nx.Graph, e0s: list, e1s: list, u0: int, v0: int) -> bool:
+    def swap_condition(
+        self, G: nx.Graph, e0s: list, e1s: list, u0: int, v0: int
+    ) -> bool:
         """
-        Evaluates the Metropolis condition for the algorithm. 
+        Evaluates the Metropolis condition for the algorithm.
 
         .. math::
             \pi=\prod_{\nu}\prod_i\frac{e_{\tau,k_{u_1},\nu,k_{v_i}}e_{\tau,k_{v_1},
@@ -215,13 +225,13 @@ class MarkovChainMonteCarlo:
 
         bottom: float = 1.0
         for e0, e1 in zip(e0s, e1s):
-            
+
             topology: str = G.edges[e0][NetworkNames.TOPOLOGY]
             topology_e1: str = G.edges[e1][NetworkNames.TOPOLOGY]
 
             if topology != topology_e1:
                 raise f"Error: MarkovChainMonteCarlo - swap_condition() edge topologies {topology} != {topology_e1}"
-            
+
             index: int = self._ejks.get_topology_index(topology)
             key_e0 = self.get_joint_excess_degree_key(G, e0, index)
             key_e1 = self.get_joint_excess_degree_key(G, e1, index)
@@ -229,7 +239,10 @@ class MarkovChainMonteCarlo:
             try:
                 # guard due to GCM algorithm honouring the handshaking lemma by inserting
                 # additional motif. Ensure this is not statistically significant.
-                bottom *= self._ejks.ejks[topology][key_e0] * self._ejks.ejks[topology][key_e1]
+                bottom *= (
+                    self._ejks.ejks[topology][key_e0]
+                    * self._ejks.ejks[topology][key_e1]
+                )
             except KeyError as e:
                 self._logger.error(
                     f"MarkovChainMonteCarlo - KeyError during swap condition denominator: {e}"
@@ -251,7 +264,7 @@ class MarkovChainMonteCarlo:
 
         number_of_edges: int = G.number_of_edges()
 
-        # create a set based on AVL tree. Ensure to order 
+        # create a set based on AVL tree. Ensure to order
         # the edge to avoid duplicate entries for a given edge
         EdgeSet = DrawSet()
         for e in G.edges():
@@ -274,12 +287,17 @@ class MarkovChainMonteCarlo:
                 # choose another edge at random.
                 e1: tuple = EdgeSet.draw()
 
-                if G.edges[e1][NetworkNames.TOPOLOGY] != G.edges[e0][NetworkNames.TOPOLOGY]:
+                if (
+                    G.edges[e1][NetworkNames.TOPOLOGY]
+                    != G.edges[e0][NetworkNames.TOPOLOGY]
+                ):
                     continue
 
                 v0: int = e1[0]
                 v_edges_in_motif: list = self.get_all_edges(G, v0, e1)
-                if self.is_edge_choice_suitable(G, u0, v0, u_edges_in_motif, v_edges_in_motif):
+                if self.is_edge_choice_suitable(
+                    G, u0, v0, u_edges_in_motif, v_edges_in_motif
+                ):
                     break
 
                 search_count += 1
@@ -305,9 +323,9 @@ class MarkovChainMonteCarlo:
                     G.edges[(v0, u1)][NetworkNames.TOPOLOGY] = topology
                     G.edges[(v0, u1)][NetworkNames.MOTIF_IDS] = motif_id
                     if v0 <= u1:
-                        EdgeSet.add((v0,u1))
+                        EdgeSet.add((v0, u1))
                     else:
-                        EdgeSet.add((u1,v0))
+                        EdgeSet.add((u1, v0))
 
                 for e in v_edges_in_motif:
                     topology: str = G.edges[e][NetworkNames.TOPOLOGY]
@@ -317,9 +335,9 @@ class MarkovChainMonteCarlo:
                     G.edges[(u0, v1)][NetworkNames.TOPOLOGY] = topology
                     G.edges[(u0, v1)][NetworkNames.MOTIF_IDS] = motif_id
                     if u0 <= v1:
-                        EdgeSet.add((u0,v1))
+                        EdgeSet.add((u0, v1))
                     else:
-                        EdgeSet.add((v1,u0))
+                        EdgeSet.add((v1, u0))
 
                 # remove old edges
                 for e0, e1 in zip(u_edges_in_motif, v_edges_in_motif):
@@ -328,15 +346,14 @@ class MarkovChainMonteCarlo:
 
                     # EdgeSet expects ordered tuples
                     if e0[0] > e0[1]:
-                        EdgeSet.remove((e0[1],e0[0]))
+                        EdgeSet.remove((e0[1], e0[0]))
                     else:
                         EdgeSet.remove(e0)
-                    
+
                     if e1[0] > e1[1]:
-                        EdgeSet.remove((e1[1],e1[0]))
+                        EdgeSet.remove((e1[1], e1[0]))
                     else:
                         EdgeSet.remove(e1)
-                    
 
                 if G.number_of_edges() != number_of_edges:
                     raise f"Error: MarkovChainMonteCarlo - rewire() edge count not preserved\

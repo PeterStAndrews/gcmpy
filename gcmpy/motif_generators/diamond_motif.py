@@ -1,6 +1,5 @@
-
-
 from gcmpy.motif_generators.cycle_motif import cycle_motif
+
 
 def diamond_motif(nodes: list) -> list:
     """
@@ -9,10 +8,10 @@ def diamond_motif(nodes: list) -> list:
     :returns: edge list as list of tuples (int, int)
     """
     if len(nodes) < 4:
-        raise("Error during motif construction - diamond_motif")
+        raise ("Error during motif construction - diamond_motif")
 
     n0, n1, n2, n3 = nodes
     edges = cycle_motif(nodes)
-    edges.append((n0,n2))
-    edges.append((n1,n3))
+    edges.append((n0, n2))
+    edges.append((n1, n3))
     return edges

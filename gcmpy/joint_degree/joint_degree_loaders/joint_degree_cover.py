@@ -1,15 +1,16 @@
-
 from gcmpy.joint_degree.joint_degree import JointDegree
 from gcmpy.joint_degree.joint_degree_types import JointDegreeType
 from gcmpy.names.joint_degree_names import JointDegreeNames
 
+
 class JointDegreeCover(JointDegree):
-    
+
     _type: str = JointDegreeType.COVER
 
     @property
     def cover(self) -> list:
-        return self._cover 
+        return self._cover
+
     @cover.setter
     def cover(self, value: list) -> None:
         self._cover = value
@@ -18,11 +19,9 @@ class JointDegreeCover(JointDegree):
         try:
             self._cover = params[JointDegreeNames.COVER]
         except Exception as e:
-            raise(f"Error instantiating {self.__class__.__name__}: {e}")
-            
-        self._motif_sizes = sorted(
-            list(set([len(c) for c in self._cover]))
-        )
+            raise (f"Error instantiating {self.__class__.__name__}: {e}")
+
+        self._motif_sizes = sorted(list(set([len(c) for c in self._cover])))
         self.create_jdd()
 
     def create_jdd(self) -> None:
@@ -33,7 +32,7 @@ class JointDegreeCover(JointDegree):
         if min(node_ids) != zero_index:
             zero_index = 1
 
-        largest_clique = len(max(self._cover, key = len))
+        largest_clique = len(max(self._cover, key=len))
 
         jds = []
         for _ in range(len(node_ids)):
@@ -43,11 +42,11 @@ class JointDegreeCover(JointDegree):
         for c in self._cover:
             clique_size = len(c)
             for node in c:
-                jds[node - zero_index][clique_size-1] += 1
+                jds[node - zero_index][clique_size - 1] += 1
 
         # iterate each column of the jds and record the index if all zeros
         indxs = [i for i, top in enumerate(zip(*jds)) if not any(top)]
-        
+
         # use the indexes of the zero columns to remove
         for i in indxs:
             for jd in jds:
@@ -55,4 +54,3 @@ class JointDegreeCover(JointDegree):
 
         # convert jds to jdd
         self.convert_jds_to_jdd(jds)
-        

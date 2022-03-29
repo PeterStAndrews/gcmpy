@@ -1,5 +1,5 @@
-
 from enum import Enum
+
 
 class JointDegreeType(Enum):
     MANUAL = "manual"

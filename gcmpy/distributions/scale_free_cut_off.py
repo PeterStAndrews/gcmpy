@@ -1,7 +1,7 @@
-
 import numpy as np
 
-def scale_free_cut_off(alpha : float, kappa :float) -> callable:
+
+def scale_free_cut_off(alpha: float, kappa: float) -> callable:
     """
     Implements a scale free with exponential degree cutoff function. Limits
     to scale free for large degree cutoff. Undefined for k = 0.
@@ -30,8 +30,9 @@ def scale_free_cut_off(alpha : float, kappa :float) -> callable:
             k += 1
         return l
 
-    C = polylog(alpha, np.exp(-1.0 / kappa)) # normalisation constant
+    C = polylog(alpha, np.exp(-1.0 / kappa))  # normalisation constant
 
     def p(k: int) -> float:
         return (pow((k + 0.0), -alpha) * np.exp(-(k + 0.0) / kappa)) / C
+
     return p

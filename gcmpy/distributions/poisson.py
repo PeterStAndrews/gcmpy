@@ -1,5 +1,5 @@
-
 import numpy as np
+
 
 def poisson(kmean: float) -> callable:
     """
@@ -7,6 +7,8 @@ def poisson(kmean: float) -> callable:
     :param kmean: mean of poisson distribution
     :returns p: Callable
     """
+
     def p(k: int) -> float:
-        return np.exp(-kmean) * pow(kmean,k) / np.math.factorial(k)
+        return np.exp(-kmean) * pow(kmean, k) / np.math.factorial(k)
+
     return p

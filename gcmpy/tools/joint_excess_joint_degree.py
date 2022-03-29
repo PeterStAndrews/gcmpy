@@ -1,19 +1,21 @@
-
 import networkx as nx
 from gcmpy.names.network_names import NetworkNames
 from gcmpy.names.tools_names import ToolsNames
-from gcmpy.tools.joint_excess_joint_degree_matrices import JointExcessJointDegreeMatrices
+from gcmpy.tools.joint_excess_joint_degree_matrices import (
+    JointExcessJointDegreeMatrices,
+)
 
 
 class JointExcessJointDegreeDistribution:
     """
     Extracts the joint excess joint degree distribution from a network
     """
+
     _topology_names: list[str]
     _G: nx.Graph = None
     _ejks = None
-    _num_edges: dict = {}                      # number of edges of i-th topology
-    _degree_keys: list = []                         # list of joint degree tuples
+    _num_edges: dict = {}  # number of edges of i-th topology
+    _degree_keys: list = []  # list of joint degree tuples
     _excess_degree_keys = {}
 
     def __init__(self, params: dict):
@@ -21,7 +23,10 @@ class JointExcessJointDegreeDistribution:
             self._G: nx.Graph = params[ToolsNames.NETWORK]
             self._topology_names: list[str] = params[ToolsNames.EDGE_NAMES]
             self._degree_keys = set(
-                [tuple(self._G.nodes[n][NetworkNames.JOINT_DEGREE]) for n in self._G.nodes()]
+                [
+                    tuple(self._G.nodes[n][NetworkNames.JOINT_DEGREE])
+                    for n in self._G.nodes()
+                ]
             )
         except Exception as e:
             raise (f"Error in {self.__class__.__name__}: {e}")
@@ -80,8 +85,8 @@ class JointExcessJointDegreeDistribution:
                 key2 = v_joint_excess_degree + u_joint_excess_degree
 
                 # divide by 2*num_edges due to adding each one twice from each end
-                ejk[key1] = ejk.get(key1, 0) + (1.0 / (2*self._num_edges[name]))
-                ejk[key2] = ejk.get(key2, 0) + (1.0 / (2*self._num_edges[name]))
+                ejk[key1] = ejk.get(key1, 0) + (1.0 / (2 * self._num_edges[name]))
+                ejk[key2] = ejk.get(key2, 0) + (1.0 / (2 * self._num_edges[name]))
 
         return ejk
 

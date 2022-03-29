@@ -1,4 +1,3 @@
-
 from gcmpy.gcm_algorithm.gcm_algorithm_types import GCMAlgorithmTypes
 from gcmpy.gcm_algorithm.gcm_algorithm import GCMAlgorithm
 
@@ -6,8 +5,8 @@ from gcmpy.gcm_algorithm.gcm_algorithm_fast import FastGCMAlgorithm
 from gcmpy.gcm_algorithm.gcm_algorithm_network import GCMAlgorithmNetwork
 from gcmpy.gcm_algorithm.gcm_algorithm_motifs import GCMAlgorithmCustomMotifs
 
-class GCMAlgorithmFactory:
 
+class GCMAlgorithmFactory:
     @staticmethod
     def resolve_algorithm(type: GCMAlgorithmTypes, params: dict) -> GCMAlgorithm:
         if type == GCMAlgorithmTypes.FAST:
@@ -17,4 +16,4 @@ class GCMAlgorithmFactory:
         elif type == GCMAlgorithmTypes.MOTIFS:
             return GCMAlgorithmCustomMotifs(params)
         else:
-            raise('Error: unknown algorithm in GCMAlgorithmFactory: resolve_algorithm')
+            raise ("Error: unknown algorithm in GCMAlgorithmFactory: resolve_algorithm")

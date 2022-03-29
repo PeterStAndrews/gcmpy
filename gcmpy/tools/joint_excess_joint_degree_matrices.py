@@ -1,12 +1,13 @@
-
 from gcmpy.names.tools_names import ToolsNames
 
 
 class JointExcessJointDegreeMatrices:
 
-    _ejks: dict[dict] = {}                # dict of ejk dicts/matrices keyed by edge topology
-    _excess_degree_keys: dict[list] = {}  # dict of lst of excess deg-tuples keyed by edge topology
-    _topology_names: list[str] = []       # list of str of topology names, ordered
+    _ejks: dict[dict] = {}  # dict of ejk dicts/matrices keyed by edge topology
+    _excess_degree_keys: dict[
+        list
+    ] = {}  # dict of lst of excess deg-tuples keyed by edge topology
+    _topology_names: list[str] = []  # list of str of topology names, ordered
 
     @property
     def excess_degree_keys(self) -> dict:
@@ -56,11 +57,9 @@ class JointExcessJointDegreeMatrices:
             for excess_key in self._ejks[topology]:
 
                 A = list(excess_key)
-                B = A[:len(A)//2]
-                C = A[len(A)//2:]
+                B = A[: len(A) // 2]
+                C = A[len(A) // 2 :]
                 excess_key_set.add(tuple(B))
                 excess_key_set.add(tuple(C))
 
             self._excess_degree_keys[topology] = list(excess_key_set)
-        
-        

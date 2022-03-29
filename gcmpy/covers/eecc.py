@@ -3,36 +3,39 @@ from random import choice
 
 from gcmpy.network.network import Network
 
+
 def binom(n: int, r: int) -> int:
     """
-    Binomial coefficient, nCr, aka the "choose" function 
+    Binomial coefficient, nCr, aka the "choose" function
             n! / (r! * (n - r)!)
     :param n: n choose
     :param r: r
     :returns int: binomial coefficient.
     """
-    p = 1    
+    p = 1
     for i in range(1, min(r, n - r) + 1):
         p *= n
         p //= i
         n -= 1
     return p
 
+
 class EECC(Network):
     """
     Creates an EECC clique cover based on the algorithm developed in (1,2) for a graph
     in an edge_list format.
-    
+
     ----- References -----
 
-    1) Giulio Burgio, Alex Arenas, Sergio Gómez and Joan T. Matamalas: 
-       Network clique cover approximation to analyze complex contagions through group interactions, 
+    1) Giulio Burgio, Alex Arenas, Sergio Gómez and Joan T. Matamalas:
+       Network clique cover approximation to analyze complex contagions through group interactions,
        Comms. Phys. (2021) in press (arXiv:2101.03618)
 
     2) https://github.com/giubuig/DisjointCliqueCover.jl
     """
+
     def __init__(self):
-        self._m0 : int = 2
+        self._m0: int = 2
         super().__init__()
 
     def set_max_clique_size(self, m0: int) -> None:
@@ -50,7 +53,8 @@ class EECC(Network):
             clique_size = len(C[c])
             if clique_size > self._m0:
                 indxs.append(c)
-                for nc in sorted(combinations(C[c],self._m0)): # sort by first element of sublist
+                # sort by first element of sublist
+                for nc in sorted(combinations(C[c], self._m0)):
                     C.append(nc)
             else:
                 C[c] = sorted(C[c])
@@ -64,16 +68,15 @@ class EECC(Network):
         for i, c in enumerate(C):
             C[i] = sorted(c)
 
-        return sorted(C, key=lambda x: (-len(x), x[0], x[1]) if len(x) > 1  else (-len(x), x[0], 0))
+        return sorted(
+            C, key=lambda x: (-len(x), x[0], x[1]) if len(x) > 1 else (-len(x), x[0], 0)
+        )
 
-
-    def compute_scores(self, C: list,
-                             EC : list,
-                             ord : list,
-                             r : list,
-                             indexes : list) -> None:
+    def compute_scores(
+        self, C: list, EC: list, ord: list, r: list, indexes: list
+    ) -> None:
         """
-        Scores the cliques in list C in the network G and includes those of score zero in the 
+        Scores the cliques in list C in the network G and includes those of score zero in the
         cover EC. The higher the score
         :param C: set of maximal clique
         :param EC: EECC cover
@@ -83,41 +86,41 @@ class EECC(Network):
         """
         num_cliques = len(C)
         for c in range(num_cliques):
-            
-            order = len(C[c])   # num vertives in clique
-            C[c] = sorted(C[c]) # sort vertices
-            ord[c] = order      # set size
-            
+
+            order = len(C[c])  # num vertives in clique
+            C[c] = sorted(C[c])  # sort vertices
+            ord[c] = order  # set size
+
             if order > 2:
 
-                size = binom(order,2) # number of edges in clique of size order
+                size = binom(order, 2)  # number of edges in clique of size order
 
-                for i in range(order): # for each vertex pair in clique (i.e. edges)
-                    for j in range(i+1,order):
+                for i in range(order):  # for each vertex pair in clique (i.e. edges)
+                    for j in range(i + 1, order):
 
                         f = 0
                         n = 0
                         # iterate all cliques and see if *this* edge (i,j)
                         # is a part of other cliques or not
-                        while n <= num_cliques-1:
-                            if n != c and set([C[c][i],C[c][j]]).issubset(C[n]):
+                        while n <= num_cliques - 1:
+                            if n != c and set([C[c][i], C[c][j]]).issubset(C[n]):
                                 f = 1
                                 break
                             else:
-                                n+=1
+                                n += 1
 
                         if f == 1:
                             # increase the score for the overlapping edge
-                            r[c] += 1.0/size
+                            r[c] += 1.0 / size
 
-            # if score is zero, add the clique to the cover      
+            # if score is zero, add the clique to the cover
             if r[c] == 0:
                 EC.append(C[c])
                 indexes.append(c)
 
     def get_EECC(self) -> None:
         """
-        Calculate the edge-disjoint edge clique cover (EECC) of a graph G considering 
+        Calculate the edge-disjoint edge clique cover (EECC) of a graph G considering
         cliques of order up to m0, according to the heuristic proposed in reference (1).
         :param G: graph
         :param m0: int for maximum order of the cliques to consider
@@ -125,13 +128,13 @@ class EECC(Network):
         """
 
         C = self.limited_maximal_cliques()
-        num_cliques : int = len(C)
-        ord : list= [0] * num_cliques
-        r : list = [0.0] * num_cliques
-        EC : list = []
+        num_cliques: int = len(C)
+        ord: list = [0] * num_cliques
+        r: list = [0.0] * num_cliques
+        EC: list = []
 
         indexes_score0 = []
-        self.compute_scores(C,EC,ord,r,indexes_score0)
+        self.compute_scores(C, EC, ord, r, indexes_score0)
 
         len_ = len(C)
         idxs = set(range(len_)) - set(indexes_score0)
@@ -150,20 +153,20 @@ class EECC(Network):
         for c in range(len(EC)):
             order = len(EC[c])
             for i in range(order):
-                for j in range(i+1,order):
-                    self.remove_edge(EC[c][i],EC[c][j])
+                for j in range(i + 1, order):
+                    self.remove_edge(EC[c][i], EC[c][j])
 
         while self.has_edges():
             # find (one of) the largest clique(s) with the minimum score, include it in EECC
 
             # get smallest score
-            min_r : float = min(r)
+            min_r: float = min(r)
 
-            # get indices of all smallest scoring cliques 
+            # get indices of all smallest scoring cliques
             min_r_set = [idx for idx, element in enumerate(r) if element == min_r]
-            
+
             # find size of largest clique of the smallest scoring cliques
-            max_ord : int = -1
+            max_ord: int = -1
             for idx in min_r_set:
                 if ord[idx] > max_ord:
                     max_ord = ord[idx]
@@ -171,7 +174,7 @@ class EECC(Network):
             # construct a list of lowest-scoring, largest sized cliques
             indexes_to_sample = [idx for idx in min_r_set if ord[idx] == max_ord]
 
-            # stochastic part of algorithm 
+            # stochastic part of algorithm
             idx = choice(indexes_to_sample)
 
             # the selected clique to include in the EECC
@@ -180,9 +183,9 @@ class EECC(Network):
 
             # remove the clique from the graph
             for i in range(max_ord):
-                for j in range(i+1,max_ord):
+                for j in range(i + 1, max_ord):
                     # assumes edges are ordered i < j
-                    self.remove_edge(cli[i],cli[j])
+                    self.remove_edge(cli[i], cli[j])
 
             C = self.limited_maximal_cliques()
 
@@ -193,7 +196,7 @@ class EECC(Network):
             indexes_score0 = []
 
             self.compute_scores(C, EC, ord, r, indexes_score0)
-            
+
             # Removing those cliques with score zero from C, r and G_
             len_ = len(C)
             idxs = set(range(len_)) - set(indexes_score0)
@@ -206,7 +209,6 @@ class EECC(Network):
                 ordtemp.append(ord[i])
                 rtemp.append(r[i])
 
-
             C = Ctemp
             ord = ordtemp
             r = rtemp
@@ -214,7 +216,7 @@ class EECC(Network):
                 order = len(EC[c])
 
                 for i in range(order):
-                    for j in range(i+1,order):
-                        self.remove_edge(EC[c][i],EC[c][j])
+                    for j in range(i + 1, order):
+                        self.remove_edge(EC[c][i], EC[c][j])
 
         return sorted(EC, key=lambda x: (-len(x), x[0], x[1]))

@@ -1,8 +1,8 @@
-
 from abc import ABC, abstractmethod
 from typing import Any, Generator
 
 from gcmpy.names.gcm_algorithm_names import GCMAlgorithmNames
+
 
 class GCMAlgorithm(ABC):
     """
@@ -11,10 +11,11 @@ class GCMAlgorithm(ABC):
     :param build_functions: callbacks that accept list of nodes and return edges
     :param edge_names: list of names for edge topologies
     """
-    _motif_sizes: list                      # list of number of nodes in each motif
-    _build_functions: list                  # list of callbacks for motif construction 
-    _edge_names: list                       # list of edge topology names
-    
+
+    _motif_sizes: list  # list of number of nodes in each motif
+    _build_functions: list  # list of callbacks for motif construction
+    _edge_names: list  # list of edge topology names
+
     def __init__(self, params: dict):
         try:
             self._motif_sizes = params[GCMAlgorithmNames.MOTIF_SIZES]
@@ -23,7 +24,7 @@ class GCMAlgorithm(ABC):
         except Exception as e:
             raise (f"Error in {self.__class__.__name__}: {e}")
 
-    def __new__(cls,*args,**kwargs):
+    def __new__(cls, *args, **kwargs):
         if cls is GCMAlgorithm:
             raise TypeError(
                 "The GCMAlgorithm class is abstract and may not be instantiated"
@@ -32,7 +33,7 @@ class GCMAlgorithm(ABC):
 
     @abstractmethod
     def random_clustered_graph(self, jds: list) -> Any:
-        raise NotImplementedError (
+        raise NotImplementedError(
             "Error attempting to call virtual method on GCMAlgorithm: random_clustered_graph"
         )
 

@@ -1,4 +1,3 @@
-
 import networkx as nx
 
 from gcmpy.network.edge_list import LightWeightEdgeList
@@ -17,21 +16,17 @@ class ConvertEdgeListToNetwork:
         joint_degrees = {}
         for n, jd in enumerate(edgelist.joint_degrees):
             joint_degrees[n] = jd
-        nx.set_node_attributes(
-            model.G, joint_degrees, NetworkNames.JOINT_DEGREE
-        )
+        nx.set_node_attributes(model.G, joint_degrees, NetworkNames.JOINT_DEGREE)
         # create edge attributes dict
         topologies = {}
         motif_ids = {}
-        for e, name, motif_id in zip(edgelist.edge_list, edgelist.topologies, edgelist.motif_id):
+        for e, name, motif_id in zip(
+            edgelist.edge_list, edgelist.topologies, edgelist.motif_id
+        ):
             topologies[e] = name
             motif_ids[e] = motif_id
 
-        nx.set_edge_attributes(
-            model.G, topologies, NetworkNames.TOPOLOGY
-        )
-        nx.set_edge_attributes(
-            model.G, motif_ids, NetworkNames.MOTIF_IDS
-        )
+        nx.set_edge_attributes(model.G, topologies, NetworkNames.TOPOLOGY)
+        nx.set_edge_attributes(model.G, motif_ids, NetworkNames.MOTIF_IDS)
 
         return model

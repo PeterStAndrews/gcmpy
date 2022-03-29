@@ -1,7 +1,4 @@
-
-
 class AverageJointDegreeFromJDD:
-    
     @staticmethod
     def get_average_joint_degrees(jdd: dict) -> list:
         joint_degrees = list(jdd.keys())
@@ -11,6 +8,3 @@ class AverageJointDegreeFromJDD:
             for index in range(num_topologies):
                 average_degrees[index] += joint_degree[index] * jdd[joint_degree]
         return average_degrees
-        
-
-

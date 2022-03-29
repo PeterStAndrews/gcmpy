@@ -1,5 +1,5 @@
-
 from gcmpy.tools.average_joint_degree_from_jdd import AverageJointDegreeFromJDD
+
 
 class JointExcessDDfromJDD:
     @staticmethod
@@ -8,7 +8,7 @@ class JointExcessDDfromJDD:
         qks = []
 
         averages = AverageJointDegreeFromJDD.get_average_joint_degrees(jdd)
-        
+
         joint_degrees = list(jdd.keys())
         num_topologies: int = len(joint_degrees[0])
         for index in range(num_topologies):
@@ -17,9 +17,9 @@ class JointExcessDDfromJDD:
                 _joint_degree = list(joint_degree)
                 if _joint_degree[index] > 0:
                     _joint_degree[index] -= 1
-                    q[tuple(_joint_degree)] = ((
-                        (_joint_degree[index] + 1) * jdd[joint_degree] + 0.0) / averages[index]
-                    )
+                    q[tuple(_joint_degree)] = (
+                        (_joint_degree[index] + 1) * jdd[joint_degree] + 0.0
+                    ) / averages[index]
             qks.append(q)
         return qks
 
@@ -28,7 +28,7 @@ class JointExcessDDfromJDD:
         """
         Static method to convert a list of dicts to dict of dicts
         :param qks_list: list of excess degree distributions
-        :param keys: list of topologies 
+        :param keys: list of topologies
         :returns dict: converted dict object
         """
         qks_dict = {}
@@ -48,9 +48,3 @@ class JointExcessDDfromJDD:
         for key in keys:
             qks_list.append(qks_dict[key])
         return qks_list
-
-
-
-
-
-
