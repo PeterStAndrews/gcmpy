@@ -31,8 +31,8 @@ class GCMAlgorithmFastTest(unittest.TestCase):
             ).random_clustered_graph(jds)
 
         num_edges = sum([k[0] for k in jds]) / 2.0
-
-        self.assertTrue(num_edges - 2 <= len(g._edge_list) <= num_edges + 2)
+        tolerance = num_edges / 500
+        self.assertTrue(num_edges - tolerance <= len(g._edge_list) <= num_edges + tolerance)
 
     def test_two_topologies(self):
 
@@ -56,7 +56,7 @@ class GCMAlgorithmFastTest(unittest.TestCase):
         num_3_clique_edges = sum([k[1] for k in jds])
         num_expected_edges = num_2_clique_edges + num_3_clique_edges
         
-        # assert that random graph has +- 0.1% of expected edges
+        # assert that random graph has +- 1% of expected edges
         tolerance = num_expected_edges / 100.0
 
         x: int = len(g._edge_list)
