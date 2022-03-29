@@ -10,6 +10,9 @@ gcmpy: Generalised Configuration Model random graphs in Python
 .. image:: https://github.com/PeterStAndrews/gcmpy/actions/workflows/ci.yml/badge.svg
      :target: hhttps://github.com/PeterStAndrews/gcmpy/actions/workflows/ci.yml
 
+.. image:: https://static.pepy.tech/personalized-badge/gcmpy?period=total&units=international_system&left_color=black&right_color=green&left_text=Downloads
+    :target: https://pepy.tech/project/gcmpy
+
 Overview
 --------
 

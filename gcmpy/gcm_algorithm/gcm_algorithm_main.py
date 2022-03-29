@@ -2,6 +2,7 @@
 from gcmpy.gcm_algorithm.gcm_algorithm_types import GCMAlgorithmTypes
 from gcmpy.gcm_algorithm.gcm_algorithm_factory import GCMAlgorithmFactory
 from gcmpy.gcm_algorithm.gcm_algorithm import GCMAlgorithm
+from gcmpy.names.gcm_algorithm_names import GCMAlgorithmNames
 
 class GeneralisedConfigurationModel:
     """
@@ -14,8 +15,8 @@ class GeneralisedConfigurationModel:
     @staticmethod
     def load_gcm_algorithm(params: dict) -> GCMAlgorithm:
         try:
-            input_type = GCMAlgorithmTypes(params["GCM_type"])
+            input_type = GCMAlgorithmTypes(params[GCMAlgorithmNames.GCM_TYPE])
             loader: GCMAlgorithm = GCMAlgorithmFactory.resolve_algorithm(input_type,params)
             return loader
         except Exception as e:
-            raise(f"Error instantiating eneralisedConfigurationModel: {e}")
+            raise(f"Error instantiating GeneralisedConfigurationModel: {e}")

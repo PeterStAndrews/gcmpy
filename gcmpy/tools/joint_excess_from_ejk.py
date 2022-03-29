@@ -1,5 +1,7 @@
 
 
+from gcmpy.tools.joint_excess_joint_degree_matrices import JointExcessJointDegreeMatrices
+
 class JointExcessDDFromEjk:
     """
     Extracts the joint excess degree distributions from a 
@@ -8,17 +10,19 @@ class JointExcessDDFromEjk:
     """
     @staticmethod
     def get_excess_joint_distributions(
-        ejks: list[dict], excess_degree_keys: list[list]
-    ) -> list[dict]:
+        ejks: JointExcessJointDegreeMatrices
+    ) -> dict[dict]:
 
-        if len(ejks) != len(excess_degree_keys):
+        if len(ejks._ejks) != len(ejks.excess_degree_keys):
             raise('Error in JointExcessDDFromEjk: incorrect ejk or keys provided')
 
-        qks: list = []
-        for ejk, keys in zip(ejks,excess_degree_keys):
+        qks: dict = {}
+        for key in ejks._ejks:
+            ejk = ejks._ejks[key]
+            keys = ejks._excess_degree_keys[key]
             q = {}
             for left_key in keys:
                 for right_key in keys:
                     q[left_key] = q.get(left_key, 0.0) + ejk[left_key+right_key]
-            qks.append(q)
+            qks[key] = q
         return qks

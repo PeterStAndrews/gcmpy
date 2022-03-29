@@ -5,6 +5,7 @@ class LightWeightEdgeList:
     _edge_list: list = []
     _topologies: list = []
     _joint_degrees: list = []
+    _motif_id: list = []
 
     @property
     def edge_list(self) -> list:
@@ -26,3 +27,10 @@ class LightWeightEdgeList:
     @joint_degrees.setter
     def joint_degrees(self, value: list) -> None:
         self._joint_degrees = value
+
+    @property
+    def motif_id(self) -> list:
+        return self._motif_id
+    @motif_id.setter
+    def motif_id(self, value: list) -> None:
+        self._motif_id = value

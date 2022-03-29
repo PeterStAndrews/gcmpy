@@ -2,6 +2,7 @@
 
 import unittest
 from gcmpy.gcm_algorithm.gcm_algorithm_motifs import GCMAlgorithmCustomMotifs
+from gcmpy.names.gcm_algorithm_names import GCMAlgorithmNames
 
 class GCMAlgorithmCustomMotifsTest(unittest.TestCase):
 
@@ -39,17 +40,17 @@ class GCMAlgorithmCustomMotifsTest(unittest.TestCase):
         params = {}
 
         # number of vertices of this orbit in motif
-        params["motif_sizes"] = [2,3,2,2,2,2,1] 
+        params[GCMAlgorithmNames.MOTIF_SIZES] = [2,3,2,2,2,2,1] 
 
         # function callbacks to return names of edges
-        params["edge_names"] = [twoclique_names,threeclique_names,diamond_names,pentagon_in_manuscript_names] 
+        params[GCMAlgorithmNames.EDGE_NAMES] = [twoclique_names,threeclique_names,diamond_names,pentagon_in_manuscript_names] 
 
         # function callbacks to return the edges
-        params["build_functions"] = [twoclique,threeclique,diamond,pentagon_in_manuscript]
+        params[GCMAlgorithmNames.BUILD_FUNCTIONS] = [twoclique,threeclique,diamond,pentagon_in_manuscript]
 
         # indices of joint degree tuple that belong to each motif
         # in this case, 2-clique, 3-clique, diamond and pentagon cycle with chord (1,3)
-        params["motif_indices"] = [[0],[1],[2,3],[4,5,6]]
+        params[GCMAlgorithmNames.MOTIF_INDICES] = [[0],[1],[2,3],[4,5,6]]
   
         es = GCMAlgorithmCustomMotifs(
             params

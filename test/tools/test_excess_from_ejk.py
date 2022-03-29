@@ -1,22 +1,15 @@
 
 
 import unittest
-
-from gcmpy.joint_degree.joint_degree_types import JointDegreeType
-from gcmpy.joint_degree.joint_degree_distribution import JointDegreeDistribution
-from gcmpy.joint_degree.joint_degree import JointDegree
-
-from gcmpy.motif_generators.clique_motif import clique_motif
-from gcmpy.gcm_algorithm.gcm_algorithm_network import GCMAlgorithmNetwork
-
 from gcmpy.tools.joint_excess_from_ejk import JointExcessDDFromEjk
-from gcmpy.tools.joint_excess_joint_degree import JointExcessJointDegreeDistribution
+from gcmpy.tools.joint_excess_joint_degree_matrices import JointExcessJointDegreeMatrices
+
 
 NETWORK_SIZE: int = 100000
 
 class ExcessFromEjkTest(unittest.TestCase):
 
-    def test_excess_from_ejk(self):
+    def test_excess_qk_from_ejk(self):
 
         ejk_tree = {(0,3,0,3): 1/81, (0,3,4,1):  5/81, (0,3,2,2): 3/81,
                     (4,1,0,3): 5/81, (4,1,4,1): 25/81, (4,1,2,2): 15/81,
@@ -28,13 +21,14 @@ class ExcessFromEjkTest(unittest.TestCase):
                         (5,0,3,1): 8/144,  (5,0,1,2): 12/144, (5,0,5,0): 4/144
         }
 
-        ejks: list[dict] = [ejk_tree, ejk_triangle]
-        qks = JointExcessDDFromEjk.get_excess_joint_distributions(
-            ejks, [[(0,3),(4,1),(2,2)], [(3,1),(1,2),(5,0)]]
-        )
+        ejk = JointExcessJointDegreeMatrices()
+        ejk._ejks = {'2-clique': ejk_tree, '3-clique': ejk_triangle}
+        ejk._excess_degree_keys = {'2-clique': [(0,3),(4,1),(2,2)], '3-clique': [(3,1),(1,2),(5,0)]}
 
-        q_tree_test = qks[0]
-        q_triangle_test = qks[1]
+        qks = JointExcessDDFromEjk.get_excess_joint_distributions(ejk)
+
+        q_tree_test = qks['2-clique']
+        q_triangle_test = qks['3-clique']
 
         q_tree_theoretical = { (0,3): 0.1111111111111111 ,
                                   (4,1): 0.5555555555555556 ,

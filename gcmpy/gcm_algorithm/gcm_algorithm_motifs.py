@@ -1,10 +1,10 @@
 
 import random
-from iteration_utilities import grouper
 from itertools import chain,repeat,starmap
 
 from gcmpy.gcm_algorithm.gcm_algorithm import GCMAlgorithm
 from gcmpy.network.edge_list import LightWeightEdgeList
+from gcmpy.names.gcm_algorithm_names import GCMAlgorithmNames
 
 class GCMAlgorithmCustomMotifs(GCMAlgorithm):
 
@@ -12,12 +12,12 @@ class GCMAlgorithmCustomMotifs(GCMAlgorithm):
 
     def __init__(self, params: dict):
         try:
-            self._motif_indices = params["motif_indices"]
+            self._motif_indices = params[GCMAlgorithmNames.MOTIF_INDICES]
             super().__init__(params)
         except Exception as e:
-            raise (f"Error in GCMAlgorithmMotifs: {e}")
+            raise (f"Error in {self.__class__.__name__}: {e}")
 
-    def partition(self, lst: list, n: int):
+    def partition(self, lst: list, n: int) -> list:
         """
         Yield successive n-sized partitions from list.
         Silent if lst % n != 0.
@@ -40,7 +40,7 @@ class GCMAlgorithmCustomMotifs(GCMAlgorithm):
         # split the stub lists into partitions of equal 
         # size to the number of that topology required to
         # construct the motif
-        partitions: list = []
+        partitions: list[list] = []
         for i, k_list in enumerate(stubs):
             partitions.append(self.partition(k_list,self._motif_sizes[i]))
         
@@ -48,6 +48,8 @@ class GCMAlgorithmCustomMotifs(GCMAlgorithm):
         # the indices of the joint degree slots required to construct 
         # the motif. 
     
+        gen = self.infinite_sequence()
+
         # for each motif type
         for j,motif_indexes in enumerate(self._motif_indices):
         
@@ -66,12 +68,17 @@ class GCMAlgorithmCustomMotifs(GCMAlgorithm):
                 # build the motif edges from the vertices
                 es: list = self._build_functions[j](vertices)
                 
+                # get the motif id
+                id = next(gen)
+                EdgeList.motif_id.extend([id]*len(es))
+                
                 if len(es) == 2:
                     # if 2-clique tuple annoyingly unpacks ... so re-pack it
                     EdgeList.edge_list.extend([es])
                     EdgeList.topologies.extend([self._edge_names[j]()])
+                    
                 else:
                     EdgeList.edge_list.extend(es)
                     EdgeList.topologies.extend(self._edge_names[j]())
-                    
+
         return EdgeList

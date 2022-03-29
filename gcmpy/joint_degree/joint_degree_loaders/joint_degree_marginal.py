@@ -5,6 +5,7 @@ import random
 
 from gcmpy.joint_degree.joint_degree import JointDegree
 from gcmpy.joint_degree.joint_degree_types import JointDegreeType
+from gcmpy.names.joint_degree_names import JointDegreeNames
 
 class JointDegreeMarginal(JointDegree):
     
@@ -28,17 +29,17 @@ class JointDegreeMarginal(JointDegree):
 
     def __init__(self, params: dict):
         try:
-            self._motif_sizes = params["motif_sizes"]
-            self._arr_fp = params["arr_fp"]
-            self._low_high_degree_bounds = params["low_high_degree_bounds"]
+            self._motif_sizes = params[JointDegreeNames.MOTIF_SIZES]
+            self._arr_fp = params[JointDegreeNames.ARR_FP]
+            self._low_high_degree_bounds = params[JointDegreeNames.LOW_HIGH_DEGREE_BOUND]
         except Exception as e:
             raise(f"Error instantiating {self.__class__.__name__}: {e}")
 
         # default not to use sampling method
-        if "use_sampling" in params:
-            self._use_sampling = params["use_sampling"]
-        if "n_samples" in params:
-            self._n_samples = params["n_samples"]
+        if JointDegreeNames.USE_SAMPLING in params:
+            self._use_sampling = params[JointDegreeNames.USE_SAMPLING]
+        if JointDegreeNames.N_SAMPLES in params:
+            self._n_samples = params[JointDegreeNames.N_SAMPLES]
         self.create_jdd()
 
     def create_jdd(self) -> None:

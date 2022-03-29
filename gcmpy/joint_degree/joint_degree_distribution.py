@@ -3,7 +3,7 @@
 from gcmpy.joint_degree.joint_degree_types import JointDegreeType
 from gcmpy.joint_degree.joint_degree import JointDegree
 from gcmpy.joint_degree.joint_degree_factory import JointDegreeFactory
-
+from gcmpy.names.joint_degree_names import JointDegreeNames
 
 class JointDegreeDistribution:
     """
@@ -15,7 +15,7 @@ class JointDegreeDistribution:
     @staticmethod
     def load_joint_degree(params: dict) -> JointDegree:
         try:
-            input_type = JointDegreeType(params["joint_degree_type"])
+            input_type = JointDegreeType(params[JointDegreeNames.JOINT_DEGREE_TYPE])
         except Exception as e:
             raise(f"Error instantiating JointDegreeDistribution: {e}")
         loader: JointDegree = JointDegreeFactory.resolve_joint_degree(input_type,params)

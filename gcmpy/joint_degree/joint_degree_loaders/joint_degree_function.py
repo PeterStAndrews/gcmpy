@@ -3,6 +3,7 @@ from itertools import product
 
 from gcmpy.joint_degree.joint_degree import JointDegree
 from gcmpy.joint_degree.joint_degree_types import JointDegreeType
+from gcmpy.names.joint_degree_names import JointDegreeNames
 
 class JointDegreeFunction(JointDegree):
     """
@@ -19,9 +20,9 @@ class JointDegreeFunction(JointDegree):
 
     def __init__(self, param: dict): 
         try:
-            self._motif_sizes = param["motif_sizes"]
-            self._fp = param["fp"]
-            self._low_high_degree_bounds = param["low_high_degree_bounds"]
+            self._motif_sizes = param[JointDegreeNames.MOTIF_SIZES]
+            self._fp = param[JointDegreeNames.FP]
+            self._low_high_degree_bounds = param[JointDegreeNames.LOW_HIGH_DEGREE_BOUND]
         except Exception as e:
             raise(f"Error instantiating {self.__class__.__name__}: {e}")
         

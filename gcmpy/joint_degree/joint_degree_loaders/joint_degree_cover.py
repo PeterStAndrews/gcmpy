@@ -1,6 +1,7 @@
 
 from gcmpy.joint_degree.joint_degree import JointDegree
 from gcmpy.joint_degree.joint_degree_types import JointDegreeType
+from gcmpy.names.joint_degree_names import JointDegreeNames
 
 class JointDegreeCover(JointDegree):
     
@@ -15,7 +16,7 @@ class JointDegreeCover(JointDegree):
 
     def __init__(self, params: dict):
         try:
-            self._cover = params["cover"]
+            self._cover = params[JointDegreeNames.COVER]
         except Exception as e:
             raise(f"Error instantiating {self.__class__.__name__}: {e}")
             

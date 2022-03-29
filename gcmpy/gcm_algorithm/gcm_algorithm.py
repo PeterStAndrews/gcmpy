@@ -1,6 +1,8 @@
 
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, Generator
+
+from gcmpy.names.gcm_algorithm_names import GCMAlgorithmNames
 
 class GCMAlgorithm(ABC):
     """
@@ -15,11 +17,11 @@ class GCMAlgorithm(ABC):
     
     def __init__(self, params: dict):
         try:
-            self._motif_sizes = params["motif_sizes"]
-            self._build_functions = params["build_functions"]
-            self._edge_names = params["edge_names"]
+            self._motif_sizes = params[GCMAlgorithmNames.MOTIF_SIZES]
+            self._build_functions = params[GCMAlgorithmNames.BUILD_FUNCTIONS]
+            self._edge_names = params[GCMAlgorithmNames.EDGE_NAMES]
         except Exception as e:
-            raise (f"Error in GCMAlgorithm: {e}")
+            raise (f"Error in {self.__class__.__name__}: {e}")
 
     def __new__(cls,*args,**kwargs):
         if cls is GCMAlgorithm:
@@ -33,3 +35,9 @@ class GCMAlgorithm(ABC):
         raise NotImplementedError (
             "Error attempting to call virtual method on GCMAlgorithm: random_clustered_graph"
         )
+
+    def infinite_sequence(self) -> Generator:
+        num = 0
+        while True:
+            yield num
+            num += 1

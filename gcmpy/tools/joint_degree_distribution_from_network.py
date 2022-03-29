@@ -1,5 +1,6 @@
 
 import networkx as nx
+from gcmpy.names.network_names import NetworkNames
 
 class JointDegreeDistributionFromNetwork:
     @staticmethod   
@@ -16,7 +17,7 @@ class JointDegreeDistributionFromNetwork:
     
         PK = {}
         for n in G.nodes():
-            key = tuple(G.nodes[n]['joint_degree'])
+            key = tuple(G.nodes[n][NetworkNames.JOINT_DEGREE])
             PK[key] = PK.get(key,0) + (1.0 / num_vertices)
   
         return PK

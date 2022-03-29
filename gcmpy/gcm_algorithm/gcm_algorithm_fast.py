@@ -1,5 +1,4 @@
 
-
 import random
 from iteration_utilities import grouper
 from itertools import chain,repeat,starmap
@@ -22,7 +21,9 @@ class FastGCMAlgorithm(GCMAlgorithm):
         EdgeList = LightWeightEdgeList()
         EdgeList.joint_degrees = jds
 
-        #for each topology list ...
+        gen = self.infinite_sequence()
+
+        # for each topology list ...
         for k, k_list in enumerate(stubs):
            
             # iterate the degree list
@@ -35,6 +36,10 @@ class FastGCMAlgorithm(GCMAlgorithm):
                 EdgeList.topologies.extend(
                     [self._edge_names[k]]*len(es)
                 )
+
+                # record the motif id
+                id = next(gen)
+                EdgeList.motif_id.extend([id]*len(es))
 
         # return the graph model as a LightWeightEdgeList
         return EdgeList
