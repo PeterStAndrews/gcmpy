@@ -28,8 +28,11 @@ joint distribution is sampled to obtain a joint degree sequence. The joint
 sequence is then used in the GCM algorithm to create a networkx graph. It can 
 also be used to create an edge list directly, which is significantly faster.
 
-Networks can be given storage tags to classify the properties for database 
-look-up. 
+There is also a tools library for obtaining useful quantities from the network
+as well as converting a joint degree distribution into excess joint degree 
+distributions and vice versa, for example. We also provide an MCMC rewiring algorithm 
+to stochastically rewire a synthetic network's correlations structure to a  
+target joint excess joint degree distributions. 
 
 Installation
 ------------
