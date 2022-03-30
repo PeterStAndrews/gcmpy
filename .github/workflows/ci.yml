@@ -1,3 +1,4 @@
+
 name: Run Test Suite
 on:
   push:
@@ -8,8 +9,9 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
-      - name: Run testsuite
       - uses: actions/checkout@v2
+      - name: Install Python 3
+        uses: actions/setup-python@v1
         with:
           python-version: 3.9
       - name: Install dependencies
