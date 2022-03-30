@@ -9,3 +9,5 @@ COPY gcmpy /opt/gcmpy/gcmpy
 RUN pip3 install -r /opt/gcmpyrequirements.txt
 
 RUN python3 /opt/gcmpy/setup.py install
+
+ENTRYPOINT [ "python3 -m unittest discover -v -s test/ -p 'test_*.py'" ]

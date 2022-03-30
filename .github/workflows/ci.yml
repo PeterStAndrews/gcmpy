@@ -9,6 +9,6 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Run testsuite
-        using: 'docker'
-        image: 'Dockerfile'
-        run: python3 -m unittest discover -v -s test/ -p 'test_*.py'
+        runs:
+          using: 'docker'
+          image: 'Dockerfile'
