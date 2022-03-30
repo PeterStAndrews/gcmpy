@@ -20,11 +20,7 @@
 
 from setuptools import find_packages, setup
 
-import os
-cwd: str = os.path.abspath(os.getcwd())
-path: str = cwd + "/gcmpy/version.py"
-with open(path) as f:
-    exec(f.read())
+__version__ = "0.1.3"
 
 with open('README.rst') as f:
     longDescription = f.read()
