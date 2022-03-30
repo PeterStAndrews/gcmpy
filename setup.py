@@ -18,7 +18,7 @@
 # along with gcmpy. If not, see <http://www.gnu.org/licenses/gpl.html>.
 
 
-from setuptools import setup
+from setuptools import find_packages, setup
 
 with open('gcmpy/version.py') as f:
     exec(f.read())
@@ -40,7 +40,8 @@ setup(name = 'gcmpy',
                       'Programming Language :: Python :: 3.9',
                       'Topic :: Scientific/Engineering' ],
       python_requires = '>=3.8',
-      packages = [ 'gcmpy' ],
+      packages = find_packages(where="gcmpy"),
+      package_dir={"": "gcmpy"},
       package_data = { 'gcmpy': [ 'py.typed' ] },
       zip_safe = False,
       install_requires = ["numpy >= 1.21.4"],
