@@ -1,54 +1,54 @@
 
 
-from .names.joint_degree_names import JointDegreeNames
-from .names.network_names import NetworkNames
-from .names.tools_names import ToolsNames
-from .names.gcm_algorithm_names import GCMAlgorithmNames
+from gcmpy.names.joint_degree_names import JointDegreeNames
+from gcmpy.names.network_names import NetworkNames
+from gcmpy.names.tools_names import ToolsNames
+from gcmpy.names.gcm_algorithm_names import GCMAlgorithmNames
 
-from .network.network import Network
-from .network.edge_list import LightWeightEdgeList
-from .network.edge_list_to_network import ConvertEdgeListToNetwork
-from .network.network_to_edge_list import NetworkToEdgeList
+from gcmpy.network.network import Network
+from gcmpy.network.edge_list import LightWeightEdgeList
+from gcmpy.network.edge_list_to_network import ConvertEdgeListToNetwork
+from gcmpy.network.network_to_edge_list import NetworkToEdgeList
 
-from .joint_degree.joint_degree import JointDegree
-from .joint_degree.joint_degree_types import JointDegreeType
-from .joint_degree.joint_degree_factory import JointDegreeFactory
-from .joint_degree.joint_degree_distribution import JointDegreeDistribution
-from .joint_degree.joint_degree_loaders.joint_degree_manual import JointDegreeManual
-from .joint_degree.joint_degree_loaders.joint_degree_marginal import JointDegreeMarginal
-from .joint_degree.joint_degree_loaders.joint_degree_empirical import JointDegreeEmpirical
-from .joint_degree.joint_degree_loaders.joint_degree_cover import JointDegreeCover
-from .joint_degree.joint_degree_loaders.joint_degree_delta import JointDegreeDelta
-from .joint_degree.joint_degree_loaders.joint_degree_split_degree import JointDegreeSplitDegree
-from .joint_degree.joint_degree_loaders.joint_degree_function import JointDegreeFunction
+from gcmpy.joint_degree.joint_degree import JointDegree
+from gcmpy.joint_degree.joint_degree_types import JointDegreeType
+from gcmpy.joint_degree.joint_degree_factory import JointDegreeFactory
+from gcmpy.joint_degree.joint_degree_distribution import JointDegreeDistribution
+from gcmpy.joint_degree.joint_degree_loaders.joint_degree_manual import JointDegreeManual
+from gcmpy.joint_degree.joint_degree_loaders.joint_degree_marginal import JointDegreeMarginal
+from gcmpy.joint_degree.joint_degree_loaders.joint_degree_empirical import JointDegreeEmpirical
+from gcmpy.joint_degree.joint_degree_loaders.joint_degree_cover import JointDegreeCover
+from gcmpy.joint_degree.joint_degree_loaders.joint_degree_delta import JointDegreeDelta
+from gcmpy.joint_degree.joint_degree_loaders.joint_degree_split_degree import JointDegreeSplitDegree
+from gcmpy.joint_degree.joint_degree_loaders.joint_degree_function import JointDegreeFunction
 
-from .motif_generators.clique_motif import clique_motif
-from .motif_generators.cycle_motif import cycle_motif
-from .motif_generators.diamond_motif import diamond_motif
+from gcmpy.motif_generators.clique_motif import clique_motif
+from gcmpy.motif_generators.cycle_motif import cycle_motif
+from gcmpy.motif_generators.diamond_motif import diamond_motif
 
-from .gcm_algorithm.gcm_algorithm import GCMAlgorithm
-from .gcm_algorithm.gcm_algorithm_factory import GCMAlgorithmFactory
-from .gcm_algorithm.gcm_algorithm_fast import FastGCMAlgorithm
-from .gcm_algorithm.gcm_algorithm_main import GeneralisedConfigurationModel
-from .gcm_algorithm.gcm_algorithm_motifs import GCMAlgorithmCustomMotifs
-from .gcm_algorithm.gcm_algorithm_network import GCMAlgorithmNetwork
-from .gcm_algorithm.gcm_algorithm_types import GCMAlgorithmTypes
+from gcmpy.gcm_algorithm.gcm_algorithm import GCMAlgorithm
+from gcmpy.gcm_algorithm.gcm_algorithm_factory import GCMAlgorithmFactory
+from gcmpy.gcm_algorithm.gcm_algorithm_fast import FastGCMAlgorithm
+from gcmpy.gcm_algorithm.gcm_algorithm_main import GeneralisedConfigurationModel
+from gcmpy.gcm_algorithm.gcm_algorithm_motifs import GCMAlgorithmCustomMotifs
+from gcmpy.gcm_algorithm.gcm_algorithm_network import GCMAlgorithmNetwork
+from gcmpy.gcm_algorithm.gcm_algorithm_types import GCMAlgorithmTypes
 
-from .distributions.exponential import exponential
-from .distributions.poisson import poisson
-from .distributions.power_law import power_law
-from .distributions.scale_free_cut_off import scale_free_cut_off
+from gcmpy.distributions.exponential import exponential
+from gcmpy.distributions.poisson import poisson
+from gcmpy.distributions.power_law import power_law
+from gcmpy.distributions.scale_free_cut_off import scale_free_cut_off
 
-from .covers.eecc import EECC
+from gcmpy.covers.eecc import EECC
 
-from .tools.average_joint_degree_from_jdd import AverageJointDegreeFromJDD
-from .tools.joint_degree_distribution_from_network import JointDegreeDistributionFromNetwork
-from .tools.joint_degree_from_excess import JointDDFromExcess
-from .tools.joint_excess_from_ejk import JointExcessDDFromEjk
-from .tools.joint_excess_from_joint_degree import JointExcessDDfromJDD
-from .tools.joint_excess_joint_degree import JointExcessJointDegreeDistribution
-from .tools.joint_excess_joint_degree_matrices import JointExcessJointDegreeMatrices
-from .tools.MCMC_rewiring import MarkovChainMonteCarlo
+from gcmpy.tools.average_joint_degree_from_jdd import AverageJointDegreeFromJDD
+from gcmpy.tools.joint_degree_distribution_from_network import JointDegreeDistributionFromNetwork
+from gcmpy.tools.joint_degree_from_excess import JointDDFromExcess
+from gcmpy.tools.joint_excess_from_ejk import JointExcessDDFromEjk
+from gcmpy.tools.joint_excess_from_joint_degree import JointExcessDDfromJDD
+from gcmpy.tools.joint_excess_joint_degree import JointExcessJointDegreeDistribution
+from gcmpy.tools.joint_excess_joint_degree_matrices import JointExcessJointDegreeMatrices
+from gcmpy.tools.MCMC_rewiring import MarkovChainMonteCarlo
 
 
 

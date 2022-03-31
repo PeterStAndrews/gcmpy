@@ -18,9 +18,9 @@
 # along with gcmpy. If not, see <http://www.gnu.org/licenses/gpl.html>.
 
 
-from setuptools import find_packages, setup
+from setuptools import setup, find_packages
 
-__version__ = "0.1.4"
+__version__ = "0.1.7"
 
 with open('README.rst') as f:
     longDescription = f.read()
