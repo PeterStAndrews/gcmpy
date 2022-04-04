@@ -1,5 +1,5 @@
 from gcmpy.joint_degree.joint_degree import JointDegree
-from gcmpy.joint_degree.joint_degree_types import JointDegreeType
+from gcmpy.joint_degree.joint_degree_type import JointDegreeType
 from gcmpy.names.joint_degree_names import JointDegreeNames
 
 
@@ -26,23 +26,23 @@ class JointDegreeCover(JointDegree):
 
     def create_jdd(self) -> None:
 
-        node_ids = list(set([node for clique in self._cover for node in clique]))
+        vertex_ids = list(set([vertex for clique in self._cover for vertex in clique]))
 
         zero_index = 0
-        if min(node_ids) != zero_index:
+        if min(vertex_ids) != zero_index:
             zero_index = 1
 
         largest_clique = len(max(self._cover, key=len))
 
         jds = []
-        for _ in range(len(node_ids)):
+        for _ in range(len(vertex_ids)):
             jd = [0] * largest_clique
             jds.append(jd)
 
         for c in self._cover:
             clique_size = len(c)
-            for node in c:
-                jds[node - zero_index][clique_size - 1] += 1
+            for vertex in c:
+                jds[vertex - zero_index][clique_size - 1] += 1
 
         # iterate each column of the jds and record the index if all zeros
         indxs = [i for i, top in enumerate(zip(*jds)) if not any(top)]

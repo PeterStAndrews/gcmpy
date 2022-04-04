@@ -4,7 +4,7 @@ from gcmpy.gcm_algorithm.gcm_algorithm import GCMAlgorithm
 from gcmpy.names.gcm_algorithm_names import GCMAlgorithmNames
 
 
-class GeneralisedConfigurationModel:
+class GCMAlgorithmMain:
     """
     Determines the type of GCM algorithm subclass to return. Expects `params`
     dict to contain key `GCM_type` among others additionally required

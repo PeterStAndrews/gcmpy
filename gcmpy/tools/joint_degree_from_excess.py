@@ -1,4 +1,4 @@
-class JointDDFromExcess:
+class JointDegreeFromExcess:
     @staticmethod
     def invert_single(qk: dict, i: int) -> dict:
         """
@@ -23,12 +23,12 @@ class JointDDFromExcess:
     def observations_from_dict(qks: dict[dict], keys: list[str]) -> dict[dict]:
         P_observations = {}
         for i, key in enumerate(keys):
-            P_observations[key] = JointDDFromExcess.invert_single(qks[key], i)
+            P_observations[key] = JointDegreeFromExcess.invert_single(qks[key], i)
         return P_observations
 
     @staticmethod
     def get_joint_degree_distribution(qks: dict[dict], keys: list[str]) -> dict:
-        p_obs: dict[dict] = JointDDFromExcess.observations_from_dict(qks, keys)
+        p_obs: dict[dict] = JointDegreeFromExcess.observations_from_dict(qks, keys)
         # get set of common keys across all observations
         p_obs_list = [p_obs[topology] for topology in p_obs]
         common_keys = list(set.intersection(*map(set, p_obs_list)))

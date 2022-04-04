@@ -1,7 +1,7 @@
 from gcmpy.joint_degree.joint_degree_loaders.joint_degree_split_degree import (
     JointDegreeSplitDegree,
 )
-from gcmpy.joint_degree.joint_degree_types import JointDegreeType
+from gcmpy.joint_degree.joint_degree_type import JointDegreeType
 from gcmpy.names.joint_degree_names import JointDegreeNames
 
 

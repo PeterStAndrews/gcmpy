@@ -3,7 +3,7 @@ from gcmpy.tools.joint_excess_joint_degree_matrices import (
 )
 
 
-class JointExcessDDFromEjk:
+class JointExcessFromEjk:
     """
     Extracts the joint excess degree distributions from a
     list of joint excess joint degree distributions. This is

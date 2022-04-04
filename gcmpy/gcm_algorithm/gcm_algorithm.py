@@ -7,12 +7,12 @@ from gcmpy.names.gcm_algorithm_names import GCMAlgorithmNames
 class GCMAlgorithm(ABC):
     """
     Abstract base class for GCM algorithm. Expects a parameter dict with keys:
-    :param motif_sizes: list of ints that indicate the number of nodes in each motif
-    :param build_functions: callbacks that accept list of nodes and return edges
+    :param motif_sizes: list of ints that indicate the number of vertices in each motif
+    :param build_functions: callbacks that accept list of vertices and return edges
     :param edge_names: list of names for edge topologies
     """
 
-    _motif_sizes: list  # list of number of nodes in each motif
+    _motif_sizes: list  # list of number of vertices in each motif
     _build_functions: list  # list of callbacks for motif construction
     _edge_names: list  # list of edge topology names
 

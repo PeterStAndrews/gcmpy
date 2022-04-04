@@ -5,14 +5,14 @@ from gcmpy.network.network import Network
 from gcmpy.names.network_names import NetworkNames
 
 
-class ConvertEdgeListToNetwork:
+class EdgeListToNetwork:
     @staticmethod
     def convert(edgelist: LightWeightEdgeList) -> Network:
 
         model = Network()
         model.G.add_edges_from(edgelist.edge_list)
 
-        # create node attributes dict
+        # create vertex attributes dict
         joint_degrees = {}
         for n, jd in enumerate(edgelist.joint_degrees):
             joint_degrees[n] = jd

@@ -7,7 +7,7 @@ class JointDegreeDistributionFromNetwork:
     def get_joint_degree_distribution(G: nx.Graph) -> dict:
         """
         Records the joint degree from a given network. Expects
-        the network nodes to have key 'joint_degree' which
+        the network vertices to have key 'joint_degree' which
         yields a tuple, this property is given when created using
         the GCMAlgorithm class.
         :param nx.Graph:

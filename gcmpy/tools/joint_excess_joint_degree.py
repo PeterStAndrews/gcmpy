@@ -6,7 +6,7 @@ from gcmpy.tools.joint_excess_joint_degree_matrices import (
 )
 
 
-class JointExcessJointDegreeDistribution:
+class JointExcessJointDegree:
     """
     Extracts the joint excess joint degree distribution from a network
     """
@@ -52,7 +52,7 @@ class JointExcessJointDegreeDistribution:
         Enumerates the number of edges of the i-th topology.
         Assumes that the network edges have attribute `topology`.
         """
-        for i, name in enumerate(self._topology_names):
+        for _, name in enumerate(self._topology_names):
             for e in self._G.edges():
                 if self._G.edges[e][NetworkNames.TOPOLOGY] == name:
                     self._num_edges[name] = self._num_edges.get(name, 0) + 1

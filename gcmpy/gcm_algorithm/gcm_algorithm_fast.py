@@ -6,7 +6,7 @@ from gcmpy.gcm_algorithm.gcm_algorithm import GCMAlgorithm
 from gcmpy.network.edge_list import LightWeightEdgeList
 
 
-class FastGCMAlgorithm(GCMAlgorithm):
+class GCMAlgorithmFast(GCMAlgorithm):
     def random_clustered_graph(self, jds: list) -> LightWeightEdgeList:
 
         stubs = [
@@ -28,9 +28,9 @@ class FastGCMAlgorithm(GCMAlgorithm):
         for k, k_list in enumerate(stubs):
 
             # iterate the degree list
-            for nodes in grouper(k_list, self._motif_sizes[k]):
+            for vertices in grouper(k_list, self._motif_sizes[k]):
                 # add the edges to the network using the builder callback
-                es = self._build_functions[k](list(nodes))
+                es = self._build_functions[k](list(vertices))
                 EdgeList.edge_list.extend(es)
 
                 # add the edge names to a list

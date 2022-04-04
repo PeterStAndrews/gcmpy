@@ -1,4 +1,4 @@
-from gcmpy.joint_degree.joint_degree_types import JointDegreeType
+from gcmpy.joint_degree.joint_degree_type import JointDegreeType
 from gcmpy.joint_degree.joint_degree import JointDegree
 from gcmpy.joint_degree.joint_degree_factory import JointDegreeFactory
 from gcmpy.names.joint_degree_names import JointDegreeNames
