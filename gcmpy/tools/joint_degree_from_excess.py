@@ -34,7 +34,7 @@ class JointDegreeFromExcess:
         common_keys = list(set.intersection(*map(set, p_obs_list)))
 
         if not common_keys:
-            raise f"Error: JointDDFromExcess - no common keys found across observations"
+            raise "Error: JointDDFromExcess - no common keys found across observations"
 
         # choose a common key and a reference topology to scale to
         common_key = common_keys[0]

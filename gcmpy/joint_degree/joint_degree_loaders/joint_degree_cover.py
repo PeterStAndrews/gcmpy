@@ -7,14 +7,6 @@ class JointDegreeCover(JointDegree):
 
     _type: str = JointDegreeType.COVER
 
-    @property
-    def cover(self) -> list:
-        return self._cover
-
-    @cover.setter
-    def cover(self, value: list) -> None:
-        self._cover = value
-
     def __init__(self, params: dict):
         try:
             self._cover = params[JointDegreeNames.COVER]
@@ -54,3 +46,11 @@ class JointDegreeCover(JointDegree):
 
         # convert jds to jdd
         self.convert_jds_to_jdd(jds)
+
+    @property
+    def cover(self) -> list:
+        return self._cover
+
+    @cover.setter
+    def cover(self, value: list) -> None:
+        self._cover = value

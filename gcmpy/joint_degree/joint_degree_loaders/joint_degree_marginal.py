@@ -10,11 +10,11 @@ from gcmpy.names.joint_degree_names import JointDegreeNames
 class JointDegreeMarginal(JointDegree):
 
     """
-    Merge uncorrelated marginals in each topology from analytical data together to create self._jdd.
-    If using a direct method, all possible joint degree tuples are evaluated; however, for large varience
-    in the allowed degrees this method is slow. Instead, we can choose to sample the analytical functions
-    by setting use_sampling which draws n_samples weighted samples from each marginal function and pieces
-    them together.
+    Merge uncorrelated marginals in each topology from analytical data together to create
+    self._jdd. If using a direct method, all possible joint degree tuples are evaluated;
+    however, for large varience in the allowed degrees this method is slow. Instead, we can
+    choose to sample the analytical functions by setting use_sampling which draws n_samples
+    weighted samples from each marginal function and pieces them together.
     :param arr_fp: array of callbacks
     :param motif_sizes: list of ints for number of vertices in each motif
     :param hi_lo_degree_bounds: list of tuples (int,int) for kmin,kmax per topology
@@ -23,12 +23,13 @@ class JointDegreeMarginal(JointDegree):
     """
 
     _type: str = JointDegreeType.MARGINAL
-    _arr_fp: list[callable] = []
-    _low_high_degree_bounds: tuple = None
-    _use_sampling: bool = False
-    _n_samples: int = 100000
 
     def __init__(self, params: dict):
+        self._arr_fp: list[callable] = []
+        self._low_high_degree_bounds: tuple = None
+        self._use_sampling: bool = False
+        self._n_samples: int = 100000
+
         try:
             self._motif_sizes = params[JointDegreeNames.MOTIF_SIZES]
             self._arr_fp = params[JointDegreeNames.ARR_FP]

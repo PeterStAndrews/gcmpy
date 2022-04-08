@@ -6,17 +6,9 @@ from gcmpy.names.joint_degree_names import JointDegreeNames
 class JointDegreeEmpirical(JointDegree):
 
     _type: str = JointDegreeType.EMPIRICAL
-    _empirical_jds: list = []
-
-    @property
-    def empirical_jds(self) -> list:
-        return self._empirical_jds
-
-    @empirical_jds.setter
-    def empirical_jds(self, value: list) -> None:
-        self._empirical_jds = value
 
     def __init__(self, params: dict):
+        self._empirical_jds: list = []
         try:
             self._motif_sizes = params[JointDegreeNames.MOTIF_SIZES]
             self._empirical_jds = params[JointDegreeNames.JDS]
@@ -26,3 +18,11 @@ class JointDegreeEmpirical(JointDegree):
 
     def create_jdd(self) -> None:
         self.convert_jds_to_jdd(self._empirical_jds)
+
+    @property
+    def empirical_jds(self) -> list:
+        return self._empirical_jds
+
+    @empirical_jds.setter
+    def empirical_jds(self, value: list) -> None:
+        self._empirical_jds = value

@@ -7,8 +7,8 @@ from gcmpy.names.joint_degree_names import JointDegreeNames
 
 class JointDegreeFunction(JointDegree):
     """
-    Multivariate function to evaluate the probability of given joint degree from an analytical source.
-    Note, callable self._fp signature must accept a joint degree tuple and return a float.
+    Multivariate function to evaluate the probability of given joint degree from an analytical
+    source. Note, callable self._fp signature must accept a joint degree tuple and return a float.
     :param fp: callback
     :param motif_sizes: list of ints for number of vertices in each motif
     :param hi_lo_degree_bounds: list of tuples (int,int) for kmin,kmax per topology
@@ -16,10 +16,10 @@ class JointDegreeFunction(JointDegree):
     """
 
     _type: str = JointDegreeType.JOINT_FUNCTION
-    _fp: callable = None
-    _low_high_degree_bounds: tuple = (0, 50)
 
     def __init__(self, param: dict):
+        self._fp: callable = None
+        self._low_high_degree_bounds: tuple = (0, 50)
         try:
             self._motif_sizes = param[JointDegreeNames.MOTIF_SIZES]
             self._fp = param[JointDegreeNames.FP]

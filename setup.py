@@ -20,29 +20,37 @@
 
 from setuptools import setup, find_packages
 
-__version__ = "0.1.8"
+__version__ = "0.1.9"
 
 with open('README.rst') as f:
     longDescription = f.read()
 
-setup(name = 'gcmpy',
-      version=__version__,
-      description = 'Generalised Configuration Model random graphs in Python',
-      long_description = longDescription,
-      url = 'https://github.com/PeterStAndrews/gcmpy',
-      author = 'Peter Mann',
-      author_email = 'pm78@st-andrews.ac.uk',
-      license = 'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
-      classifiers = [ 'Intended Audience :: Science/Research',
-                      'Intended Audience :: Developers',
-                      'Programming Language :: Python :: 3.8',
-                      'Programming Language :: Python :: 3.9',
-                      'Topic :: Scientific/Engineering' ],
-      python_requires = '>=3.8',
-      packages = find_packages(where="gcmpy"),
-      package_dir={"": "gcmpy"},
-      package_data = { 'gcmpy': [ 'py.typed' ] },
-      zip_safe = False,
-      install_requires = ["numpy >= 1.21.4"],
-      extra_requires = { ':python_version < 3.8': [ 'typing_extensions' ] },
+setup(
+    name='gcmpy',
+    version=__version__,
+    description='Generalised Configuration Model random graphs in Python',
+    long_description=longDescription,
+    url='https://github.com/PeterStAndrews/gcmpy',
+    author='Peter Mann',
+    author_email='pm78@st-andrews.ac.uk',
+    license='License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
+    classifiers=[
+        'Intended Audience :: Science/Research',
+        'Intended Audience :: Developers',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Topic :: Scientific/Engineering'
+    ],
+    python_requires='>=3.8',
+    packages=find_packages(where="gcmpy"),
+    package_dir={"": "gcmpy"},
+    package_data={'gcmpy': ['py.typed']},
+    zip_safe=False,
+    install_requires=[
+        "numpy >= 1.21.4",
+        "epydemic >= 1.9.2",
+        "iteration_utilities==0.11.0",
+        "networkx==2.6.3",
+        "setuptools==60.5.0"
+    ]
 )

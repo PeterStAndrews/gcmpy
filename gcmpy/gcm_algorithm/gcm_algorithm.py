@@ -12,11 +12,11 @@ class GCMAlgorithm(ABC):
     :param edge_names: list of names for edge topologies
     """
 
-    _motif_sizes: list  # list of number of vertices in each motif
-    _build_functions: list  # list of callbacks for motif construction
-    _edge_names: list  # list of edge topology names
-
     def __init__(self, params: dict):
+        self._motif_sizes: list = []  # list of number of vertices in each motif
+        self._build_functions: list = []  # list of callbacks for motif construction
+        self._edge_names: list = []  # list of edge topology names
+
         try:
             self._motif_sizes = params[GCMAlgorithmNames.MOTIF_SIZES]
             self._build_functions = params[GCMAlgorithmNames.BUILD_FUNCTIONS]

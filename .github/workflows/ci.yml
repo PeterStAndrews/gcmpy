@@ -17,6 +17,6 @@ jobs:
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
-          pip3 install -r requirements.txt
+          python3 setup.py install
       - name: Run tests with unittest
         run: python3 -m unittest discover -v -s test/ -p 'test_*.py'

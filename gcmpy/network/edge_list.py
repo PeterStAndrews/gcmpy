@@ -1,9 +1,10 @@
 class LightWeightEdgeList:
 
-    _edge_list: list = []
-    _topologies: list = []
-    _joint_degrees: list = []
-    _motif_id: list = []
+    def __init__(self):
+        self._edge_list: list = []
+        self._topologies: list = []
+        self._joint_degrees: list = []
+        self._motif_id: list = []
 
     @property
     def edge_list(self) -> list:

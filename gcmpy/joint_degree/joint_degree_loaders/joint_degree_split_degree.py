@@ -6,11 +6,12 @@ from gcmpy.names.joint_degree_names import JointDegreeNames
 class JointDegreeSplitDegree(JointDegree):
 
     _type: str = JointDegreeType.SPLIT_DEGREE
-    _fp: callable = None
-    _probs: list = []
-    _low_high_degree_bound: tuple = None
 
     def __init__(self, params: dict):
+        self._fp: callable = None
+        self._probs: list = []
+        self._low_high_degree_bound: tuple = None
+
         try:
             self._fp = params[JointDegreeNames.FP]
             self._probs = params[JointDegreeNames.PROBS]

@@ -8,9 +8,8 @@ from gcmpy.names.gcm_algorithm_names import GCMAlgorithmNames
 
 class GCMAlgorithmCustomMotifs(GCMAlgorithm):
 
-    _motif_indices: list = []
-
     def __init__(self, params: dict):
+        self._motif_indices: list = []
         try:
             self._motif_indices = params[GCMAlgorithmNames.MOTIF_INDICES]
             super().__init__(params)
@@ -22,7 +21,7 @@ class GCMAlgorithmCustomMotifs(GCMAlgorithm):
         Yield successive n-sized partitions from list.
         Silent if lst % n != 0.
         """
-        return [lst[i : i + n] for i in range(0, len(lst), n)]
+        return [lst[i: i + n] for i in range(0, len(lst), n)]
 
     def random_clustered_graph(self, jds: list) -> LightWeightEdgeList:
 

@@ -17,24 +17,10 @@ class JointDegree(ABC):
     """
 
     _type: str = ""
-    _jdd: dict = None
-    _motif_sizes: list = None
 
-    @property
-    def jdd(self) -> dict:
-        return self._jdd
-
-    @jdd.setter
-    def jdd(self, value: dict) -> None:
-        self._jdd = value
-
-    @property
-    def motif_sizes(self) -> list:
-        return self._motif_sizes
-
-    @motif_sizes.setter
-    def motif_sizes(self, value: list) -> None:
-        self._motif_sizes = value
+    def __init__(self):
+        self._jdd: dict = None
+        self._motif_sizes: list = None
 
     def __new__(cls, *args, **kwargs):
         if cls is JointDegree:
@@ -91,3 +77,19 @@ class JointDegree(ABC):
         d = Counter(jds)
         for k, v in d.items():
             self._jdd[k] = v / n_samples
+
+    @property
+    def jdd(self) -> dict:
+        return self._jdd
+
+    @jdd.setter
+    def jdd(self, value: dict) -> None:
+        self._jdd = value
+
+    @property
+    def motif_sizes(self) -> list:
+        return self._motif_sizes
+
+    @motif_sizes.setter
+    def motif_sizes(self, value: list) -> None:
+        self._motif_sizes = value

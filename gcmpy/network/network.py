@@ -3,16 +3,6 @@ import networkx as nx
 
 class Network:
 
-    _G: nx.Graph = None
-
-    @property
-    def G(self) -> nx.Graph:
-        return self._G
-
-    @G.setter
-    def G(self, value: nx.Graph) -> None:
-        self._G = value
-
     def __init__(self):
         self._G = nx.Graph()
 
@@ -50,3 +40,11 @@ class Network:
         True if graph has edges remaining.
         """
         return len(self._G.edges()) > 0
+
+    @property
+    def G(self) -> nx.Graph:
+        return self._G
+
+    @G.setter
+    def G(self, value: nx.Graph) -> None:
+        self._G = value

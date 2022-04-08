@@ -1,7 +1,9 @@
 class ProposalEdge:
-    _topology: str = None
-    _motif_id: int = None
-    _new_edge: tuple = None
+
+    def __init__(self):
+        self._topology: str = None
+        self._motif_id: int = None
+        self._new_edge: tuple = None
 
     @property
     def topology(self) -> str:

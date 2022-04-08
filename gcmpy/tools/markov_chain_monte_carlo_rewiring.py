@@ -11,6 +11,7 @@ from gcmpy.tools.joint_excess_joint_degree_matrices import (
 )
 from gcmpy.tools.proposal_edge import ProposalEdge
 from gcmpy.tools.markov_chain_monte_carlo import MarkovChainMonteCarlo
+from gcmpy.tools.joint_excess_joint_degree_keys_view import JointExcessJointDegreeKeysView
 
 
 class ErrorMarkovChainMonteCarloRewiring(Exception): ...
@@ -22,14 +23,15 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
     Stochastically rewires `_network` so that the target correlations match `ejks`.
     """
 
-    _network: Network = None
-    _convergence_limit: int = None
-    _search_limit: int = 25
-    _ejks: JointExcessJointDegreeMatrices = None
-    _logger: Logger = Logger("MarkovChainMonteCarloRewiring")
-    _proposal_edges: list[ProposalEdge] = []
-
     def __init__(self, params: dict):
+        self._network: Network = None
+        self._convergence_limit: int = None
+        self._search_limit: int = 25
+        self._ejks: JointExcessJointDegreeMatrices = None
+        self._logger: Logger = Logger("MarkovChainMonteCarloRewiring")
+        self._proposal_edges: list[ProposalEdge] = []
+        self._proposal_count: int = 0
+        self._proposals_accepted: int = 0
         try:
             self._network: Network = params[ToolsNames.NETWORK]
             self._ejks: JointExcessJointDegreeMatrices = params[ToolsNames.EJKS]
@@ -37,7 +39,7 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
                 self._convergence_limit: int = params[ToolsNames.CONVERGENCE_LIMIT]
             else:
                 # set a limit for the number of swaps before termination
-                self._convergence_limit = 10 * self._network._G.edges()
+                self._convergence_limit = 10 * self._network.G.edges()
             if ToolsNames.SEARCH_LIMIT in params:
                 self._search_limit: int = params[ToolsNames.SEARCH_LIMIT]
         except Exception as e:
@@ -173,7 +175,7 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
 
     def get_swapped_joint_excess_degree_key(
         self, G: nx.Graph, e0: tuple, e1: tuple, u0: int, v0: int, index: int
-    ) -> tuple:
+    ) -> JointExcessJointDegreeKeysView:
         """
         Returns the swapped joint excess degree key tuple for two edges e0, e1 in network G.
         :param G: nx.Graph
@@ -182,7 +184,7 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
         :param u0: left vertex
         :param v0: right vertex
         :param index: index in joint degree of edge topology
-        :returns key pair: joint excess joint degree key tuples for (u0,v1) and (v0,u1)
+        :returns JointExcessJointDegreeKeysView: object to view excess joint degree tuples
         """
         u1: int = self.get_other_vertex(u0, e0)
         v1: int = self.get_other_vertex(v0, e1)
@@ -196,7 +198,8 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
         for jd in us_jd:
             jd[index] -= 1
             us_excess_jd.append(tuple(jd))
-        return us_excess_jd[0] + us_excess_jd[3], us_excess_jd[2] + us_excess_jd[1]
+
+        return JointExcessJointDegreeKeysView(us_excess_jd)
 
     def append_proposal_edges(
         self, G: nx.Graph, u0: int, old_edge: tuple, new_edge:  tuple
@@ -266,13 +269,25 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
                 G, v0, e1, (v0, self.get_other_vertex(u0, e0))
             )
 
-            # these are the excess degree tuples of the proposed edges
-            key1, key2 = self.get_swapped_joint_excess_degree_key(
+            # create an excess degree key view object
+            key_view: JointExcessJointDegreeKeysView = self.get_swapped_joint_excess_degree_key(
                 G, e0, e1, u0, v0, index
             )
 
+            u0v1_key: tuple = key_view.get_u0v1()
+            v0u1_key: tuple = key_view.get_v0u1()
+            u0u1: tuple = key_view.get_u0u1()
+            u1u0: tuple = key_view.get_u1u0()
+            v0v1: tuple = key_view.get_v0v1()
+            v1v0: tuple = key_view.get_v1v0()
+
+            # test if swapped keys change anything, if not, silent return False.
+            starting_keys: set = {u0u1, u1u0, v0v1, v1v0}
+            if set([u0v1_key, v0u1_key]).issubset(starting_keys):
+                return False
+
             try:
-                top *= self._ejks.ejks[topology][key1] * self._ejks.ejks[topology][key2]
+                top *= self._ejks.ejks[topology][u0v1_key] * self._ejks.ejks[topology][v0u1_key]
             except KeyError as e:
                 # guard due to GCM algorithm honouring the handshaking lemma by inserting
                 # additional motif. Ensure this is not statistically significant, unlikely
@@ -313,7 +328,7 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
                 return False
 
         if bottom == 0.0:
-            raise "Error: MarkovChainMonteCarlo - swap_condition() divide by zero"
+            raise ErrorMarkovChainMonteCarloRewiring("swap_condition() divide by zero")
 
         value: float = (top + 0.0) / bottom
         if value > random.random():
@@ -321,12 +336,12 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
 
         return False
 
-    def rewire(self) -> None:
+    def rewire(self) -> nx.Graph:
         """
         Entrypoint to MCMC rewiring algorithm
         """
         # pull a copy of the network, careful still has edge data?
-        G: nx.Graph = self._network.G
+        G: nx.Graph = self._network.G.copy()
 
         number_of_edges: int = G.number_of_edges()
 
@@ -338,6 +353,11 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
 
         convergence_count: int = 0
         while convergence_count <= self._convergence_limit:
+
+            if convergence_count % 100 == 0 and self._proposal_count != 0:
+                self._logger.info(f"MarkovChainMonteCarloRewiring: Acceptance \
+                    ratio = {self._proposals_accepted/self._proposal_count}"
+                )
 
             # pick an edge at random.
             e0: tuple = EdgeSet.draw()
@@ -381,6 +401,10 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
                 # add the new proposal edges for both sides
                 for pe in self._proposal_edges:
                     e: tuple = pe._new_edge
+                    if G.has_edge(*e):
+                        raise ErrorMarkovChainMonteCarloRewiring(
+                            f"Edge {e} already present in network!"
+                        )
                     G.add_edge(*e)
                     G.edges[e][NetworkNames.TOPOLOGY] = pe._topology
                     G.edges[e][NetworkNames.MOTIF_IDS] = pe._motif_id
@@ -396,10 +420,12 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
                     EdgeSet.remove(tuple(sorted(e1)))
 
                 if G.number_of_edges() != number_of_edges:
-                    raise ErrorMarkovChainMonteCarloRewiring(f"Error: MarkovChainMonteCarlo - rewire() edge count not preserved\
-                         by swap {number_of_edges} vs {G.number_of_edges()}")
+                    raise ErrorMarkovChainMonteCarloRewiring(
+                        f"Error: MarkovChainMonteCarlo - rewire() edge count not preserved\
+                        by swap {number_of_edges} vs {G.number_of_edges()}"
+                    )
 
-        self._network.G = G
+        return G
 
     @property
     def network(self) -> Network:

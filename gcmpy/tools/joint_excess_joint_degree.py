@@ -7,18 +7,19 @@ from gcmpy.tools.joint_excess_joint_degree_matrices import (
 
 
 class JointExcessJointDegree:
+
     """
     Extracts the joint excess joint degree distribution from a network
     """
 
-    _topology_names: list[str]
-    _G: nx.Graph = None
-    _ejks = None
-    _num_edges: dict = {}  # number of edges of i-th topology
-    _degree_keys: list = []  # list of joint degree tuples
-    _excess_degree_keys = {}
-
     def __init__(self, params: dict):
+        self._topology_names: list[str] = None
+        self._G: nx.Graph = None
+        self._ejks = None
+        self._num_edges: dict = {}  # number of edges of i-th topology
+        self._degree_keys: list = []  # list of joint degree tuples
+        self._excess_degree_keys = {}
+
         try:
             self._G: nx.Graph = params[ToolsNames.NETWORK]
             self._topology_names: list[str] = params[ToolsNames.EDGE_NAMES]
@@ -52,10 +53,10 @@ class JointExcessJointDegree:
         Enumerates the number of edges of the i-th topology.
         Assumes that the network edges have attribute `topology`.
         """
-        for _, name in enumerate(self._topology_names):
-            for e in self._G.edges():
-                if self._G.edges[e][NetworkNames.TOPOLOGY] == name:
-                    self._num_edges[name] = self._num_edges.get(name, 0) + 1
+        # self._num_edges = {}
+        for e in self._G.edges():
+            topology: str = self._G.edges[e][NetworkNames.TOPOLOGY]
+            self._num_edges[topology] = self._num_edges.get(topology, 0) + 1
 
     def get_ejk(self, i: int, name: str) -> dict:
         """
@@ -84,9 +85,11 @@ class JointExcessJointDegree:
                 key1 = u_joint_excess_degree + v_joint_excess_degree
                 key2 = v_joint_excess_degree + u_joint_excess_degree
 
-                # divide by 2*num_edges due to adding each one twice from each end
-                ejk[key1] = ejk.get(key1, 0) + (1.0 / (2 * self._num_edges[name]))
-                ejk[key2] = ejk.get(key2, 0) + (1.0 / (2 * self._num_edges[name]))
+                if key1 == key2:
+                    ejk[key1] = ejk.get(key1, 0) + (1.0 / (self._num_edges[name]))
+                else:
+                    ejk[key1] = ejk.get(key1, 0) + (1.0 / (self._num_edges[name]))
+                    ejk[key2] = ejk.get(key2, 0) + (1.0 / (self._num_edges[name]))
 
         return ejk
 
