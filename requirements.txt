@@ -1,5 +1,5 @@
-numpy,
-epydemic,
-iteration_utilities,
-networkx,
-setuptools
+epydemic==1.9.2
+iteration_utilities==0.11.0
+networkx==2.6.3
+numpy==1.22.3
+setuptools==60.5.0
