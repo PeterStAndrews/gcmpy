@@ -1,0 +1,5 @@
+numpy,
+epydemic,
+iteration_utilities,
+networkx,
+setuptools
