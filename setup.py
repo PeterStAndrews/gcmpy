@@ -20,7 +20,7 @@
 
 from setuptools import setup, find_packages
 
-__version__ = "0.1.9"
+__version__ = "0.2.0"
 
 with open('README.rst') as f:
     longDescription = f.read()
@@ -47,10 +47,10 @@ setup(
     package_data={'gcmpy': ['py.typed']},
     zip_safe=False,
     install_requires=[
-        "numpy",
-        "epydemic >= 1.9.2",
+        "epydemic==1.9.2",
         "iteration_utilities==0.11.0",
-        "networkx",
-        "setuptools"
+        "networkx==2.6.3",
+        "numpy==1.22.3",
+        "setuptools==60.5.0"
     ]
 )

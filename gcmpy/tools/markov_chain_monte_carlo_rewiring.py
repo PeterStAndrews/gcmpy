@@ -14,7 +14,8 @@ from gcmpy.tools.markov_chain_monte_carlo import MarkovChainMonteCarlo
 from gcmpy.tools.joint_excess_joint_degree_keys_view import JointExcessJointDegreeKeysView
 
 
-class ErrorMarkovChainMonteCarloRewiring(Exception): ...
+class ErrorMarkovChainMonteCarloRewiring(Exception):
+    ...
 
 
 class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
@@ -32,6 +33,7 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
         self._proposal_edges: list[ProposalEdge] = []
         self._proposal_count: int = 0
         self._proposals_accepted: int = 0
+        self._acceptance_ratio: list = []
         try:
             self._network: Network = params[ToolsNames.NETWORK]
             self._ejks: JointExcessJointDegreeMatrices = params[ToolsNames.EJKS]
@@ -226,8 +228,8 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
         Evaluates the Metropolis condition for the algorithm.
 
         .. math::
-            \pi=\prod_{\nu}\prod_i\frac{e_{\tau,k_{u_1},\nu,k_{v_i}}e_{\tau,k_{v_1},
-            \nu,k_{v_i}}}{e_{\tau,k_{u_1},\nu,k_{u_i}}e_{\tau,k_{v_1},\nu,k_{v_i}}}
+            \\pi=prod_{\\nu}\\prod_i \\frac{e_{tau,k_{u_1},\\nu,k_{v_i}}e_{\tau,k_{v_1},
+            nu,k_{v_i}}}{e_{\tau,k_{u_1},\nu,k_{u_i}}e_{\tau,k_{v_1},\nu,k_{v_i}}}
 
         Ensures that corresponding edges are swapped by creating a topology hashmap
         of (v0,v1) edges so that subgraphs with different orbits swap correct edges.
@@ -355,8 +357,8 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
         while convergence_count <= self._convergence_limit:
 
             if convergence_count % 100 == 0 and self._proposal_count != 0:
-                self._logger.info(f"MarkovChainMonteCarloRewiring: Acceptance \
-                    ratio = {self._proposals_accepted/self._proposal_count}"
+                self._acceptance_ratio.append(
+                    float(self._proposals_accepted)/float(self._proposal_count)
                 )
 
             # pick an edge at random.
