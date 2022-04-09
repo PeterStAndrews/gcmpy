@@ -2,7 +2,6 @@ import networkx as nx
 
 
 class Network:
-
     def __init__(self):
         self._G = nx.Graph()
 

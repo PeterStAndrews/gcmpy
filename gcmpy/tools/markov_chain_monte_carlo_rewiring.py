@@ -7,11 +7,13 @@ from gcmpy.names.tools_names import ToolsNames
 from gcmpy.network.network import Network
 from gcmpy.names.network_names import NetworkNames
 from gcmpy.tools.joint_excess_joint_degree_matrices import (
-    JointExcessJointDegreeMatrices
+    JointExcessJointDegreeMatrices,
 )
 from gcmpy.tools.proposal_edge import ProposalEdge
 from gcmpy.tools.markov_chain_monte_carlo import MarkovChainMonteCarlo
-from gcmpy.tools.joint_excess_joint_degree_keys_view import JointExcessJointDegreeKeysView
+from gcmpy.tools.joint_excess_joint_degree_keys_view import (
+    JointExcessJointDegreeKeysView,
+)
 
 
 class ErrorMarkovChainMonteCarloRewiring(Exception):
@@ -45,8 +47,10 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
             if ToolsNames.SEARCH_LIMIT in params:
                 self._search_limit: int = params[ToolsNames.SEARCH_LIMIT]
         except Exception as e:
-            raise ErrorMarkovChainMonteCarloRewiring(f"Error instantiating \
-                {self.__class__.__name__}: {e}")
+            raise ErrorMarkovChainMonteCarloRewiring(
+                f"Error instantiating \
+                {self.__class__.__name__}: {e}"
+            )
 
     def get_all_edges(self, G: nx.Graph, u0: int, edge: tuple) -> list:
         """
@@ -155,8 +159,10 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
         elif e[1] == u:
             return e[0]
         else:
-            raise ErrorMarkovChainMonteCarloRewiring(f"Error: MarkovChainMonteCarlo - get_other_node() vertex {u} not \
-                in edge {e}")
+            raise ErrorMarkovChainMonteCarloRewiring(
+                f"Error: MarkovChainMonteCarlo - get_other_node() vertex {u} not \
+                in edge {e}"
+            )
 
     def get_joint_excess_degree_key(self, G: nx.Graph, e: tuple, index: int) -> tuple:
         """
@@ -204,7 +210,7 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
         return JointExcessJointDegreeKeysView(us_excess_jd)
 
     def append_proposal_edges(
-        self, G: nx.Graph, u0: int, old_edge: tuple, new_edge:  tuple
+        self, G: nx.Graph, u0: int, old_edge: tuple, new_edge: tuple
     ) -> None:
         """
         Appends edge `e` (tuple) to propsal edges for this trial. Retains the
@@ -260,20 +266,18 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
                 # this is where the other edge is selected
                 e1 = lst.pop()
             except IndexError as e:
-                raise ErrorMarkovChainMonteCarloRewiring(f"IndexError during swap condition {e}")
+                raise ErrorMarkovChainMonteCarloRewiring(
+                    f"IndexError during swap condition {e}"
+                )
 
             # cache out the new edges that this attempt is proposing to add, (u0, v1)
             # and (v0, u1), to self._proposal_edges
-            self.append_proposal_edges(
-                G, u0, e0, (u0, self.get_other_vertex(v0, e1))
-            )
-            self.append_proposal_edges(
-                G, v0, e1, (v0, self.get_other_vertex(u0, e0))
-            )
+            self.append_proposal_edges(G, u0, e0, (u0, self.get_other_vertex(v0, e1)))
+            self.append_proposal_edges(G, v0, e1, (v0, self.get_other_vertex(u0, e0)))
 
             # create an excess degree key view object
-            key_view: JointExcessJointDegreeKeysView = self.get_swapped_joint_excess_degree_key(
-                G, e0, e1, u0, v0, index
+            key_view: JointExcessJointDegreeKeysView = (
+                self.get_swapped_joint_excess_degree_key(G, e0, e1, u0, v0, index)
             )
 
             u0v1_key: tuple = key_view.get_u0v1()
@@ -289,7 +293,10 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
                 return False
 
             try:
-                top *= self._ejks.ejks[topology][u0v1_key] * self._ejks.ejks[topology][v0u1_key]
+                top *= (
+                    self._ejks.ejks[topology][u0v1_key]
+                    * self._ejks.ejks[topology][v0u1_key]
+                )
             except KeyError as e:
                 # guard due to GCM algorithm honouring the handshaking lemma by inserting
                 # additional motif. Ensure this is not statistically significant, unlikely
@@ -358,7 +365,7 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
 
             if convergence_count % 100 == 0 and self._proposal_count != 0:
                 self._acceptance_ratio.append(
-                    float(self._proposals_accepted)/float(self._proposal_count)
+                    float(self._proposals_accepted) / float(self._proposal_count)
                 )
 
             # pick an edge at random.

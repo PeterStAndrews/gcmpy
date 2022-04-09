@@ -1,5 +1,4 @@
 class ProposalEdge:
-
     def __init__(self):
         self._topology: str = None
         self._motif_id: int = None

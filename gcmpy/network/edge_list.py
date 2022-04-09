@@ -1,5 +1,4 @@
 class LightWeightEdgeList:
-
     def __init__(self):
         self._edge_list: list = []
         self._topologies: list = []

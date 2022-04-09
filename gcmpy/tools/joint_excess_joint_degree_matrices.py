@@ -2,7 +2,6 @@ from gcmpy.names.tools_names import ToolsNames
 
 
 class JointExcessJointDegreeMatrices:
-
     def __init__(self, params=None):
         self._ejks: dict[dict] = {}  # dict of ejk dicts/matrices keyed by edge topology
         self._excess_degree_keys: dict[
@@ -34,7 +33,7 @@ class JointExcessJointDegreeMatrices:
 
                 A = list(excess_key)
                 B = A[: len(A) // 2]
-                C = A[len(A) // 2:]
+                C = A[len(A) // 2 :]
                 excess_key_set.add(tuple(B))
                 excess_key_set.add(tuple(C))
 

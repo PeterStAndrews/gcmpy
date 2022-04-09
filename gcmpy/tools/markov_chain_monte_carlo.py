@@ -18,6 +18,7 @@ class MarkovChainMonteCarlo:
         and when it returns True. This is used to measure the efficiency
         of the Markov chain acceptance vs rejection.
         """
+
         @wraps(func)
         def wrapper(*args, **kwargs):
             self._proposal_count += 1
@@ -25,4 +26,5 @@ class MarkovChainMonteCarlo:
             if result:
                 self._proposals_accepted += 1
             return result
+
         return wrapper
