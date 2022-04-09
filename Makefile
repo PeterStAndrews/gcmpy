@@ -61,6 +61,10 @@ clean-all:
 	clean-build
 	clean-egg-pyc
 
+.PHONY: run-unit-tests
+discover-unit-tests:
+	$(PYTHON) -m unittest discover -v -s test/ -p 'test_*.py'
+
 # ----- Usage -----
 
 .PHONY: help
@@ -80,6 +84,7 @@ Available targets:
    make clean-build  			removes build folder and contents
    make clean-egg-pyc 			removes egg and pycache files from source directory
    make clean-all				runs clean-build, clean-egg-pyc and clean distribution
+   make run-unit-tests     		runs unit tests with unittest
 
 endef
 export HELP_MESSAGE
