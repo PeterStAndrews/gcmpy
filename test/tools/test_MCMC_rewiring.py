@@ -23,7 +23,7 @@ NETWORK_SIZE: int = 4000
 
 class MCMCTest(unittest.TestCase):
     def test_MCMC(self):
-        print('here')
+
         # for a given ejk and corresponding degree distribution,
         # create a network, rewire it and then extract its mixing
         # matrices until it is converged
