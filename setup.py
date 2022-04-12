@@ -20,7 +20,8 @@
 
 from setuptools import setup, find_packages
 
-__version__ = "0.2.2"
+# the current version of the package
+__version__ = "0.2.3"
 
 with open('README.rst') as f:
     longDescription = f.read()

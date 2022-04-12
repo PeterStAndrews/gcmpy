@@ -1,9 +1,6 @@
 # ----- Name ------
 PROJECTNAME := gcmpy
 
-# ----- Version ------
-VERSION = 0.2.2
-
 # ----- Directories -----
 
 SRCPATH := $(CURDIR)/gcmpy
