@@ -21,7 +21,7 @@
 from setuptools import setup, find_packages
 
 # the current version of the package
-__version__ = "0.2.3"
+__version__ = "0.2.5"
 
 with open('README.rst') as f:
     longDescription = f.read()
@@ -48,7 +48,6 @@ setup(
     package_data={'gcmpy': ['py.typed']},
     zip_safe=False,
     install_requires=[
-        "epydemic==1.9.2",
         "iteration_utilities==0.11.0",
         "networkx==2.6.3",
         "numpy==1.22.3",

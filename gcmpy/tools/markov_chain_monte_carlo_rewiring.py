@@ -1,4 +1,3 @@
-from epydemic import DrawSet
 import random
 import networkx as nx
 from logging import Logger
@@ -14,7 +13,7 @@ from gcmpy.tools.markov_chain_monte_carlo import MarkovChainMonteCarlo
 from gcmpy.tools.joint_excess_joint_degree_keys_view import (
     JointExcessJointDegreeKeysView,
 )
-
+from gcmpy.tools.draw_set import DrawSet
 
 class ErrorMarkovChainMonteCarloRewiring(Exception):
     ...
