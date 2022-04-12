@@ -18,7 +18,7 @@ from gcmpy.tools.joint_degree_from_excess import JointDegreeFromExcess
 from gcmpy.tools.joint_excess_joint_degree import JointExcessJointDegree
 
 
-NETWORK_SIZE: int = 4000
+NETWORK_SIZE: int = 5000
 
 
 class MCMCTest(unittest.TestCase):
@@ -105,7 +105,7 @@ class MCMCTest(unittest.TestCase):
         params[ToolsNames.NETWORK] = g
         params[ToolsNames.EJKS] = ejk_target
         params[ToolsNames.SEARCH_LIMIT] = 20
-        params[ToolsNames.CONVERGENCE_LIMIT] = 25000
+        params[ToolsNames.CONVERGENCE_LIMIT] = 10000
         mcmc = MarkovChainMonteCarloRewiring(params)
         G: nx.Graph = mcmc.rewire()
 
@@ -117,40 +117,15 @@ class MCMCTest(unittest.TestCase):
         experimental_ejks: JointExcessJointDegreeMatrices = CJointExcess.get_ejks()
 
         # check that the experimental mixing matrices are closer to the target than the initial
-        # check that the qks and jdd are correct to theoretical
-
-        theoretical_jdd: dict = {
-            (5, 1): 1 / 3, (3, 2): 1 / 3, (1, 3): 1 / 3
-        }
-
-        theoretical_qk_tree: dict = {
-            (0, 3): 0.11025028370284273,
-            (4, 1): 0.5568150524081263,
-            (2, 2): 0.33293067275708305,
-        }
-
-        theoretical_qk_triangle: dict = {
-            (3, 1): 0.33423484065484,
-            (1, 2): 0.4980622601010759,
-            (5, 0): 0.16769688919908976,
-        }
-
-        self.assertTrue(jdd == theoretical_jdd)
-
-        for key in qks["2-clique"]:
-            self.assertAlmostEqual(qks["2-clique"][key], theoretical_qk_tree[key], 2)
-
-        for key in qks["3-clique"]:
-            self.assertAlmostEqual(
-                qks["3-clique"][key], theoretical_qk_triangle[key], 2
-            )
-
         # check mixing matrices
-        print('target', 'initial', 'final')
+        print('\ntarget', 'initial', 'final')
         for topology in edge_names:
             for key in ejk_target.ejks[topology]:
+                
                 target: float = ejk_target.ejks[topology][key]
                 initial: float = initial_experimental_ejks.ejks[topology][key]
                 final: float = experimental_ejks.ejks[topology][key]
+                
                 self.assertTrue(abs(target - initial) >= abs(target - final))
+
                 print(target, initial, final)

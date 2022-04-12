@@ -100,7 +100,7 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
         """
         if len(e0s) != len(e1s):
             # probably a mismatch during GCM algorithm, selfloops, multi-edges ...
-            self._logger.error(
+            self._logger.debug(
                 f"MarkovChainMonteCarlo - paired corners not equal size {len(e0s)} and {len(e1s)},\
                     {e0s} and {e1s}."
             )
@@ -111,7 +111,7 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
 
         if hashmap_e0s.keys() != hashmap_e1s.keys():
             # check paired corners have same edge-topologies
-            self._logger.error(
+            self._logger.debug(
                 f"MarkovChainMonteCarlo - paired corners not equal topologies {hashmap_e0s} \
                     and {hashmap_e1s}"
             )
@@ -121,7 +121,7 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
             if len(hashmap_e0s[key]) != len(hashmap_e1s[key]):
                 # check paired corners have same number of each edge topology, residue
                 # of GCM construction
-                self._logger.error(
+                self._logger.debug(
                     f"MarkovChainMonteCarlo - paired corners not equal number of topologies {hashmap_e0s} \
                         and {hashmap_e1s}"
                 )
@@ -301,7 +301,7 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
                 # guard due to GCM algorithm honouring the handshaking lemma by inserting
                 # additional motif. Ensure this is not statistically significant, unlikely
                 # to fail here due to the previous checks ...
-                self._logger.error(
+                self._logger.debug(
                     f"MarkovChainMonteCarlo - KeyError during swap condition numerator: {e}"
                 )
                 return False
@@ -331,7 +331,7 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
             except KeyError as e:
                 # guard due to GCM algorithm honouring the handshaking lemma by inserting
                 # additional motif. Ensure this is not statistically significant.
-                self._logger.error(
+                self._logger.debug(
                     f"MarkovChainMonteCarlo - KeyError during swap condition denominator: {e}"
                 )
                 return False
@@ -363,7 +363,7 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
         convergence_count: int = 0
         while convergence_count <= self._convergence_limit:
 
-            if convergence_count % 100 == 0 and self._proposal_count != 0:
+            if convergence_count % 50 == 0 and self._proposal_count != 0:
                 self._acceptance_ratio.append(
                     float(self._proposals_accepted) / float(self._proposal_count)
                 )
@@ -395,7 +395,7 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
                 search_count += 1
 
             if search_count >= self._search_limit:
-                self._logger.error(
+                self._logger.debug(
                     f"Error: MarkovChainMonteCarlo - rewire() could not find another edge to swap \
                     with {G.edges[e0]}"
                 )
