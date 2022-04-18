@@ -1,22 +1,22 @@
-from gcmpy.joint_degree.joint_degree import JointDegree
-from gcmpy.joint_degree.joint_degree_type import JointDegreeType
-from gcmpy.joint_degree.joint_degree_loaders.joint_degree_manual import (
+from gcmpy import JointDegree
+from gcmpy import JointDegreeType
+from gcmpy import (
     JointDegreeManual,
 )
-from gcmpy.joint_degree.joint_degree_loaders.joint_degree_empirical import (
+from gcmpy import (
     JointDegreeEmpirical,
 )
-from gcmpy.joint_degree.joint_degree_loaders.joint_degree_function import (
+from gcmpy import (
     JointDegreeFunction,
 )
-from gcmpy.joint_degree.joint_degree_loaders.joint_degree_marginal import (
+from gcmpy import (
     JointDegreeMarginal,
 )
-from gcmpy.joint_degree.joint_degree_loaders.joint_degree_split_degree import (
+from gcmpy import (
     JointDegreeSplitDegree,
 )
-from gcmpy.joint_degree.joint_degree_loaders.joint_degree_delta import JointDegreeDelta
-from gcmpy.joint_degree.joint_degree_loaders.joint_degree_cover import JointDegreeCover
+from gcmpy import JointDegreeDelta
+from gcmpy import JointDegreeCover
 
 
 class JointDegreeFactory:

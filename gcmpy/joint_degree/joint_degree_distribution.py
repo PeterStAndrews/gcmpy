@@ -1,7 +1,7 @@
-from gcmpy.joint_degree.joint_degree_type import JointDegreeType
-from gcmpy.joint_degree.joint_degree import JointDegree
-from gcmpy.joint_degree.joint_degree_factory import JointDegreeFactory
-from gcmpy.names.joint_degree_names import JointDegreeNames
+from gcmpy import JointDegreeType
+from gcmpy import JointDegree
+from gcmpy import JointDegreeFactory
+from gcmpy import JointDegreeNames
 
 
 class JointDegreeDistribution:
