@@ -21,7 +21,7 @@
 from setuptools import setup, find_packages
 
 # the current version of the package
-__version__ = "0.2.14"
+__version__ = "0.2.15"
 
 with open('README.rst') as f:
     longDescription = f.read()
@@ -44,7 +44,7 @@ setup(
     ],
     python_requires='>=3.8',
     packages=['gcmpy', 'gcmpy.covers','gcmpy.distributions','gcmpy.gcm_algorithm',
-    'gcmpy.joint_degree','gcmpy.joint_degree_loaders', 'gcmpy.motif_generators','gcmpy.names','gcmpy.network', 'gcmpy.tools'],
+    'gcmpy.joint_degree','gcmpy.joint_degree.joint_degree_loaders', 'gcmpy.motif_generators','gcmpy.names','gcmpy.network', 'gcmpy.tools'],
     package_data={'gcmpy': ['py.typed']},
     zip_safe=False,
     install_requires=[
