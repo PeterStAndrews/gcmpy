@@ -47,6 +47,6 @@
 # from gcmpy.tools.joint_excess_joint_degree import JointExcessJointDegree
 # from gcmpy.tools.joint_excess_joint_degree_matrices import JointExcessJointDegreeMatrices
 # from gcmpy.tools.markov_chain_monte_carlo_rewiring import MarkovChainMonteCarloRewiring
-# from gcmpy.tools.draw_set import DrawSet
+from gcmpy.tools.draw_set import DrawSet
 
 from .new_net import NewNetwork
