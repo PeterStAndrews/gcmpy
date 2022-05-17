@@ -2,7 +2,7 @@
 
 
 .. image:: gcmpy_animation.gif
-
+     :align: center
 
 gcmpy: Generalised Configuration Model random graphs in Python
 ===================================================================
