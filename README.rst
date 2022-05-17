@@ -1,6 +1,6 @@
 
 
-![gcmpylogo](https://github.com/PeterStAndrews/gcmpy/blob/main/gcmpy_animation.gif)
+![gcmpylogo](gcmpy_animation.gif)
 
 
 gcmpy: Generalised Configuration Model random graphs in Python
