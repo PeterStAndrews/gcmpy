@@ -62,6 +62,10 @@ clean-all:
 discover-unit-tests:
 	$(PYTHON) -m unittest discover -v -s test/ -p 'test_*.py'
 
+.PHONY: coverage-report
+coverage-report:
+	coverage run --source gcmpy -m unittest discover && coverage report
+
 # ----- Usage -----
 
 .PHONY: help
@@ -82,7 +86,7 @@ Available targets:
    make clean-egg-pyc 			removes egg and pycache files from source directory
    make clean-all				runs clean-build, clean-egg-pyc and clean distribution
    make run-unit-tests     		runs unit tests with unittest
-
+   make coverage-report			runs a coverage report with unittest
 endef
 export HELP_MESSAGE
 

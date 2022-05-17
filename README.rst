@@ -1,3 +1,8 @@
+
+
+![gcmpylogo](https://media.giphy.com/media/bSwAk3HV29tRVlfxjE/giphy.gif)
+
+
 gcmpy: Generalised Configuration Model random graphs in Python
 ===================================================================
 
