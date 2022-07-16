@@ -2,7 +2,7 @@ import itertools
 import networkx as nx
 
 
-def count_number_of_connected_graphs(G: nx.Graph, ak: list, i: int, k: int):
+def number_of_connected_graphs(G: nx.Graph, ak: list, i: int, k: int):
     '''
     Returns the number of connected graphs among vertices
     (ak + i) with k edges removed. For instance, there are
