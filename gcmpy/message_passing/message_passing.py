@@ -5,7 +5,7 @@ from gcmpy.message_passing.message_passing_mixin import MessagePassingMixin
 
 class MessagePassing():
 
-    def __init__(self, cover_type: str, G: nx.Graph, equations: dict, iterations: int = 15):
+    def __init__(self, cover_type: str, G: nx.Graph, equations: dict, iterations: int = 25):
         '''
         An implementation of the message passing algorithm for networkx graphs that
         have been covered with edge-disjoint motifs.
@@ -40,7 +40,7 @@ class MessagePassing():
         :return float: the probability that connection to the GCC
         fails through this motif.
         '''
-        return self._equations[topology]
+        return self._equations[topology](self._phi, prods)
 
     def calculate_H_tau(self, focal: int, vertices_in_motif: list, motif_ID: int,
                         topology: str) -> None:
@@ -93,8 +93,8 @@ class MessagePassing():
                 prod_vertex *= self._H_tau[(vertex, motif_ID_l)]
                 done_motifs.add(motif_ID_l)
 
-                # H_{\tau_j\leftarrow l}(z)
-                prods.append(prod_vertex)
+            # H_{\tau_j\leftarrow l}(z)
+            prods.append(prod_vertex)
 
         # H_{i\leftarrow \tau}(z)
         self._H_tau[(focal, motif_ID)] = self.resolve_equation(topology, prods)
@@ -110,14 +110,14 @@ class MessagePassing():
         self._phi = phi
 
         # initialise the model
-        H_tau: dict = {}
+        self._H_tau: dict = {}
         for i, j in self._MPM._G.edges():
 
-            label: str = self._MPM.get_edge_cover_label(self._MPM._G, i, j)
+            label: str = self._MPM.get_edge_cover_label(i, j)
             motif_ID: str = self._MPM.get_motif_ID(label)
 
             for k in self._MPM.get_vertices_in_motif(label):
-                H_tau[(k, motif_ID)] = 0.5
+                self._H_tau[(k, motif_ID)] = 0.5
 
         # fixed point iteration repeats
         for r in range(self._iterations):
@@ -155,7 +155,7 @@ class MessagePassing():
                 if motif_ID in done_motifs:
                     continue
 
-                prod *= H_tau[(i, motif_ID)]
+                prod *= self._H_tau[(i, motif_ID)]
                 done_motifs.add(motif_ID)
 
             outer_sum += prod
