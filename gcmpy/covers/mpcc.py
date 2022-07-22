@@ -14,6 +14,8 @@ def MPCC(G: nx.Graph):
     `nx.enumerate_all_cliques` might be slow; however, we only need to
     call it once.
 
+    Take care of self-loops in the network, as these will not be labelled.
+
     :param G nx.Graph: the network to cover.
     :returns: G a covered graph.
     '''
