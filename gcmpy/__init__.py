@@ -1,4 +1,3 @@
-import imp
 from gcmpy.names.joint_degree_names import JointDegreeNames
 from gcmpy.names.network_names import NetworkNames
 from gcmpy.names.tools_names import ToolsNames
@@ -39,6 +38,7 @@ from gcmpy.distributions.power_law import power_law
 from gcmpy.distributions.scale_free_cut_off import scale_free_cut_off
 
 from gcmpy.covers.eecc import EECC
+from gcmpy.covers.mpcc import MPCC
 
 from gcmpy.tools.average_joint_degree_from_jdd import AverageJointDegreeFromJDD
 from gcmpy.tools.joint_degree_distribution_from_network import JointDegreeDistributionFromNetwork
