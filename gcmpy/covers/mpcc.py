@@ -17,8 +17,8 @@ def MPCC(G: nx.Graph, max_size: int = 0):
     Take care of self-loops in the network, as these will not be labelled.
 
     `max_size` is an optional integer to disregard cliques larger than this size.
-    If it is set to zero (default) then all clique sizes are included. If it is 
-    greater than zero, only cliques larger than this value are included in the 
+    If it is set to zero (default) then all clique sizes are included. If it is
+    greater than zero, only cliques larger than this value are included in the
     cover.
 
     :param G nx.Graph: the network to cover.
