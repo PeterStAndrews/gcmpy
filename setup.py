@@ -21,7 +21,7 @@
 from setuptools import setup, find_packages
 
 # the current version of the package
-__version__ = "0.2.15"
+__version__ = "0.2.16"
 
 with open('README.rst') as f:
     longDescription = f.read()
