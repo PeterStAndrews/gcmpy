@@ -2,7 +2,7 @@ import networkx as nx
 import itertools
 
 
-def MPCC(G: nx.Graph):
+def MPCC(G: nx.Graph, max_size: int = 0):
     '''
     An edge-disjoint clique cover that preserves larger motifs within
     a network. This works by assigning labels to each edge of the form
@@ -16,13 +16,24 @@ def MPCC(G: nx.Graph):
 
     Take care of self-loops in the network, as these will not be labelled.
 
+    `max_size` is an optional integer to disregard cliques larger than this size.
+    If it is set to zero (default) then all clique sizes are included. If it is 
+    greater than zero, only cliques larger than this value are included in the 
+    cover.
+
     :param G nx.Graph: the network to cover.
+    :param max_size int: optional int to control the maximum clique size allowed
+
     :returns: G a covered graph.
     '''
     g: nx.Graph = G.copy()
     cliques: list = sorted(list(nx.enumerate_all_cliques(g)), key=len, reverse=True)
     cover: list = []
     for c in cliques:
+
+        if len(c) > max_size and max_size > 0:
+            continue
+
         skip: bool = False
         for e in itertools.combinations(c, 2):
             if not g.has_edge(e[0], e[1]):
