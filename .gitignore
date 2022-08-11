@@ -51,3 +51,6 @@ coverage.xml
 .vscode/*
 
 *.DS_store
+
+# notebooks folder
+notebooks/*
