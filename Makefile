@@ -36,7 +36,7 @@ install:
 .PHONY: upload
 upload: 
 	$(PYTHON) setup.py sdist
-	$(TWINE) upload dist/* 
+	$(TWINE) upload --skip-existing dist/* 
 
 .PHONY: clean-distribution
 clean-distribution:
