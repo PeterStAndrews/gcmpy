@@ -1,10 +1,11 @@
 import random
 
+
 class DrawSet(object):
 
     def __init__(self):
         self._edge_hashmap: dict = {}
-        self._edges: list= []
+        self._edges: list = []
 
     def __contains__(self, e: tuple) -> bool:
         return e in self._edge_hashmap

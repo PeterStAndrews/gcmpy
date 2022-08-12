@@ -1,6 +1,7 @@
 import random
 import networkx as nx
 
+
 def bond_percolate(g: nx.Graph, phi: float) -> float:
     """
     Performs bond percolation with occupancy probability `phi`
