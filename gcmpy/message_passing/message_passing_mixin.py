@@ -15,43 +15,43 @@ class MessagePassingMixin():
         self._CoverType: str = cover_type
         self._G: nx.Graph = G
 
-    # def get_edge_cover_label(i: int, j: int) -> str:
-    #     '''
-    #     Interrogates the graph `G' for edge <i,j>'s cover label. Each label
-    #     will depend on the cover that is being used.
+    def get_edge_cover_label(i: int, j: int) -> str:
+        '''
+        Interrogates the graph `G' for edge <i,j>'s cover label. Each label
+        will depend on the cover that is being used.
 
-    #     :param i: vertex id
-    #     :param j: vertex id
+        :param i: vertex id
+        :param j: vertex id
 
-    #     :returns string: the cover label
-    #     '''
-    #     pass
+        :returns string: the cover label
+        '''
+        pass
 
-    # def get_motif_topology(label: str) -> str:
-    #     '''
-    #     Parses the cover label to get the topology of the edge.
+    def get_motif_topology(label: str) -> str:
+        '''
+        Parses the cover label to get the topology of the edge.
 
-    #     :param label: the cover label
-    #     :returns string: topology
-    #     '''
-    #     pass
+        :param label: the cover label
+        :returns string: topology
+        '''
+        pass
 
-    # def get_motif_ID(label: str) -> str:
-    #     '''
-    #     Parses the cover label to return the unique ID of
-    #     the motif.
+    def get_motif_ID(label: str) -> str:
+        '''
+        Parses the cover label to return the unique ID of
+        the motif.
 
-    #     :param str: cover label
-    #     :returns str: unique motif ID
-    #     '''
-    #     pass
+        :param str: cover label
+        :returns str: unique motif ID
+        '''
+        pass
 
-    # def get_vertices_in_motif(label: str) -> list:
-    #     '''
-    #     Parses the cover label to return the vertices in
-    #     the motif as a list of integers.
+    def get_vertices_in_motif(label: str) -> list:
+        '''
+        Parses the cover label to return the vertices in
+        the motif as a list of integers.
 
-    #     :param str: cover label
-    #     :returns list: vertex IDs in motif.
-    #     '''
-    #     pass
+        :param str: cover label
+        :returns list: vertex IDs in motif.
+        '''
+        pass
