@@ -51,6 +51,6 @@ from gcmpy.tools.markov_chain_monte_carlo_rewiring import MarkovChainMonteCarloR
 from gcmpy.tools.draw_set import DrawSet
 from gcmpy.tools.bond_percolate import bond_percolate
 
-from gcmpy.message_passing.message_passing_mixin import MessagePassingMixin
-from gcmpy.message_passing.message_passing import MessagePassing
-from gcmpy.message_passing.number_connected_graphs import number_of_connected_graphs, QQ, Q
+# from gcmpy.message_passing.message_passing_mixin import MessagePassingMixin
+# from gcmpy.message_passing.message_passing import MessagePassing
+# from gcmpy.message_passing.number_connected_graphs import number_of_connected_graphs, QQ, Q
