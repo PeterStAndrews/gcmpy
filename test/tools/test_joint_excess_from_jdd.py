@@ -27,7 +27,7 @@ class JointExcessDDfromJDDTest(unittest.TestCase):
         for key in q_triangle_st_expected:
             self.assertAlmostEqual(q_triangle_st_expected[key], test_data[1][key])
 
-        test_data_dict: dict[dict] = JointExcessfromJDD.convert_list_qks_to_dict(
+        test_data_dict: dict = JointExcessfromJDD.convert_list_qks_to_dict(
             test_data, ["2-clique", "3-clique"]
         )
 

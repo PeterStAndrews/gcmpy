@@ -3,7 +3,7 @@ from gcmpy.names.tools_names import ToolsNames
 
 class JointExcessJointDegreeMatrices:
     def __init__(self, params=None):
-        self._ejks: dict[dict] = {}  # dict of ejk dicts/matrices keyed by edge topology
+        self._ejks: dict = {}  # dict of ejk dicts/matrices keyed by edge topology
         self._excess_degree_keys: dict[
             list
         ] = {}  # dict of lst of excess deg-tuples keyed by edge topology

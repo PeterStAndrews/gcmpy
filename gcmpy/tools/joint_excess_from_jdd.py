@@ -24,7 +24,7 @@ class JointExcessfromJDD:
         return qks
 
     @staticmethod
-    def convert_list_qks_to_dict(qks_list: list[dict], keys: list[str]) -> dict[dict]:
+    def convert_list_qks_to_dict(qks_list: list[dict], keys: list[str]) -> dict:
         """
         Static method to convert a list of dicts to dict of dicts
         :param qks_list: list of excess degree distributions
@@ -37,7 +37,7 @@ class JointExcessfromJDD:
         return qks_dict
 
     @staticmethod
-    def convert_dict_qks_to_list(qks_dict: dict[dict], keys: list[str]) -> list[dict]:
+    def convert_dict_qks_to_list(qks_dict: dict, keys: list[str]) -> list[dict]:
         """
         Static method to convert a dict of dicts to list of dicts
         :param qks_dict: dict keyed by topology string
