@@ -88,8 +88,8 @@ class JointExcessJointDegree:
                 if key1 == key2:
                     ejk[key1] = ejk.get(key1, 0) + (1.0 / (self._num_edges[name]))
                 else:
-                    ejk[key1] = ejk.get(key1, 0) + (1.0 / (self._num_edges[name]))
-                    ejk[key2] = ejk.get(key2, 0) + (1.0 / (self._num_edges[name]))
+                    ejk[key1] = ejk.get(key1, 0) + (0.5 / (self._num_edges[name]))
+                    ejk[key2] = ejk.get(key2, 0) + (0.5 / (self._num_edges[name]))
 
         return ejk
 
