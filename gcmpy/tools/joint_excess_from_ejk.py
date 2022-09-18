@@ -25,6 +25,7 @@ class JointExcessFromEjk:
             q = {}
             for left_key in keys:
                 for right_key in keys:
-                    q[left_key] = q.get(left_key, 0.0) + ejk[left_key + right_key]
+                    if left_key + right_key in ejk:
+                        q[left_key] = q.get(left_key, 0.0) + ejk[left_key + right_key]
             qks[key] = q
         return qks
