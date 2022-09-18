@@ -43,6 +43,7 @@ from gcmpy.covers.mpcc import MPCC
 from gcmpy.tools.average_joint_degree_from_jdd import AverageJointDegreeFromJDD
 from gcmpy.tools.joint_degree_distribution_from_network import JointDegreeDistributionFromNetwork
 from gcmpy.tools.joint_degree_from_excess import JointDegreeFromExcess
+from gcmpy.tools.joint_excess_degree import JointExcessDegree
 from gcmpy.tools.joint_excess_from_ejk import JointExcessFromEjk
 from gcmpy.tools.joint_excess_from_jdd import JointExcessfromJDD
 from gcmpy.tools.joint_excess_joint_degree import JointExcessJointDegree
