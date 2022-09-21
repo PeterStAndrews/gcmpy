@@ -1,4 +1,5 @@
 import networkx as nx
+from random import shuffle
 import itertools
 
 
@@ -27,7 +28,9 @@ def MPCC(G: nx.Graph, max_size: int = 0):
     :returns: G a covered graph.
     '''
     g: nx.Graph = G.copy()
-    cliques: list = sorted(list(nx.enumerate_all_cliques(g)), key=len, reverse=True)
+    cliques = list(nx.enumerate_all_cliques(g))
+    shuffle(cliques)
+    cliques = sorted(cliques, key=len, reverse=True)
     cover: list = []
     for c in cliques:
 
