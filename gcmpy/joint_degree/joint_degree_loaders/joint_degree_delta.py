@@ -6,11 +6,9 @@ from gcmpy.names.joint_degree_names import JointDegreeNames
 
 
 class JointDegreeDelta(JointDegreeSplitDegree):
-
     _type: str = JointDegreeType.DELTA
 
     def __init__(self, params: dict):
-
         try:
             self._target_k = params[JointDegreeNames.TARGET_K]
             self._fp = params[JointDegreeNames.FP]

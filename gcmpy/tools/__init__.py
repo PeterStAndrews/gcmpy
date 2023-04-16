@@ -1,3 +1,4 @@
+# flake8: noqa
 from .average_joint_degree_from_jdd import AverageJointDegreeFromJDD
 from .joint_degree_distribution_from_network import JointDegreeDistributionFromNetwork
 from .joint_degree_from_excess import JointDegreeFromExcess

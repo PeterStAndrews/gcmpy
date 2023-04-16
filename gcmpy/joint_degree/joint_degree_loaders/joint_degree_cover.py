@@ -4,7 +4,6 @@ from gcmpy.names.joint_degree_names import JointDegreeNames
 
 
 class JointDegreeCover(JointDegree):
-
     _type: str = JointDegreeType.COVER
 
     def __init__(self, params: dict):
@@ -17,7 +16,6 @@ class JointDegreeCover(JointDegree):
         self.create_jdd()
 
     def create_jdd(self) -> None:
-
         vertex_ids = list(set([vertex for clique in self._cover for vertex in clique]))
 
         zero_index = 0

@@ -8,7 +8,6 @@ from gcmpy.network.edge_list import LightWeightEdgeList
 
 class GCMAlgorithmFast(GCMAlgorithm):
     def random_clustered_graph(self, jds: list) -> LightWeightEdgeList:
-
         stubs = [
             list(chain.from_iterable(starmap(repeat, r)))
             for r in map(enumerate, zip(*jds))
@@ -26,7 +25,6 @@ class GCMAlgorithmFast(GCMAlgorithm):
 
         # for each topology list ...
         for k, k_list in enumerate(stubs):
-
             # iterate the degree list
             for vertices in grouper(k_list, self._motif_sizes[k]):
                 # add the edges to the network using the builder callback

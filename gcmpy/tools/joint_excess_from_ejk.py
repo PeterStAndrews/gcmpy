@@ -14,7 +14,6 @@ class JointExcessFromEjk:
     def get_excess_joint_distributions(
         ejks: JointExcessJointDegreeMatrices,
     ) -> dict:
-
         if len(ejks._ejks) != len(ejks.excess_degree_keys):
             raise ("Error in JointExcessDDFromEjk: incorrect ejk or keys provided")
 

@@ -1,3 +1,4 @@
+# flake8: noqa
 from .network import Network
 from .edge_list import LightWeightEdgeList
 from .edge_list_to_network import EdgeListToNetwork

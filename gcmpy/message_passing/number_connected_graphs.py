@@ -5,7 +5,7 @@ from math import factorial
 
 
 def number_of_connected_graphs(G: nx.Graph, ak: list, i: int, k: int):
-    '''
+    """
     Returns the number of connected graphs among vertices
     (ak + i) with k edges removed. For instance, there are
     three graphs among a triangle with one edge removed.
@@ -17,7 +17,7 @@ def number_of_connected_graphs(G: nx.Graph, ak: list, i: int, k: int):
 
     :returns the number of connected graphs that contain vertices
     ak+i, with k edges removed.
-    '''
+    """
 
     count: int = 0
     H: nx.Graph = G.copy()
@@ -39,7 +39,7 @@ def number_of_connected_graphs(G: nx.Graph, ak: list, i: int, k: int):
 
 @lru_cache(maxsize=None)
 def QQ(n: int, k: int) -> int:
-    '''
+    """
     Returns the number of connected graphs of n vertices with k edges.
     This function is for cliques only.
 
@@ -59,11 +59,11 @@ def QQ(n: int, k: int) -> int:
     for i in range(0,len(checks)):
         print(QQ(6,15-i), checks[i])
 
-    '''
+    """
     gg = nx.complete_graph(n)
     focal = 0
     aks = [x for x in range(1, n)]
-    all_edges = int(0.5*n*(n-1))
+    all_edges = int(0.5 * n * (n - 1))
     edges_to_remove = all_edges - k
     return number_of_connected_graphs(gg, aks, focal, edges_to_remove)
 
@@ -78,7 +78,7 @@ def binomial(n, k):
 
 @lru_cache(maxsize=None)
 def Q(n: int, k: int) -> int:
-    '''
+    """
     Number of labeled, simply connected Graphs of order n, size k.
     This is a recursion taken from "Frank Harary and Edgar M. Palmer.
     Graphical Enumeration. Academic Press. 1973".
@@ -89,7 +89,7 @@ def Q(n: int, k: int) -> int:
     :returns int: the number of connected graphs with `n` vertices and
     `k` edges.
 
-    '''
+    """
     s = n * (n - 1) // 2
     if k < n - 1 or k > s:
         res = 0

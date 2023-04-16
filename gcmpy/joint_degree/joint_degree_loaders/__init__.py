@@ -1,3 +1,4 @@
+# flake8: noqa
 from .joint_degree_manual import JointDegreeManual
 from .joint_degree_marginal import JointDegreeMarginal
 from .joint_degree_empirical import JointDegreeEmpirical

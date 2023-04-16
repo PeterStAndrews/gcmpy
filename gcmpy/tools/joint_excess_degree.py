@@ -1,11 +1,9 @@
 import networkx as nx
 
 
-class JointExcessDegree():
-
+class JointExcessDegree:
     @staticmethod
     def get_ejk(G: nx.Graph) -> dict:
-
         """
         Returns the joint excess degree (overall) of a
         networkx graph.
@@ -18,7 +16,6 @@ class JointExcessDegree():
 
         num_edges = len(G.edges())
         for e in G.edges():
-
             u, v = e
             u_degree = G.degree(u)
             v_degree = G.degree(v)

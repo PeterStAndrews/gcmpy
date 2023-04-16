@@ -1,3 +1,4 @@
+# flake8: noqa
 from .exponential import exponential
 from .poisson import poisson
 from .power_law import power_law

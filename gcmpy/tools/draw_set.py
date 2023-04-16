@@ -2,7 +2,6 @@ import random
 
 
 class DrawSet(object):
-
     def __init__(self):
         self._edge_hashmap: dict = {}
         self._edges: list = []
@@ -20,7 +19,7 @@ class DrawSet(object):
         if e in self._edge_hashmap:
             return
         self._edges.append(e)
-        self._edge_hashmap[e] = len(self._edges)-1
+        self._edge_hashmap[e] = len(self._edges) - 1
 
     def remove(self, e: tuple) -> None:
         position = self._edge_hashmap.pop(e)

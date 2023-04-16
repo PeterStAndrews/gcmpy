@@ -27,10 +27,8 @@ class JointExcessJointDegreeMatrices:
         """
         self._excess_degree_keys: dict[list] = {}
         for topology in self._ejks:
-
             excess_key_set = set()
             for excess_key in self._ejks[topology]:
-
                 A = list(excess_key)
                 B = A[: len(A) // 2]
                 C = A[len(A) // 2 :]

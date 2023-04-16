@@ -70,7 +70,6 @@ class JointExcessJointDegree:
         ejk = {}
         for e in self._G.edges():
             if self._G.edges[e][NetworkNames.TOPOLOGY] == name:
-
                 u, v = e
 
                 u_joint_degree = list(self._G.nodes[u][NetworkNames.JOINT_DEGREE])

@@ -23,7 +23,6 @@ class GCMAlgorithmCustomMotifs(GCMAlgorithm):
         return [lst[i : i + n] for i in range(0, len(lst), n)]
 
     def random_clustered_graph(self, jds: list) -> LightWeightEdgeList:
-
         stubs = [
             list(chain.from_iterable(starmap(repeat, r)))
             for r in map(enumerate, zip(*jds))
@@ -52,12 +51,10 @@ class GCMAlgorithmCustomMotifs(GCMAlgorithm):
 
         # for each motif type
         for j, motif_indexes in enumerate(self._motif_indices):
-
             # for each motif of that type
             kk: int = motif_indexes[0]
             num_motifs = (0.0 + len(stubs[kk])) / self._motif_sizes[kk]
             for k in range(int(num_motifs)):
-
                 vertices: list = []
                 # for each orbit in the motif
                 for index in motif_indexes:

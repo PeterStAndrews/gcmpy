@@ -1,12 +1,12 @@
 import networkx as nx
-
 from gcmpy.message_passing.message_passing_mixin import MessagePassingMixin
 
 
-class MessagePassing():
-
-    def __init__(self, cover_type: str, G: nx.Graph, equations: dict, iterations: int = 25):
-        '''
+class MessagePassing:
+    def __init__(
+        self, cover_type: str, G: nx.Graph, equations: dict, iterations: int = 25
+    ):
+        """
         An implementation of the message passing algorithm for networkx graphs that
         have been covered with edge-disjoint motifs.
 
@@ -22,14 +22,14 @@ class MessagePassing():
         :param G: networkx graph with edge labels.
         :param equations: dict of callbacks that evaluate the motif equations.
         :param iterations: [optional] integer number of iterations for fixed point calculation
-        '''
+        """
         self._MPM = MessagePassingMixin(cover_type, G)
         self._H_tau: dict = {}
         self._equations: dict[callable] = equations
         self._iterations: int = iterations
 
     def resolve_equation(self, topology: str, prods: list) -> float:
-        '''
+        """
         Calculates the probability that connection to the GCC
         fails through this motif. This will throw if the equation
         is not found for the motif topology.
@@ -39,12 +39,13 @@ class MessagePassing():
 
         :return float: the probability that connection to the GCC
         fails through this motif.
-        '''
+        """
         return self._equations[topology](self._phi, prods)
 
-    def calculate_H_tau(self, focal: int, vertices_in_motif: list, motif_ID: int,
-                        topology: str) -> None:
-        '''
+    def calculate_H_tau(
+        self, focal: int, vertices_in_motif: list, motif_ID: int, topology: str
+    ) -> None:
+        """
         Calculates `H_{focal leftarrow tau}(z)' which is the probability that `focal' vertex
         does not become attached to the GCC from membership in motif tau.
 
@@ -52,11 +53,10 @@ class MessagePassing():
         :param vertices_in_motif: vertices that belong to this motif
         :param motif_ID: integer motif unique ID
         :param topology: string indicating the topology
-        '''
+        """
         # iterate the vertices of *this* motif apart from focal vertex i
         prods = []
         for vertex in vertices_in_motif:
-
             if vertex == focal:
                 continue
 
@@ -83,7 +83,6 @@ class MessagePassing():
             prod_vertex = 1
             done_motifs = set()
             for ell in cavity_neighbours:
-
                 label_l = self._MPM.get_edge_cover_label(vertex, ell)
                 motif_ID_l = self._MPM.get_motif_ID(label_l)
 
@@ -100,19 +99,18 @@ class MessagePassing():
         self._H_tau[(focal, motif_ID)] = self.resolve_equation(topology, prods)
 
     def theoretical(self, phi: float) -> float:
-        '''
+        """
         Performs the message passing algorithm for networks with an
         edge-disjoint cover of motifs for bond percolation dynamics.
 
         :param phi: float, bond occupation probability
         :return float: average probability that a random vertex belongs to the GCC
-        '''
+        """
         self._phi = phi
 
         # initialise the model
         self._H_tau: dict = {}
         for i, j in self._MPM._G.edges():
-
             label: str = self._MPM.get_edge_cover_label(i, j)
             motif_ID: str = self._MPM.get_motif_ID(label)
 
@@ -121,10 +119,8 @@ class MessagePassing():
 
         # fixed point iteration repeats
         for r in range(self._iterations):
-
             # iterate all edges in the network
             for i, j in self._MPM._G.edges():
-
                 # pull the cover label from the raw network label
                 label: str = self._MPM.get_edge_cover_label(i, j)
 
@@ -147,7 +143,6 @@ class MessagePassing():
             prod = 1
             done_motifs = set()
             for j in self._MPM._G.neighbors(i):
-
                 label = self._MPM.get_edge_cover_label(i, j)
                 topology = self._MPM.get_motif_topology(label)
                 motif_ID = self._MPM.get_motif_ID(label)
@@ -160,4 +155,4 @@ class MessagePassing():
 
             outer_sum += prod
 
-        return 1 - ((1.0*outer_sum)/self._MPM._G.order())
+        return 1 - ((1.0 * outer_sum) / self._MPM._G.order())

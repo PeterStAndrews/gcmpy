@@ -1,3 +1,4 @@
+# flake8: noqa
 from .joint_degree_names import JointDegreeNames
 from .network_names import NetworkNames
 from .tools_names import ToolsNames

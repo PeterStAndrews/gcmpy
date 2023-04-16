@@ -86,18 +86,15 @@ class EECC(Network):
         """
         num_cliques = len(C)
         for c in range(num_cliques):
-
             order = len(C[c])  # num vertives in clique
             C[c] = sorted(C[c])  # sort vertices
             ord[c] = order  # set size
 
             if order > 2:
-
                 size = binom(order, 2)  # number of edges in clique of size order
 
                 for i in range(order):  # for each vertex pair in clique (i.e. edges)
                     for j in range(i + 1, order):
-
                         f = 0
                         n = 0
                         # iterate all cliques and see if *this* edge (i,j)

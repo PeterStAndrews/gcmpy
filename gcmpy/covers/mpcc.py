@@ -4,7 +4,7 @@ import itertools
 
 
 def MPCC(G: nx.Graph, max_size: int = 0):
-    '''
+    """
     An edge-disjoint clique cover that preserves larger motifs within
     a network. This works by assigning labels to each edge of the form
 
@@ -26,14 +26,13 @@ def MPCC(G: nx.Graph, max_size: int = 0):
     :param max_size int: optional int to control the maximum clique size allowed
 
     :returns: G a covered graph.
-    '''
+    """
     g: nx.Graph = G.copy()
     cliques = list(nx.enumerate_all_cliques(g))
     shuffle(cliques)
     cliques = sorted(cliques, key=len, reverse=True)
     cover: list = []
     for c in cliques:
-
         if len(c) > max_size and max_size > 0:
             continue
 
@@ -50,6 +49,6 @@ def MPCC(G: nx.Graph, max_size: int = 0):
     for c in cover:
         ID: int = next(clique_ID)
         for e in itertools.combinations(c, 2):
-            G.edges[e[0], e[1]]['clique'] = f'{len(c)}-{c}-{ID}'
+            G.edges[e[0], e[1]]["clique"] = f"{len(c)}-{c}-{ID}"
 
     return G

@@ -13,4 +13,4 @@ def bond_percolate(g: nx.Graph, phi: float) -> float:
     es: list = [e for e in G.edges() if random.random() > phi]
     G.remove_edges_from(es)
     Gcc: list = sorted(nx.connected_components(G), key=len, reverse=True)
-    return float(len(Gcc[0]))/G.order()
+    return float(len(Gcc[0])) / G.order()

@@ -1,3 +1,4 @@
+# flake8: noqa
 from .gcm_algorithm import GCMAlgorithm
 from .gcm_algorithm_factory import GCMAlgorithmFactory
 from .gcm_algorithm_fast import GCMAlgorithmFast

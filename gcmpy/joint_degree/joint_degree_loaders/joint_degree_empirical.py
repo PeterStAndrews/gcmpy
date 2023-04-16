@@ -4,7 +4,6 @@ from gcmpy.names.joint_degree_names import JointDegreeNames
 
 
 class JointDegreeEmpirical(JointDegree):
-
     _type: str = JointDegreeType.EMPIRICAL
 
     def __init__(self, params: dict):

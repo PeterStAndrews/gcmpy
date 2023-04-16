@@ -15,6 +15,7 @@ from gcmpy.tools.joint_excess_joint_degree_keys_view import (
 )
 from gcmpy.tools.draw_set import DrawSet
 
+
 class ErrorMarkovChainMonteCarloRewiring(Exception):
     ...
 
@@ -313,7 +314,6 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
         # since we are multiplying the all together anyway. However, we should pull the
         # topology for each edge seperately.
         for e0, e1 in zip(e0s, e1s):
-
             left_topology: str = G.edges[e0][NetworkNames.TOPOLOGY]
             index: int = self._ejks.get_topology_index(left_topology)
             key_e0 = self.get_joint_excess_degree_key(G, e0, index)
@@ -361,7 +361,6 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
 
         convergence_count: int = 0
         while convergence_count <= self._convergence_limit:
-
             if convergence_count % 50 == 0 and self._proposal_count != 0:
                 self._acceptance_ratio.append(
                     float(self._proposals_accepted) / float(self._proposal_count)
@@ -374,7 +373,6 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
 
             search_count: int = 0
             while search_count <= self._search_limit:
-
                 # choose another edge at random.
                 e1: tuple = EdgeSet.draw()
 
@@ -403,7 +401,6 @@ class MarkovChainMonteCarloRewiring(MarkovChainMonteCarlo):
             # we now have two candidate corners of two seperate motifs of the same topology that
             # can be swapped next, evaluate the swap condition and then swap the edges.
             if self.swap_condition(G, u_edges_in_motif, v_edges_in_motif, u0, v0):
-
                 convergence_count += 1
 
                 # add the new proposal edges for both sides

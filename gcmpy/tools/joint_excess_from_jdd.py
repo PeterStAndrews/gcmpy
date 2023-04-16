@@ -4,7 +4,6 @@ from gcmpy.tools.average_joint_degree_from_jdd import AverageJointDegreeFromJDD
 class JointExcessfromJDD:
     @staticmethod
     def get_joint_excess_distributions(jdd: dict) -> list[dict]:
-
         qks = []
 
         averages = AverageJointDegreeFromJDD.get_average_joint_degrees(jdd)

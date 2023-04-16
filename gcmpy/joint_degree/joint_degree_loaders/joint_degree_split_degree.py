@@ -4,7 +4,6 @@ from gcmpy.names.joint_degree_names import JointDegreeNames
 
 
 class JointDegreeSplitDegree(JointDegree):
-
     _type: str = JointDegreeType.SPLIT_DEGREE
 
     def __init__(self, params: dict):

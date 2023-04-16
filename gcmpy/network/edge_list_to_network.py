@@ -8,7 +8,6 @@ from gcmpy.names.network_names import NetworkNames
 class EdgeListToNetwork:
     @staticmethod
     def convert(edgelist: LightWeightEdgeList) -> Network:
-
         model = Network()
         model.G.add_edges_from(edgelist.edge_list)
 
