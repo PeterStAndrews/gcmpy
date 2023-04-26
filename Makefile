@@ -16,7 +16,7 @@ TWINE = twine
 
 .PHONY: requirements
 requirements:
-	pip3 install -U -r $(CURDIR)/requirements.txt
+	pip3 install -U -r $(CURDIR)/requirements/requirements.txt
 
 .PHONY: lint
 lint:
