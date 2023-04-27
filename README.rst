@@ -56,7 +56,7 @@ copy, just clone the repo:
     
     git clone git@github.com:PeterStAndrews/gcmpy.git
     cd gcmpy
-    python setup.py install
+    pip install .
 
 
 The unit tests can be discovered from the project root using 

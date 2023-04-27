@@ -3,6 +3,7 @@ import networkx as nx
 
 from gcmpy.message_passing.equations.clique_equation import clique_equation
 from gcmpy.message_passing.equations.automated_equation import automated_equation
+from gcmpy.message_passing.equations.chordless_cycle_equation import chordless_cycle_equation
 
 
 class EquationTestMixin():
@@ -16,19 +17,37 @@ class EquationTestMixin():
             us[n] = u
         nx.set_node_attributes(G, us, "u")
 
-    def _make_clique(self, n, u: float):
-        G = nx.complete_graph(n)
-        self._initialise_us(G, self.u)
+    def _make_chordless_cycle(self, n, u: float) -> nx.Graph:
+        G = nx.cycle_graph(n)
+        self._initialise_us(G, u)
         return G
 
-
-class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
+    def _make_clique(self, n, u: float) -> nx.Graph:
+        G = nx.complete_graph(n)
+        self._initialise_us(G, u)
+        return G
 
     def _make_diamond(self, u: float):
         G = nx.Graph()
         G.add_edges_from([(0, 1), (1, 2), (2, 3), (3, 0), (0, 2)])
         self._initialise_us(G, u=u)
         return G
+
+
+class ChordlessCycleEquationTest(EquationTestMixin, unittest.TestCase):
+    
+    def test_edge(self):
+        self.assertAlmostEqual(
+            chordless_cycle_equation(3, self.u, self.phi),
+            pow(1 - self.phi, 2)
+            + 2 * self.phi * pow(1 - self.phi, 2) * self.u
+            + (3 * pow(self.phi, 2) * (1 - self.phi) + pow(self.phi, 3))
+            * pow(self.u, 2),
+            places=7,
+        )
+
+
+class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
 
     def test_2_clique(self):
         G = self._make_clique(n=2, u=self.u)
@@ -46,6 +65,14 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
             + 2 * self.phi * pow(1 - self.phi, 2) * self.u
             + (3 * pow(self.phi, 2) * (1 - self.phi) + pow(self.phi, 3))
             * pow(self.u, 2),
+            places=7,
+        )
+
+    def test_4_cycle(self):
+        G = self._make_chordless_cycle(4, self.u)
+        self.assertAlmostEqual(
+            automated_equation(G, self.phi, 0),
+            chordless_cycle_equation(4, self.u, self.phi),
             places=7,
         )
 
@@ -106,6 +133,15 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
             ),
             places=7,
         )
+
+    def test_n_cycle(self):
+        for n in range(3,10):
+            G = self._make_chordless_cycle(n, self.u)
+            self.assertAlmostEqual(
+                automated_equation(G, self.phi, 0),
+                chordless_cycle_equation(n, self.u, self.phi),
+                places=7
+            )
 
     @unittest.skip("TODO - fix automated_equation() for 5 vertex motifs or more")
     def test_5_clique(self):

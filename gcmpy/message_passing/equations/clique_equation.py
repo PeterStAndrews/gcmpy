@@ -4,6 +4,8 @@ from gcmpy.message_passing.number_connected_graphs import Q
 
 def clique_equation(tau: int, phi: float, Hs: list) -> float:
     """
+    P. Mann (et al). Phys. Rev. E 104, 024304 2021.
+
     :param tau: size of the clique including focal vertex
     :param phi: bond occupation probability
     :param Hs: H values for all vertices in the clique apart from focal

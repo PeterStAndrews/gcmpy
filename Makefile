@@ -64,7 +64,7 @@ discover-unit-tests:
 
 .PHONY: coverage-report
 coverage-report:
-	coverage run --source gcmpy -m unittest discover && coverage report
+	python3 -m coverage run --source=gcmpy -m unittest discover -v -s test/ -p 'test_*.py' && python3 -m coverage report
 
 # ----- Usage -----
 
