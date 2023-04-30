@@ -55,6 +55,7 @@ setup(
         "gcmpy.network",
         "gcmpy.tools",
         "gcmpy.message_passing",
+        "gcmpy.message_passing.equations",
     ],
     package_data={"gcmpy": ["py.typed"]},
     zip_safe=False,
