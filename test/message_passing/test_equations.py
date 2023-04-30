@@ -36,7 +36,7 @@ class EquationTestMixin():
 
 class ChordlessCycleEquationTest(EquationTestMixin, unittest.TestCase):
     
-    def test_edge(self):
+    def test_3_cycle(self):
         self.assertAlmostEqual(
             chordless_cycle_equation(3, self.u, self.phi),
             pow(1 - self.phi, 2)
@@ -143,7 +143,7 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
                 places=7
             )
 
-    @unittest.skip("TODO - fix automated_equation() for 5 vertex motifs or more")
+    @unittest.skip("TODO - fix automated_equation() for 5 clique")
     def test_5_clique(self):
         T = self.phi
         u = self.u
@@ -179,7 +179,7 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
             places=7,
         )
 
-    @unittest.skip("TODO - fix automated_equation() for 5 vertex motifs or more")
+    @unittest.skip("TODO - fix automated_equation() for 6 clique")
     def test_6_clique(self):
         T = self.phi
         u = self.u

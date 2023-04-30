@@ -2,30 +2,21 @@ import itertools
 import networkx as nx
 
 
-def all_connected_subgraphs(g: tuple, m: int):
+def get_connected_subgraphs(G: nx.Graph, subgraph: set, possible: set, excluded: set, results: list, max_size: int):
     """
-    A backtracking algorithm which says, given a partial subgraph of size < m and
-    a set of nodes that are allowed to be added, add each node and expand the set of possible
-    options to include all neighbours of that node. To reduce symmetry, we keep track
-    of which nodes have already been used and add these to the excluded set.
+    Backtracking algorithm to find all subgraphs that contain a root vertex
+    from a graph represented as an edge set.
     """
+    results.append(subgraph)
 
-    def _recurse(t, possible, excluded):
-        if len(t) == m:
-            yield t
-        else:
-            excluded = set(excluded)
-            for i in possible:
-                if i not in excluded:
-                    current_subgraph = (*t, i)
-                    new_possible = possible | g[i]  # union of sets
-                    excluded.add(i)
-                    yield from _recurse(current_subgraph, new_possible, excluded)
+    if len(subgraph) == max_size:
+        return
 
-    excluded = set()
-    for i, possible in enumerate(g):
-        excluded.add(i)
-        yield from _recurse((i,), possible, excluded)
+    for j in possible - excluded:
+        new_subgraph: set = subgraph | {j}
+        excluded: set = excluded | {j}
+        new_possible: set = (possible | set(G.neighbors(j))) - excluded
+        get_connected_subgraphs(G, new_subgraph, new_possible, excluded, results, max_size)
 
 
 def automated_equation(G: nx.Graph, p: float, root: int) -> float:
@@ -56,16 +47,14 @@ def automated_equation(G: nx.Graph, p: float, root: int) -> float:
     prob = 0.0
 
     # `components` is a list of combinations of vertices that contain `root`
-    edge_set = [set(G.neighbors(n)) for n in G.nodes()]
+    # and that are valid subgraphs of a motif.
     components = []
-    for l in range(
-        1, len(G.edges()) + 2
-    ):  # isolated vertex --> max number of vertices (+Python index)
-        components.extend(
-            [c for c in list(all_connected_subgraphs(edge_set, l)) if root in c]
-        )
-
+    get_connected_subgraphs(G, {root}, set(G.neighbors(root)), {root}, components, len(G.nodes()))
+    
     for c in components:
+        
+        c = list(c)
+        
         if len(c) == 1:
             # isolated vertex, set all of its edges to (1-p)
             prob += pow(1 - p, len(list(G.neighbors(c[0]))))

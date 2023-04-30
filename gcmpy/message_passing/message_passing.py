@@ -1,102 +1,112 @@
 import networkx as nx
 from gcmpy.message_passing.message_passing_mixin import MessagePassingMixin
+from gcmpy.message_passing.equations.automated_equation import automated_equation
 
 
 class MessagePassing:
     def __init__(
-        self, cover_type: str, G: nx.Graph, equations: dict, iterations: int = 25
+        self, G: nx.Graph, cover_type: str = 'motif cover', iterations: int = 25
     ):
         """
         An implementation of the message passing algorithm for networkx graphs that
         have been covered with edge-disjoint motifs.
-
-        The equations dict is a key:value pair of callback functions that, for a given
-        motif topology (key) evaluates the probability that the motif fails to connect
-        a vertex to the GCC. The signature of the callbacks is fixed, for instance for
-        ordinary edges we have
-
-            def func(phi: float, Hs: list[float])->float:
-                return 1 - phi + phi*Hs[0]
-
-        :param cover_type: str, the type of cover being calculated
+        
         :param G: networkx graph with edge labels.
-        :param equations: dict of callbacks that evaluate the motif equations.
+        :param cover_type: [optional] str, the type of cover being calculated
         :param iterations: [optional] integer number of iterations for fixed point calculation
         """
         self._MPM = MessagePassingMixin(cover_type, G)
         self._H_tau: dict = {}
-        self._equations: dict[callable] = equations
         self._iterations: int = iterations
 
-    def resolve_equation(self, topology: str, prods: list) -> float:
+    def resolve_equation(self, focal: int, label: str, prods: dict) -> float:
         """
-        Calculates the probability that connection to the GCC
-        fails through this motif. This will throw if the equation
-        is not found for the motif topology.
+        Calculates the probability that connection to the GCC fails through this motif. The
+        implementation of this method depends on what is being calculated. If the cover only
+        contains cliques, then we can do the following
 
-        :param topology: str, the toplogy of the motif
-        :param prods: a list of floats of `H_{j leftarrow nu}(z)'
+        ```python
+            topology = self._MPM.get_motif_topology(label)
+            return clique_equation(topology, self._phi, prods.values())
+        ```
+    
+        Another plan would be to store a list of callbacks, which could be provided on
+        initialisation of this class
 
-        :return float: the probability that connection to the GCC
-        fails through this motif.
+        ```python
+            return self._equations[topology](args)
+        ```
+
+        A final option is to call the automated equation, which will require a nx subgraph
+        to be constructed first and the u = prod_{\nu}H_{j\leftarrow \nu} values installed 
+        on the vertices as attributes keyed by `u`.
+        
+        ```python
+            edges: list[tuple] = self._MPM.get_edges_in_motif(label)
+            H = nx.Graph()
+            H.add_edges_from(edges)
+            nx.set_node_attributes(H, prods, "u")
+            return automated_equation(H, self._phi, focal)
+        ```
+    
+        :param focal: int, the ID of the focal vertex
+        :param label: str, cover label for an edge in the motif
+        :param prods: a dict of floats of `j: H_{j leftarrow nu}(z)'
+        :return float: the probability that connection to the GCC fails through this motif.
         """
-        return self._equations[topology](self._phi, prods)
-
+        edges: list[tuple] = self._MPM.get_edges_in_motif(label)
+        H = nx.Graph()
+        H.add_edges_from(edges)
+        nx.set_node_attributes(H, prods, "u")
+        return automated_equation(H, self._phi, focal)
+        
     def calculate_H_tau(
-        self, focal: int, vertices_in_motif: list, motif_ID: int, topology: str
+        self, focal: int, label: str
     ) -> None:
         """
         Calculates `H_{focal leftarrow tau}(z)' which is the probability that `focal' vertex
-        does not become attached to the GCC from membership in motif tau.
+        does not become attached to the GCC from membership in motif tau. 
+        `vertices_in_motif` are vertices that belong to *this* motif.
 
         :param focal: int the ID of the focal vertex
-        :param vertices_in_motif: vertices that belong to this motif
-        :param motif_ID: integer motif unique ID
-        :param topology: string indicating the topology
+        :param label: str of the cover label for this motif
         """
+        # parse the topology of the motif, its unique ID and
+        # the other vertices in the motif.
+        motif_ID: str = self._MPM.get_motif_ID(label)
+        vertices_in_motif: tuple = self._MPM.get_vertices_in_motif(label)
+
         # iterate the vertices of *this* motif apart from focal vertex i
-        prods = []
-        for vertex in vertices_in_motif:
-            if vertex == focal:
+        prods = {}
+        for j in vertices_in_motif:
+            if j == focal:
                 continue
 
-            # get all of the neighbours of the vertex
-            cavity_neighbours = [n for n in self._MPM._G.neighbors(vertex)]
+            # Get all of the direct neighbours of j. Note non-direct neighbours
+            # in motif nu will still be caught by cover label.
+            js_neighbours = list(self._MPM._G.neighbors(j))
 
-            # remove vertices that are in the motif itself
-            try:
-                for v in vertices_in_motif:
-                    if v != vertex:
-                        cavity_neighbours.remove(v)
-            except Exception:
-                # if we are here, we have tried to remove a neighbour
-                # that is not actually directly connected to `vertex`
-                # but *is* in the motif.
+            # ignore verticies in *this* motif with focal
+            js_neighbours = set(js_neighbours) - set(vertices_in_motif)
 
-                # it might also be an error in the configuration model
-                # due to a mis-formed motif (self-loops etc).
-
-                # just do nothing (no-op)
-                pass
-
-            # for each neighbour of `vertex' (which is focal's neighbour in the motif)
-            prod_vertex = 1
+            # for each motif of `j' get prob don't connect j to GCC
+            prod_j = 1
             done_motifs = set()
-            for ell in cavity_neighbours:
-                label_l = self._MPM.get_edge_cover_label(vertex, ell)
+            for l in js_neighbours:
+                label_l = self._MPM.get_edge_cover_label(j, l)
                 motif_ID_l = self._MPM.get_motif_ID(label_l)
 
                 if motif_ID_l in done_motifs:
                     continue
 
-                prod_vertex *= self._H_tau[(vertex, motif_ID_l)]
+                prod_j *= self._H_tau[(j, motif_ID_l)]
                 done_motifs.add(motif_ID_l)
 
             # H_{\tau_j\leftarrow l}(z)
-            prods.append(prod_vertex)
+            prods[j] = prod_j
 
         # H_{i\leftarrow \tau}(z)
-        self._H_tau[(focal, motif_ID)] = self.resolve_equation(topology, prods)
+        self._H_tau[(focal, motif_ID)] = self.resolve_equation(focal, label, prods)
 
     def theoretical(self, phi: float) -> float:
         """
@@ -124,17 +134,11 @@ class MessagePassing:
                 # pull the cover label from the raw network label
                 label: str = self._MPM.get_edge_cover_label(i, j)
 
-                # parse the topology of the motif, its unique ID and
-                # the other vertices in the motif.
-                topology: str = self._MPM.get_motif_topology(label)
-                motif_ID: str = self._MPM.get_motif_ID(label)
-                vertices_in_motif: tuple = self._MPM.get_vertices_in_motif(label)
-
                 # ================= Calculate H_{i,\tau}(z) ================== #
-                self.calculate_H_tau(i, vertices_in_motif, motif_ID, topology)
+                self.calculate_H_tau(i, label)
 
                 # ================= Calculate H_{j,\tau}(z) ================== #
-                self.calculate_H_tau(j, vertices_in_motif, motif_ID, topology)
+                self.calculate_H_tau(j, label)
 
         # construct the probability that the average vertex does not
         # belong to the GCC.
@@ -144,7 +148,6 @@ class MessagePassing:
             done_motifs = set()
             for j in self._MPM._G.neighbors(i):
                 label = self._MPM.get_edge_cover_label(i, j)
-                topology = self._MPM.get_motif_topology(label)
                 motif_ID = self._MPM.get_motif_ID(label)
 
                 if motif_ID in done_motifs:
