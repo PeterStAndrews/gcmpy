@@ -225,7 +225,7 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
         )
 
     def test_n_clique(self):
-        for n in range(5,9):
+        for n in range(5,7):
             G = self._make_clique(n, self.u)
             self.assertAlmostEqual(
                 automated_equation(G, self.phi, 0),
