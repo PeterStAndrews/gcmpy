@@ -143,7 +143,6 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
                 places=7
             )
 
-    @unittest.skip("TODO - fix automated_equation() for 5 clique")
     def test_5_clique(self):
         T = self.phi
         u = self.u
@@ -179,7 +178,6 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
             places=7,
         )
 
-    @unittest.skip("TODO - fix automated_equation() for 6 clique")
     def test_6_clique(self):
         T = self.phi
         u = self.u
@@ -225,6 +223,15 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
             ),
             places=7,
         )
+
+    def test_n_clique(self):
+        for n in range(5,9):
+            G = self._make_clique(n, self.u)
+            self.assertAlmostEqual(
+                automated_equation(G, self.phi, 0),
+                clique_equation(n, self.phi, [self.u]*(n-1)),
+                places=7
+            )
 
 
 class CliqueEquationTest(EquationTestMixin, unittest.TestCase):

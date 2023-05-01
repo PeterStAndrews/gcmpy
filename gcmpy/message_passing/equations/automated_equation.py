@@ -75,7 +75,7 @@ def automated_equation(G: nx.Graph, p: float, root: int) -> float:
             else:
                 # one end is in component, other is out - interface edge, must be (1-p)
                 g.remove_edge(*e)
-                interface_edges *= 1 - p
+                interface_edges *= (1 - p)
                 continue
 
         # remove isolated vertices from RG
@@ -84,7 +84,7 @@ def automated_equation(G: nx.Graph, p: float, root: int) -> float:
         # remaining edges in g are between vertices in the same component as `root`
         # they can be either p or 1-p state as long as the component is connected
         edge_combinations = []
-        for l in range(0, len(g.nodes())):
+        for l in range(0, len(g.edges())+1):
             edge_combinations.extend([e for e in itertools.combinations(g.edges(), l)])
 
         for es in edge_combinations:
