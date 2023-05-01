@@ -1,6 +1,6 @@
 import networkx as nx
 from gcmpy.message_passing.message_passing_mixin import MessagePassingMixin
-from gcmpy.message_passing.equations.automated_equation import automated_equation
+from gcmpy.message_passing.equations.automated_equation import AutomatedEquation
 
 
 class MessagePassing:
@@ -16,6 +16,7 @@ class MessagePassing:
         :param iterations: [optional] integer number of iterations for fixed point calculation
         """
         self._MPM = MessagePassingMixin(cover_type, G)
+        self._AE = AutomatedEquation()
         self._H_tau: dict = {}
         self._iterations: int = iterations
 
@@ -55,10 +56,10 @@ class MessagePassing:
         :return float: the probability that connection to the GCC fails through this motif.
         """
         edges: list[tuple] = self._MPM.get_edges_in_motif(label)
-        H = nx.Graph()
+        H = nx.Graph(name=f"{focal}-{self._MPM.get_motif_ID(label)}")
         H.add_edges_from(edges)
         nx.set_node_attributes(H, prods, "u")
-        return automated_equation(H, self._phi, focal)
+        return self._AE.automated_equation(H, self._phi, focal)
         
     def calculate_H_tau(
         self, focal: int, label: str
@@ -128,7 +129,7 @@ class MessagePassing:
                 self._H_tau[(k, motif_ID)] = 0.5
 
         # fixed point iteration repeats
-        for r in range(self._iterations):
+        for _ in range(self._iterations):
             # iterate all edges in the network
             for i, j in self._MPM._G.edges():
                 # pull the cover label from the raw network label

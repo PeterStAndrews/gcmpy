@@ -1,8 +1,9 @@
-import unittest
+import time
 import networkx as nx
+import unittest
 
 from gcmpy.message_passing.equations.clique_equation import clique_equation
-from gcmpy.message_passing.equations.automated_equation import automated_equation
+from gcmpy.message_passing.equations.automated_equation import AutomatedEquation
 from gcmpy.message_passing.equations.chordless_cycle_equation import chordless_cycle_equation
 
 
@@ -18,19 +19,22 @@ class EquationTestMixin():
         nx.set_node_attributes(G, us, "u")
 
     def _make_chordless_cycle(self, n, u: float) -> nx.Graph:
-        G = nx.cycle_graph(n)
+        G: nx.Graph = nx.cycle_graph(n)
         self._initialise_us(G, u)
+        G.name = f"{n}-cycle"
         return G
 
     def _make_clique(self, n, u: float) -> nx.Graph:
-        G = nx.complete_graph(n)
+        G: nx.Graph = nx.complete_graph(n)
         self._initialise_us(G, u)
+        G.name = f"{n}-clique"
         return G
 
     def _make_diamond(self, u: float):
         G = nx.Graph()
         G.add_edges_from([(0, 1), (1, 2), (2, 3), (3, 0), (0, 2)])
         self._initialise_us(G, u=u)
+        G.name = f"1,3-chorded-4-cycle"
         return G
 
 
@@ -49,10 +53,14 @@ class ChordlessCycleEquationTest(EquationTestMixin, unittest.TestCase):
 
 class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
 
+    def setUp(self) -> None:
+        super().setUp()
+        self._AE = AutomatedEquation()
+
     def test_2_clique(self):
         G = self._make_clique(n=2, u=self.u)
         self.assertAlmostEqual(
-            automated_equation(G, self.phi, 0),
+            self._AE.automated_equation(G, self.phi, 0),
             1 - self.phi + self.u * self.phi,
             places=7,
         )
@@ -60,7 +68,7 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
     def test_3_clique(self):
         G = self._make_clique(n=3, u=self.u)
         self.assertAlmostEqual(
-            automated_equation(G, self.phi, 0),
+            self._AE.automated_equation(G, self.phi, 0),
             pow(1 - self.phi, 2)
             + 2 * self.phi * pow(1 - self.phi, 2) * self.u
             + (3 * pow(self.phi, 2) * (1 - self.phi) + pow(self.phi, 3))
@@ -71,7 +79,7 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
     def test_4_cycle(self):
         G = self._make_chordless_cycle(4, self.u)
         self.assertAlmostEqual(
-            automated_equation(G, self.phi, 0),
+            self._AE.automated_equation(G, self.phi, 0),
             chordless_cycle_equation(4, self.u, self.phi),
             places=7,
         )
@@ -83,7 +91,7 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
         G = self._make_diamond(u=self.u)
 
         self.assertAlmostEqual(
-            automated_equation(G, self.phi, 0),
+            self._AE.automated_equation(G, self.phi, 0),
             (
                 pow(1 - phi, 3)
                 + 2 * phi * pow(1 - phi, 3) * u
@@ -98,7 +106,7 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
         )
 
         self.assertAlmostEqual(
-            automated_equation(G, self.phi, 1),
+            self._AE.automated_equation(G, self.phi, 1),
             (
                 pow(1 - phi, 2)
                 + 2 * phi * pow(1 - phi, 3) * u
@@ -116,7 +124,7 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
         u = self.u
         G = self._make_clique(n=4, u=u)
         self.assertAlmostEqual(
-            automated_equation(G, self.phi, 1),
+            self._AE.automated_equation(G, self.phi, 1),
             (
                 pow(1 - T, 3)
                 + 3 * u * T * pow(1 - T, 4)
@@ -138,7 +146,7 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
         for n in range(3,10):
             G = self._make_chordless_cycle(n, self.u)
             self.assertAlmostEqual(
-                automated_equation(G, self.phi, 0),
+                self._AE.automated_equation(G, self.phi, 0),
                 chordless_cycle_equation(n, self.u, self.phi),
                 places=7
             )
@@ -149,7 +157,7 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
         G = self._make_clique(n=5, u=u)
 
         self.assertAlmostEqual(
-            automated_equation(G, T, 0),
+            self._AE.automated_equation(G, T, 0),
             (
                 pow(1 - T, 4)
                 + 4 * u * T * pow(1 - T, 6)
@@ -183,7 +191,7 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
         u = self.u
         G = self._make_clique(n=6, u=u)
         self.assertAlmostEqual(
-            automated_equation(G, self.phi, 0),
+            self._AE.automated_equation(G, self.phi, 0),
             pow(1 - T, 5)
             + 5 * u * T * pow(1 - T, 8)
             + 10
@@ -228,7 +236,7 @@ class AutomatedEquationTest(EquationTestMixin, unittest.TestCase):
         for n in range(5,7):
             G = self._make_clique(n, self.u)
             self.assertAlmostEqual(
-                automated_equation(G, self.phi, 0),
+                self._AE.automated_equation(G, self.phi, 0),
                 clique_equation(n, self.phi, [self.u]*(n-1)),
                 places=7
             )
