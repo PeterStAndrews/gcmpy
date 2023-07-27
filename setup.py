@@ -61,7 +61,7 @@ setup(
     zip_safe=False,
     install_requires=[
         "iteration_utilities==0.11.0",
-        "networkx==2.8.6",
+        "networkx==2.8.8",
         "numpy==1.22.3",
     ],
 )
